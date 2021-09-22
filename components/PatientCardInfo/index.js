@@ -6,7 +6,7 @@ export default function PatientCardInfo (props) {
   return (
     <div className='flex items-center'>
       <img
-        src={patientImage} 
+        src={patientImage}
         alt='dentist-profile'
         className='w-050 md:w-060 h-050 md:h-060 rounded-full object-cover'
       />

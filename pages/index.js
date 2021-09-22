@@ -8,6 +8,7 @@ import FormInput from '../components/FormInput'
 import SearchInput from '../components/SearchInput'
 import PatientCard from '../components/PatientCard'
 import PatientCardInfo from '../components/PatientCardInfo'
+import Toggle from '../components/Toggle'
 
 export default function Home () {
   return (
@@ -32,6 +33,9 @@ export default function Home () {
         dummyContent='Hola soy info'
         patientImage='https://ak.picdn.net/shutterstock/videos/3779099/thumb/1.jpg'
         patientName='Mariana Jáuregui'
+      />
+      <Toggle
+        textPlaceholder='soy un toggle'
       />
     </>
   )
