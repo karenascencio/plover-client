@@ -2,6 +2,7 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
+<<<<<<< HEAD
     extend: {
       colors: {
         'plover-blue': '#274C77',
@@ -15,6 +16,9 @@ module.exports = {
         '050': '3.125rem'
       }
     }
+=======
+    extend: {}
+>>>>>>> 2885972f7b00bfa448a261cce9580ae89187b11b
   },
   variants: {
     extend: {}
