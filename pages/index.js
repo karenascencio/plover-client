@@ -29,11 +29,9 @@ export default function Home () {
         textPlaceholder='Buscar paciente...'
       />
       <PatientCard
-        patientName='Hola soy info'
-      />
-      <PatientCardInfo
+        dummyContent='Hola soy info'
         patientImage='https://ak.picdn.net/shutterstock/videos/3779099/thumb/1.jpg'
-        patientName='Karen Ascencio'
+        patientName='Mariana Jáuregui'
       />
     </>
   )
