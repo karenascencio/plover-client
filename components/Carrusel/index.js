@@ -29,7 +29,6 @@ export default function Carrusel (props) {
 
   return (
     <div className='flex'>
-      <div className='w-0 md:w-30vw h-140px bg-plover-blue' />
       <button
         className='w-2.5vw'
         onClick={handleLeftClick}
