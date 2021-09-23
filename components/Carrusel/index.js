@@ -36,9 +36,9 @@ export default function Carrusel (props) {
       </button>
       <div className='flex justify-between items-center w-full md:w-65vw h-140px'>
         {
-            size.width <= 768 ? notes.slice(0, 2).map((item, key) => <CarruselCard name={item.name} procedure={item.procedure} date={item.date} />)
-              : size.width <= 1024 ? notes.slice(0, 3).map((item, key) => <CarruselCard name={item.name} procedure={item.procedure} date={item.date} />)
-                : notes.slice(0, 4).map((item, key) => <CarruselCard name={item.name} procedure={item.procedure} date={item.date} />)
+            size.width <= 768 ? notes.slice(0, 2).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
+              : size.width <= 1024 ? notes.slice(0, 3).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
+                : notes.slice(0, 4).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
       }
       </div>
       <button className='w-2.5vw' onClick={handleRightClick}>{'>'}</button>
