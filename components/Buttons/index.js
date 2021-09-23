@@ -7,14 +7,14 @@ export default function Buttons() {
                 INICIAR SESIÓN
             </button>
 
-            <button class="bg-white hover:bg-gray-100 text-plover-blue font-normal py-2 px-4 border border-gray-400 rounded shadow">
+            <button className="bg-white hover:bg-gray-100 text-plover-blue font-normal py-2 px-4 border border-gray-400 rounded shadow">
                 Home
             </button>
 
-            <button class="bg-white hover:bg-gray-100 text-plover-blue font-normal m-2 py-2 px-4 border-2 border-plover-blue rounded shadow">
+            <button className="bg-white hover:bg-gray-100 text-plover-blue font-normal m-2 py-2 px-4 border-2 border-plover-blue rounded shadow">
                 Agregar cita
             </button>
-            <button class="bg-white hover:bg-gray-100 text-plover-blue font-normal m-2 py-2 px-4 border-2 border-plover-blue rounded shadow w-px3 h-px-3">
+            <button className="bg-white hover:bg-gray-100 text-plover-blue font-normal m-2 py-2 px-4 border-2 border-plover-blue rounded shadow w-8 h-8">
                 IMG
             </button>
         </>
