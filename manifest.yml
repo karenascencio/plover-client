@@ -1,6 +1,0 @@
-applications:
-- name: plover-client
-  memory: 80M
-  instances: 1
-  stack: cflinuxfs3
-
