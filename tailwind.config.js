@@ -1,6 +1,7 @@
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
+  //agregamos mas cosas a tailwind
   theme: {
     extend: {
       colors: {
