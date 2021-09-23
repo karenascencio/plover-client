@@ -15,7 +15,6 @@ import Buttons from '../components/Buttons'
 export default function Home () {
   return (
     <>
-      <Buttons />
       <H3
         textTitle='Citas'
         textColor='plover-blue'
@@ -51,6 +50,7 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
+      <Buttons />
     </>
   )
 }
