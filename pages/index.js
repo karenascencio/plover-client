@@ -7,11 +7,21 @@ import H1 from '../components/H1'
 import FormInput from '../components/FormInput'
 import SearchInput from '../components/SearchInput'
 import PatientCard from '../components/PatientCard'
+import PatientCardInfo from '../components/PatientCardInfo'
+import Toggle from '../components/Toggle'
+import Carrusel from '../components/Carrusel'
 import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
 import Buttons from '../components/Buttons'
+const cardsInfo = [
+  { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'hector hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'karen ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+]
+
 export default function Home () {
   return (
     <>
@@ -36,6 +46,10 @@ export default function Home () {
         patientImage='https://i.pinimg.com/originals/20/02/b1/2002b11bafd880f3c8b3584a972f6693.png'
         patientName='Mariana Jáuregui'
       />
+      <Toggle
+        textPlaceholder='soy un toggle'
+      />
+      <Carrusel cards={cardsInfo} />
       <Textarea
         textLabel='Anotaciones'
       />
