@@ -9,6 +9,13 @@ import SearchInput from '../components/SearchInput'
 import PatientCard from '../components/PatientCard'
 import PatientCardInfo from '../components/PatientCardInfo'
 import Toggle from '../components/Toggle'
+import Carrusel from '../components/Carrusel'
+const cardsInfo = [
+  { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'hector hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'karen ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+]
 
 export default function Home () {
   return (
@@ -37,6 +44,7 @@ export default function Home () {
       <Toggle
         textPlaceholder='soy un toggle'
       />
+      <Carrusel cards={cardsInfo} />
     </>
   )
 }
