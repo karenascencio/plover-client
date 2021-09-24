@@ -5,7 +5,7 @@ export default function index ({  title, imagen }) {
             {title}
         </button>*/}
 
-        <div class='box-border h-30 w-30 rounded ml-2  border-plover-blue border-2 '>
+        <div className='box-border h-30 w-30 rounded ml-2  border-plover-blue border-2 '>
     <a className=''>{imagen}</a>
         </div>
     </>
