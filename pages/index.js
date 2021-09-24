@@ -14,7 +14,7 @@ import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
-
+import Buttons from '../components/Buttons'
 const cardsInfo = [
   { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -64,6 +64,7 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
+      <Buttons />
     </>
   )
 }
