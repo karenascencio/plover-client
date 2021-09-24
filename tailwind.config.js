@@ -32,6 +32,9 @@ module.exports = {
         '10px': '10px',
         '8-5': '2.125rem',
         '034': '8.125rem'
+      },
+      fontFamily: {
+        lato: "'Lato', sans-serif"
       }
     }
   },

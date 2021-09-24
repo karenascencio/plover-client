@@ -14,12 +14,14 @@ import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
+import TextGroup from '../components/TextGroup'
+import Greeting from '../components/Greeting'
 
 const cardsInfo = [
-  { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'hector hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'karen ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
 export default function Home () {
@@ -28,6 +30,9 @@ export default function Home () {
       <H3
         textTitle='Citas'
         textColor='plover-blue'
+      />
+      <Greeting
+        userName='Denisse'
       />
       <H1
         textTitle='Citas'
@@ -63,6 +68,9 @@ export default function Home () {
       />
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
+      />
+      <TextGroup
+        text='Higiene Bucodental'
       />
     </>
   )
