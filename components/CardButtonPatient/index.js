@@ -6,11 +6,11 @@ export default function index({ title, imagen}) {
     {title}
     </button>*/}
 
-    <div className=' w-30 h-30 pt-1 pl-1 pr-1 rounded ml-2 hover:bg-blue-light  border-plover-blue border-2 '>
+    <div className=' w-30 h-30 pt-1 pl-1 pr-1 rounded ml-2 hover:bg-light-blue  border-plover-blue border-2 '>
       <div className=' lg:hidden items center object-fill'>
-        <Image src={imagen} alt='img' height={15} width={18}  />
+        <Image src={imagen} alt='img' height={15} width={18} href='#' />
       </div>
-      <a className=' sm:hidden lg:block w-30'>{title}</a>
+      <a className=' sm:hidden lg:block w-30 m-1 text-plover-blue' href='#'>{title}</a>
     </div>
   </>
   )

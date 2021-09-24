@@ -20,6 +20,8 @@ import CardButtonPatient from '../components/CardButtonPatient'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
+import readAppointment from '../public/readAppointment.svg'
+import clinicBackground from '../public/clinicBackground.svg'
 
 const cardsInfo = [
   { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -80,7 +82,11 @@ export default function Home () {
         />
         <CardButtonPatient
           title='Consultar cita'
-          imagen={addIcon}
+          imagen={readAppointment}
+        />
+        <CardButtonPatient
+          title='Historial clínico'
+          imagen={clinicBackground}
         />
       </div>
     </>
