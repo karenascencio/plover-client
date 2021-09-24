@@ -69,7 +69,10 @@ export default function Home () {
       />
       <LoginButtons title="INICIAR SESIÓN" />
       <AsideLeftButtons title="HOME" />
-      <CardButtonPatient title="Agregar cita" imagen="SVG" />
+      <CardButtonPatient
+      title="Agregar cita"
+      imagen="SVG"
+      />
     </>
   )
 }
