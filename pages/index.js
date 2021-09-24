@@ -79,7 +79,7 @@ export default function Home () {
           imagen={addAppointment}
         />
         <CardButtonPatient
-          title='Agregar cita'
+          title='Consultar cita'
           imagen={addIcon}
         />
       </div>
