@@ -17,6 +17,15 @@ import PopUp from '../components/PopUp'
 import LoginButtons from '../components/LoginButtons'
 import AsideLeftButtons from '../components/AsideLeftButtons'
 import CardButtonPatient from '../components/CardButtonPatient'
+// My images
+import {
+  addAppointment,
+  clinicBackground,
+  deleteIcon,
+  paymentHistory,
+  readAppointment,
+  addIcon,
+} from '../public/img'
 
 const cardsInfo = [
   { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -69,10 +78,21 @@ export default function Home () {
       />
       <LoginButtons title="INICIAR SESIÓN" />
       <AsideLeftButtons title="HOME" />
-      <CardButtonPatient
-      title="Agregar cita"
-      imagen="SVG"
-      />
+
+      <div className="flex flex-grow  justify-evenly-2 max-w-2xl">
+        <CardButtonPatient
+        title="Agregar cita"
+        imagen="SVG"
+        />
+        <CardButtonPatient
+        title="Agregar cita"
+        imagen="SVG"
+        />
+        <CardButtonPatient
+        title="Agregar cita"
+        imagen="SVG"
+        />
+      </div>
     </>
   )
 }
