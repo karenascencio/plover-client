@@ -4,7 +4,7 @@ export default function LoginButtons({title}) {
     
     return (
         <>
-            <button className='bg-plover-blue hover:bg-blue-700 text-white font-normal m-2 py-2 px-4 rounded'   >
+            <button className=' mr-1 w-180px h-30px bg-plover-blue hover:bg-blue-700 text-white font-normal rounded'>
                 {title}
             </button>
         </>
