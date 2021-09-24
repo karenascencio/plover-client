@@ -14,7 +14,13 @@ import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
-import Buttons from '../components/Buttons'
+import LoginButtons from '../components/LoginButtons'
+import AsideLeftButtons from '../components/AsideLeftButtons'
+import CardButtonPatient from '../components/CardButtonPatient'
+// My images
+import addAppointment from '../public/addAppointment.svg'
+import addIcon from '../public/addIcon.svg'
+
 const cardsInfo = [
   { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -64,7 +70,19 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
-      <Buttons />
+      <LoginButtons title='INICIAR SESIÓN' />
+      <AsideLeftButtons title='HOME' />
+
+      <div className='flex flex-grow  justify-evenly-2 max-w-2xl'>
+        <CardButtonPatient
+          title='Agregar cita'
+          imagen={addAppointment}
+        />
+        <CardButtonPatient
+          title='Agregar cita'
+          imagen={addIcon}
+        />
+      </div>
     </>
   )
 }
