@@ -11,7 +11,7 @@ export default function FormInput (props) {
         {textLabel}
       </label>
       <input
-        className='h-8 pl-1 text-base border-b border-lighter-gray text-darker-gray bg-light-blue focus:outline-none'
+        className='h-8 pl-1 text-base text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none'
         type='text'
         id={`${inputID}-input`}
         placeholder={textValue}
