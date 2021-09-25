@@ -4,7 +4,7 @@ import index from '../AsideLeftButtons'
 export default function CardButtonPatient({ title, imagen}) {
   return (
   <>
-    <div className=' sm:ml-5px md:ml-10px md:h-30px p-1 h-30px item-center rounded hover:bg-light-blue border-plover-blue border-2 '>
+    <div className=' sm:ml-5px md:ml-10px p-1 h-30px item-center rounded hover:bg-light-blue border-plover-blue border-2 '>
 
       <div className=' lg:hidden items-center object-fill'>
         <Image src={imagen} alt='img' height={15} width={15} href='#' />

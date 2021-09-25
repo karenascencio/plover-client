@@ -3,10 +3,12 @@ import Image from "next/image"
 export default function AddNewPatientButton({title, imagen}) {
     return (
   <>
-        <div className='flex flex-row flex-center justify-items-center justify-center w-180px h-30px md:w-30px p-1 item-center rounded hover:bg-light-blue bg-plover-blue border-2 '>
+        <div className=' h-30px sm:w-30px xl:w-180px flex justify-center justify-items-center items-center rounded hover:bg-light-blue bg-plover-blue'>
             <Image src={imagen} alt='img' height={15} width={15} href='#' />
-            <a className=' ml-1  md:hidden text-white text-center align-middle text-14px sm:hidden lg:block w-30  ' href='#'>{title}</a>
+            <a className=' ml-1 sm:hidden md:hidden text-white text-center align-middle text-14px lg:block' href='#'>{title}</a>
         </div>
 </>
     )
 }
+
+//flex flex-row flex-center justify-items-center justify-center h-30px md:w-30px  xl:w-180px p-1 item-center rounded hover:bg-light-blue bg-plover-blue
