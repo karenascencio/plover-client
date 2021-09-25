@@ -1,7 +1,6 @@
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
-  //agregamos mas cosas a tailwind
   theme: {
     extend: {
       colors: {
@@ -33,6 +32,9 @@ module.exports = {
         '10px': '10px',
         '8-5': '2.125rem',
         '034': '8.125rem'
+      },
+      fontFamily: {
+        lato: "'Lato', sans-serif"
       },
       margin: {
         '5px': '0.313rem',
