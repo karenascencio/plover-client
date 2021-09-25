@@ -16,7 +16,19 @@ import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
 import TextGroup from '../components/TextGroup'
 import Greeting from '../components/Greeting'
-
+import LoginButtons from '../components/LoginButtons'
+import AsideLeftButtons from '../components/AsideLeftButtons'
+import CardButtonPatient from '../components/CardButtonPatient'
+import DeleteButton from '../components/DeleteButton'
+import PaymentHistoryButton from '../components/PaymentHistoryButton'
+import AddNewPatientButton from '../components/AddNewPatientButton'
+// My images
+import addAppointment from '../public/addAppointment.svg'
+import addIcon from '../public/addIcon.svg'
+import readAppointment from '../public/readAppointment.svg'
+import clinicBackground from '../public/clinicBackground.svg'
+import deleteIcon from '../public/deleteIcon.svg'
+import paymentHistory from '../public/paymentHistory.svg'
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -72,6 +84,26 @@ export default function Home () {
       <TextGroup
         text='Higiene Bucodental'
       />
+      <LoginButtons title='INICIAR SESIÓN' />
+      <AsideLeftButtons title='HOME' />
+
+      <div className='flex flex-grow  justify-evenly-2 max-w-2xl'>
+        <CardButtonPatient
+          title='Agregar cita'
+          imagen={addAppointment}
+        />
+        <CardButtonPatient
+          title='Consultar cita'
+          imagen={readAppointment}
+        />
+        <CardButtonPatient
+          title='Historial clínico'
+          imagen={clinicBackground}
+        />
+        <DeleteButton imagen={deleteIcon} />
+        <PaymentHistoryButton imagen={paymentHistory} />
+      </div>
+      <AddNewPatientButton title='Nuevo' imagen={addIcon} />
     </>
   )
 }
