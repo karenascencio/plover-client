@@ -12,12 +12,10 @@ export default function Carrusel (props) {
     arr.unshift(arr.pop())
     return arr
   }
-
   function leftShift (arr) {
     arr.push(arr.shift())
     return arr
   }
-
   function handleRightClick () {
     console.log(notes)
     setNotes([...rightShift(notes)])
@@ -27,6 +25,7 @@ export default function Carrusel (props) {
     setNotes([...leftShift(notes)])
   }
 
+
   return (
     <div className='flex'>
       <button
@@ -34,9 +33,9 @@ export default function Carrusel (props) {
         onClick={handleLeftClick}
       >{'<'}
       </button>
-      <div className='flex justify-between items-center w-full md:w-65vw h-140px'>
+      <div className='flex justify-between items-center w-full sm:w-65vw h-140px'>
         {
-            size.width <= 768 ? notes.slice(0, 2).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
+            size.width <= 640 ? notes.slice(0, 2).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
               : size.width <= 1024 ? notes.slice(0, 3).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
                 : notes.slice(0, 4).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
       }
