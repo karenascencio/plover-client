@@ -17,12 +17,16 @@ import PopUp from '../components/PopUp'
 import LoginButtons from '../components/LoginButtons'
 import AsideLeftButtons from '../components/AsideLeftButtons'
 import CardButtonPatient from '../components/CardButtonPatient'
+import DeleteButton from '../components/DeleteButton'
+import PaymentHistoryButton from '../components/PaymentHistoryButton'
+import AddNewPatientButton from '../components/AddNewPatientButton'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
 import readAppointment from '../public/readAppointment.svg'
 import clinicBackground from '../public/clinicBackground.svg'
-
+import deleteIcon from '../public/deleteIcon.svg'
+import paymentHistory from '../public/paymentHistory.svg'
 const cardsInfo = [
   { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -88,7 +92,10 @@ export default function Home () {
           title='Historial clínico'
           imagen={clinicBackground}
         />
+        <DeleteButton imagen={deleteIcon} />
+        <PaymentHistoryButton imagen={paymentHistory} />
       </div>
+      <AddNewPatientButton title="Nuevo" imagen={addIcon} />
     </>
   )
 }
