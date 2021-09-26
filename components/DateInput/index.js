@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function FormInput (props) {
-  const { textLabel, textValue, inputID } = props
+export default function DateInput (props) {
+  const { inputID, textLabel } = props
   return (
     <div className='my-5 flex flex-col flex-auto'>
       <label
@@ -12,10 +12,8 @@ export default function FormInput (props) {
       </label>
       <input
         className='h-8 pl-1 text-base text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none'
-        type='text'
+        type='date'
         id={`${inputID}-input`}
-        placeholder={textValue}
-        value={textValue}
       />
     </div>
   )

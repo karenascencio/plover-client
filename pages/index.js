@@ -14,12 +14,29 @@ import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
-import Layout from '../components/layout'
+import TextGroup from '../components/TextGroup'
+import Greeting from '../components/Greeting'
+import LoginButtons from '../components/LoginButtons'
+import AsideLeftButtons from '../components/AsideLeftButtons'
+import CardButtonPatient from '../components/CardButtonPatient'
+import DeleteButton from '../components/DeleteButton'
+import PaymentHistoryButton from '../components/PaymentHistoryButton'
+import AddNewPatientButton from '../components/AddNewPatientButton'
+import Calendar from '../components/Calendar'
+import AmountDisplay from '../components/AmountDisplay'
+import DateInput from '../components/DateInput'
+// My images
+import addAppointment from '../public/addAppointment.svg'
+import addIcon from '../public/addIcon.svg'
+import readAppointment from '../public/readAppointment.svg'
+import clinicBackground from '../public/clinicBackground.svg'
+import deleteIcon from '../public/deleteIcon.svg'
+import paymentHistory from '../public/paymentHistory.svg'
 const cardsInfo = [
-  { name: 'alfredo castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'hector hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'karen ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
 export default function Home () {
@@ -29,6 +46,9 @@ export default function Home () {
       <H3
         textTitle='Citas'
         textColor='plover-blue'
+      />
+      <Greeting
+        userName='Denisse'
       />
       <H1
         textTitle='Citas'
@@ -65,6 +85,41 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
+<<<<<<< HEAD
       </Layout>
+=======
+      <TextGroup
+        text='Higiene Bucodental'
+      />
+      <Calendar />
+      <AmountDisplay
+        totalAmount='12000.00'
+        remaining='4700.00'
+      />
+      <DateInput
+        inputID='01'
+        textLabel='Fecha'
+      />
+      <LoginButtons title='INICIAR SESIÓN' />
+      <AsideLeftButtons title='HOME' />
+      <div className='flex flex-grow  justify-evenly-2 max-w-2xl'>
+        <CardButtonPatient
+          title='Agregar cita'
+          imagen={addAppointment}
+        />
+        <CardButtonPatient
+          title='Consultar cita'
+          imagen={readAppointment}
+        />
+        <CardButtonPatient
+          title='Historial clínico'
+          imagen={clinicBackground}
+        />
+        <DeleteButton imagen={deleteIcon} />
+        <PaymentHistoryButton imagen={paymentHistory} />
+      </div>
+      <AddNewPatientButton title='Nuevo' imagen={addIcon} />
+    </>
+>>>>>>> main
   )
 }

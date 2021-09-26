@@ -1,7 +1,6 @@
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
-  //agregamos mas cosas a tailwind
   theme: {
     extend: {
       colors: {
@@ -29,13 +28,30 @@ module.exports = {
         '90px': '90px',
         '23%': '23%',
         '8-5': '2.125rem',
-        '034': '8.125rem'
+        '034': '8.125rem',
+        '30px': '1.875rem'
       },
       fontSize: {
         '14px': '14px',
         '10px': '10px',
         '8-5': '2.125rem',
         '034': '8.125rem'
+      },
+      fontFamily: {
+        lato: "'Lato', sans-serif"
+      },
+      margin: {
+        '5px': '0.313rem',
+        '10px': '0.625rem'
+      },
+      width: {
+        '15px': '0.938rem',
+        '30px': '1.875rem',
+        '180px': '11.25rem'
+      },
+      height: {
+        '15px': '0.938rem',
+        '30px': '1.875rem'
       }
     }
   },
