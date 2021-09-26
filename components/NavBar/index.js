@@ -4,6 +4,7 @@ import H3 from '../H3'
 import HamburgerMenu from 'react-hamburger-menu'
 import {useState} from 'react'
 import useWindowSize from '../../hooks/useWindowSize'
+import {motion,AnimatePresence} from 'framer-motion'
 const links = ['Informacion general',
                 'Antecedentes familiares',
                'Antecedentes patologicos',
@@ -17,10 +18,9 @@ export default function NavBar() {
     function handleHamburgerMenu(){
         setIsOpen(!isOpen)
     }
-
     return (
         <div className='relative'>
-        <div className='sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-5 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw  bg-plover-blue'>
+        <div className='sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-5 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm sm:min-w-max bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
                 <ul className='mt-10 hidden sm:block'>
                     {
@@ -39,18 +39,24 @@ export default function NavBar() {
                     color='white'
                     borderRadius={0}
                     animationDuration={0.5}
-
                     />
             </div>
-                {size.width<640 &&
-                <ul className={`transition-all bg-plover-blue w-100vw text-center absolute  ${!isOpen ? 'hidden' : 'block'} `}>
+                
+                <AnimatePresence>
+                { isOpen &&(
+                    <motion.ul
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className={` bg-plover-blue w-100vw text-center absolute md:hidden`}>
                     {
                         links.map((link,key)=>{
                             return <li className='border-2 border-white'><H3 className='' key ={key} textTitle={link} textColor='white'  /></li>
                         })
                     }
-                </ul>
+                </motion.ul>)
                 }
+                </AnimatePresence>
             </div>
     )
 }
