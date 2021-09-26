@@ -22,6 +22,9 @@ import CardButtonPatient from '../components/CardButtonPatient'
 import DeleteButton from '../components/DeleteButton'
 import PaymentHistoryButton from '../components/PaymentHistoryButton'
 import AddNewPatientButton from '../components/AddNewPatientButton'
+import Calendar from '../components/Calendar'
+import AmountDisplay from '../components/AmountDisplay'
+import DateInput from '../components/DateInput'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -84,9 +87,17 @@ export default function Home () {
       <TextGroup
         text='Higiene Bucodental'
       />
+      <Calendar />
+      <AmountDisplay
+        totalAmount='12000.00'
+        remaining='4700.00'
+      />
+      <DateInput
+        inputID='01'
+        textLabel='Fecha'
+      />
       <LoginButtons title='INICIAR SESIÓN' />
       <AsideLeftButtons title='HOME' />
-
       <div className='flex flex-grow  justify-evenly-2 max-w-2xl'>
         <CardButtonPatient
           title='Agregar cita'
