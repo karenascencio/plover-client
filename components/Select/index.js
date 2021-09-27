@@ -9,13 +9,15 @@ export default function Select (props) {
       </label>
       <select id={`${selectID}-select`}>
         {
-          outputOptions.map( (item, index) => {
+          outputOptions.map((item, index) => {
             return (
-              <option 
+              <option
                 key={index}
-                value={item}>
+                value={item}
+              >
                 {item}
-              </option>)
+              </option>
+            )
           })
         }
       </select>

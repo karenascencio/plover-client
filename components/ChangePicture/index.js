@@ -6,7 +6,7 @@ export default function ChangePicture (props) {
     <div className='w-034 h-034 relative'>
       <img
         className='w-full rounded-full'
-        src={profilePicture} 
+        src={profilePicture}
         alt='pfp'
       />
       <label

@@ -97,7 +97,7 @@ export default function Home () {
         inputID='01'
         textLabel='Fecha'
       />
-      <Select 
+      <Select
         selectID='02'
         selectQuestion='Which is your favorite?'
         outputOptions={['one', 'two', 'three', 'four']}
