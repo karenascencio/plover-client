@@ -11,7 +11,7 @@ export default function DateInput (props) {
         {textLabel}
       </label>
       <input
-        className='h-8 pl-1 text-base text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none'
+        className='h-30px pl-1 text-base text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none'
         type='date'
         id={`${inputID}-input`}
       />
