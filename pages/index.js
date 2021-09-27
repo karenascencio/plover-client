@@ -42,7 +42,7 @@ const cardsInfo = [
 
 export default function Home () {
   return (
-    <>
+    <div className=''>
       <H3
         textTitle='Citas'
         textColor='plover-blue'
@@ -121,6 +121,6 @@ export default function Home () {
         <PaymentHistoryButton imagen={paymentHistory} />
       </div>
       <AddNewPatientButton title='Nuevo' imagen={addIcon} />
-    </>
+    </div>
   )
 }
