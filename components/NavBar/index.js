@@ -51,7 +51,7 @@ export default function NavBar() {
                     className={` bg-plover-blue w-100vw text-center absolute md:hidden`}>
                     {
                         links.map((link,key)=>{
-                            return <li className='border-2 border-white'><H3 className='' key ={key} textTitle={link} textColor='white'  /></li>
+                            return <li key ={key} className='border-2 border-white'><H3 className=''textTitle={link} textColor='white'  /></li>
                         })
                     }
                 </motion.ul>)
