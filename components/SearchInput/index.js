@@ -7,7 +7,7 @@ export default function SearchInput (props) {
       <label htmlFor='' />
       <input
         type='text'
-        className='h-12 pl-1 text-base placeholder-plover-blue text-plover-blue bg-input-gray focus:outline-none'
+        className='w-full h-12 pl-1 text-base placeholder-plover-blue text-plover-blue bg-input-gray focus:outline-none'
         placeholder={textPlaceholder}
       />
     </div>

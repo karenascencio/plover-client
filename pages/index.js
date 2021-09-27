@@ -25,6 +25,7 @@ import AddNewPatientButton from '../components/AddNewPatientButton'
 import Calendar from '../components/Calendar'
 import AmountDisplay from '../components/AmountDisplay'
 import DateInput from '../components/DateInput'
+import Select from '../components/Select'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -63,7 +64,7 @@ export default function Home () {
       />
       <PatientCard
         dummyContent='Hola soy info'
-        patientImage='https://i.pinimg.com/originals/20/02/b1/2002b11bafd880f3c8b3584a972f6693.png'
+        patientImage='https://api.multiavatar.com/karen%20ascencio.png'
         patientName='Mariana Jáuregui'
       />
       <Toggle
@@ -79,7 +80,7 @@ export default function Home () {
         procedureStatus='Terminado'
       />
       <ChangePicture
-        profilePicture='https://i.pinimg.com/originals/20/02/b1/2002b11bafd880f3c8b3584a972f6693.png'
+        profilePicture='https://api.multiavatar.com/karen%20ascencio.png'
       />
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
@@ -95,6 +96,11 @@ export default function Home () {
       <DateInput
         inputID='01'
         textLabel='Fecha'
+      />
+      <Select
+        selectID='02'
+        selectQuestion='Which is your favorite?'
+        outputOptions={['One', 'Two', 'Three', 'Four']}
       />
       <LoginButtons title='INICIAR SESIÓN' />
       <AsideLeftButtons title='HOME' />
