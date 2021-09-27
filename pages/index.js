@@ -14,7 +14,7 @@ import Textarea from '../components/Textarea'
 import ProcedureCard from '../components/ProcedureCard'
 import ChangePicture from '../components/ChangePicture'
 import PopUp from '../components/PopUp'
-import TextGroup from '../components/TextGroup'
+import PlainText from '../components/PlainText'
 import Greeting from '../components/Greeting'
 import LoginButtons from '../components/LoginButtons'
 import AsideLeftButtons from '../components/AsideLeftButtons'
@@ -85,7 +85,7 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
-      <TextGroup
+      <PlainText
         text='Higiene Bucodental'
       />
       <Calendar />
