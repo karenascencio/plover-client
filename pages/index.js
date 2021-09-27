@@ -25,6 +25,7 @@ import AddNewPatientButton from '../components/AddNewPatientButton'
 import Calendar from '../components/Calendar'
 import AmountDisplay from '../components/AmountDisplay'
 import DateInput from '../components/DateInput'
+import Select from '../components/Select'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -95,6 +96,11 @@ export default function Home () {
       <DateInput
         inputID='01'
         textLabel='Fecha'
+      />
+      <Select 
+        selectID='02'
+        selectQuestion='Which is your favorite?'
+        outputOptions={['one', 'two', 'three', 'four']}
       />
       <LoginButtons title='INICIAR SESIÓN' />
       <AsideLeftButtons title='HOME' />
