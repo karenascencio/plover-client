@@ -25,7 +25,7 @@ export default function NavBar() {
                 <ul className='mt-10 hidden sm:block'>
                     {
                         links.map((link,key)=>{
-                            return <li><H3 className='' key ={key} textTitle={link} textColor='white'  /></li>
+                            return <li key={key}><H3 className='' textTitle={link} textColor='white'  /></li>
                         })
                     }
                 </ul>
