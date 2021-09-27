@@ -41,8 +41,7 @@ const cardsInfo = [
 
 export default function Home () {
   return (
-
-    <Layout>
+    <div className=''>
       <H3
         textTitle='Citas'
         textColor='plover-blue'
@@ -85,9 +84,6 @@ export default function Home () {
       <PopUp
         popUpText='Las contraseñas no coinciden, porfavor reingresa la contraseña.'
       />
-<<<<<<< HEAD
-      </Layout>
-=======
       <TextGroup
         text='Higiene Bucodental'
       />
@@ -119,7 +115,6 @@ export default function Home () {
         <PaymentHistoryButton imagen={paymentHistory} />
       </div>
       <AddNewPatientButton title='Nuevo' imagen={addIcon} />
-    </>
->>>>>>> main
+    </div>
   )
 }

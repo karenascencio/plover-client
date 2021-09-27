@@ -19,8 +19,8 @@ export default function NavBar() {
         setIsOpen(!isOpen)
     }
     return (
-        <div className='relative'>
-        <div className='sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-5 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm sm:min-w-max bg-plover-blue'>
+        <div className=''>
+        <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-5 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
                 <ul className='mt-10 hidden sm:block'>
                     {
