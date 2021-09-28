@@ -34,7 +34,7 @@ export default function Aboutme () {
       })}
       </div>
       <RadioButtons 
-        textLabel='¿Has tomado pastillas anticonseptivas?'
+        textLabel='¿Has tomado pastillas anticonceptivas?'
         options={['si','no']}
         handleChange={()=>{console.log('cambio')}}
         handleBlur={()=>{console.log('blur')}}
@@ -42,7 +42,7 @@ export default function Aboutme () {
           />
 
 <RadioButtons 
-        textLabel='¿Has tomado pastillas anticonseptivas?'
+        textLabel='¿Has tomado pastillas anticonceptivas?'
         options={['buena','regular','mala']}
         handleChange={()=>{console.log('cambio')}}
         handleBlur={()=>{console.log('blur')}}
