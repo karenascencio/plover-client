@@ -88,7 +88,11 @@ export default function patientForm() {
             <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               
               <Select 
-                    selectID='alcohol' 
+                    selectID='alcoholConsumption' 
+                    textName='nonPathologicalBackground.alcoholConsumption'
+                    textValue={values.nonPathologicalBackground.alcoholConsumption}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
                     selectQuestion='¿Bebe alcohol frecuentemente?' 
                     outputOptions={[
                         'Nunca he tomado',
@@ -97,17 +101,67 @@ export default function patientForm() {
                         'Una vez cada quince días',
                         'Una vez al mes'
                     ]} />
-              
-              
-              
+                <Select 
+                    selectID='cigarConsumption' 
+                    textName='nonPathologicalBackground.cigarConsumption'
+                    textValue={values.nonPathologicalBackground.cigarConsumption}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    selectQuestion='¿Con que frecuencia fuma?' 
+                    outputOptions={[
+                        'Nunca he fumado',
+                        'No fumo',
+                        '10 ó menos cajetillas por mes',
+                        '11 a 20 cajetillas por mes',
+                        '21 a 30 cajetillas por mes',
+                        '31 cajetillas por mes ó mas'
+                    ]} />
               <RadioButtons 
-                    textLabel='¿Como considera su alimentacion?'
-                    options={['buena','regular','mala']}
+                    textLabel='¿Te has tatuado en los ultimos 6 meses?'
+                    options={['Si','No']}
                     setFieldValue={setFieldValue}
-                    textValue={values.nonPathologicalBackground.feeding}
-                    textName='nonPathologicalBackground.feeding'
+                    textValue={values.nonPathologicalBackground.recentTattos}
+                    textName='nonPathologicalBackground.recentTattos'
                 />
-          
+
+            <Textarea
+                    textName='nonPathologicalBackground.hygieneDescription' 
+                    textLabel='Describa su higiene personal' 
+                    textValue={values.nonPathologicalBackground.hygieneDescription}  
+                    inputId='nonPathologicalBackground.hygieneDescription'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+                </div>
+                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+
+            <FormInput 
+                    textName='nonPathologicalBackground.services'
+                    textLabel='Servicios básicos' 
+                    textValue={values.nonPathologicalBackground.services}  
+                    inputId='nonPathologicalBackground.services'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+
+            <Textarea
+                    textName='nonPathologicalBackground.unusualHabits' 
+                    textLabel='Hábitos extraños' 
+                    textValue={values.nonPathologicalBackground.unusualHabits}  
+                    inputId='nonPathologicalBackground.unusualHabits'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+
+            <Textarea
+                    textName='nonPathologicalBackground.observations' 
+                    textLabel='Observaciónes' 
+                    textValue={values.nonPathologicalBackground.observations}  
+                    inputId='nonPathologicalBackground.observations'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+
             </div>
 
 
