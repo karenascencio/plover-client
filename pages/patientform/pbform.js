@@ -1,11 +1,11 @@
 import React from 'react'
 import { Formik } from 'formik'
-import FormInput from '../components/FormInput'
-import Textarea from '../components/Textarea'
-import RadioButtons from '../components/RadioButtons'
-import useLocalStorage from '../hooks/useLocalStorage'
-import H1 from '../components/H1'
-import H3 from '../components/H3'
+import FormInput from '../../components/FormInput'
+import Textarea from '../../components/Textarea'
+import RadioButtons from '../../components/RadioButtons'
+import useLocalStorage from '../../hooks/useLocalStorage'
+import H1 from '../../components/H1'
+import H3 from '../../components/H3'
 //por favor funciona
 export default function Pbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
