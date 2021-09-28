@@ -12,7 +12,8 @@ export default function Select (props) {
       </label>
       <select
         className='w-full h-30px bg-light-blue text-plover-blue text-sm border-b border-lighter-gray'
-        id={`${selectID}-select`}>
+        id={`${selectID}-select`}
+      >
         {
           outputOptions.map((item, index) => {
             return (
