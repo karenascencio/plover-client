@@ -18,7 +18,7 @@ export default function patientForm() {
               height:'1.8 m',
               weight:'100 kg',
               bloodType:'A+',
-              maritalState:'soltero',
+              maritalStatus:'soltero',
               address:{
                 state:'Nayarit',
                 city:'Rincon de guayabitos',
@@ -138,7 +138,7 @@ export default function patientForm() {
               <FormInput 
                 textName='maritalStatus' 
                 textLabel='Estado Civil' 
-                textValue={values.maritalState}  
+                textValue={values.maritalStatus}  
                 inputId='maritalStatus'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
