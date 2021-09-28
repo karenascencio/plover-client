@@ -27,6 +27,8 @@ import Calendar from '../components/Calendar'
 import AmountDisplay from '../components/AmountDisplay'
 import DateInput from '../components/DateInput'
 import Select from '../components/Select'
+import TitleHeader from '../components/TitleHeader'
+import SettingsProfileCard from '../components/SettingsProfileCard'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -44,6 +46,14 @@ const cardsInfo = [
 export default function Home () {
   return (
     <div className=''>
+      <TitleHeader
+        pageTitle='Home'
+        secondaryText='Próximas citas'
+      />
+      <SettingsProfileCard
+        userName='Denisse Aguilar'
+        profilePicture='https://api.multiavatar.com/karen%20ascencio.png'
+      />
       <H3
         textTitle='Citas'
         textColor='plover-blue'
