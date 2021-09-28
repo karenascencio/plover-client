@@ -100,7 +100,7 @@ export default function Home () {
         labelText='Procedimiento'
       />
       <PlainText
-        text='Higiene Bucodental'
+        text='higiene bucodental'
       />
       <Calendar />
       <AmountDisplay
