@@ -1,5 +1,5 @@
 export default function RadioButtons (props) {
-    const { textLabel,options,setFieldValue,handleBlur,textName,textValue} = props
+    const { textLabel,options,setFieldValue,textName,textValue} = props
     return (
       <div className={' my-5 flex flex-col flex-auto '}>
         <p className='text-sm text-plover-blue mb-2.5'>{textLabel}</p>

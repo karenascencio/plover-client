@@ -8,7 +8,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
 
-export default function patientForm() {
+export default function npbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
     function stringToArray(str){ 
          return str.split(',').map(item=>item.trim().split(' ')).reduce((acum,item)=>{

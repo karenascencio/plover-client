@@ -4,7 +4,7 @@ import FormInput from '../components/FormInput'
 import useLocalStorage from '../hooks/useLocalStorage'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
-export default function patientForm() {
+export default function giform() {
     const [patient,setPatient] = useLocalStorage('patient')
     return (
         <>

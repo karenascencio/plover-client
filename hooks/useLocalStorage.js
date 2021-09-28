@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react'
 
-
+//por favor funciona
 export default function useLocalStorage(key, initialValue={}) {
     // State to store our value
     // Pass initial state function to useState so logic is only executed once
