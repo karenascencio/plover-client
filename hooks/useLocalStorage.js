@@ -33,6 +33,7 @@ export default function useLocalStorage(key, initialValue={}) {
         // Save state
         setStoredValue(valueToStore);
         // Save to local storage
+        //we add a validation since next does not find the window objcet, (it only live in the browser XD)
         if (typeof window !== "undefined") {
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
         }    
