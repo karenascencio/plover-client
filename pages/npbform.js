@@ -107,7 +107,7 @@ export default function Npbform() {
                     textValue={values.nonPathologicalBackground.cigarConsumption}
                     handleChange={handleChange}
                     handleBlur={handleBlur}
-                    selectQuestion='¿Con que frecuencia fuma?' 
+                    selectQuestion='¿Con qué frecuencia fuma?' 
                     outputOptions={[
                         'Nunca he fumado',
                         'No fumo',
@@ -117,7 +117,7 @@ export default function Npbform() {
                         '31 cajetillas por mes ó mas'
                     ]} />
               <RadioButtons 
-                    textLabel='¿Te has tatuado en los ultimos 6 meses?'
+                    textLabel='¿Te has tatuado en los últimos 6 meses?'
                     options={['Si','No']}
                     setFieldValue={setFieldValue}
                     textValue={values.nonPathologicalBackground.recentTattos}
@@ -155,7 +155,7 @@ export default function Npbform() {
 
             <Textarea
                     textName='nonPathologicalBackground.observations' 
-                    textLabel='Observaciónes' 
+                    textLabel='Observaciones' 
                     textValue={values.nonPathologicalBackground.observations}  
                     inputId='nonPathologicalBackground.observations'
                     handleChange={handleChange}
