@@ -24,7 +24,7 @@ export default function Calendar () {
           Selecciona una fecha:
         </label>
         <input
-          className='text-plover-blue text-base border rounded font-thin ml-1 px-1'
+          className='text-plover-blue text-base border rounded font-thin ml-1 px-1 hidden'
           type='date'
           onChange={appointmentDate}
           id='calendar'
