@@ -99,7 +99,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.father.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.father.description}  
                         inputId='familyBackground.father.description'
                         handleChange={handleChange}
@@ -121,7 +121,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.mother.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.mother.description}  
                         inputId='familyBackground.mother.description'
                         handleChange={handleChange}
@@ -143,7 +143,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.grandFather.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.grandFather.description}  
                         inputId='familyBackground.grandFather.description'
                         handleChange={handleChange}
@@ -165,7 +165,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.grandMother.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.grandMother.description}  
                         inputId='familyBackground.grandMother.description'
                         handleChange={handleChange}
@@ -187,7 +187,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.partner.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.partner.description}  
                         inputId='familyBackground.partner.description'
                         handleChange={handleChange}
@@ -209,7 +209,7 @@ export default function Fbform() {
                     {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
                     <Textarea
                         textName='familyBackground.brothers.description' 
-                        textLabel='descripcion' 
+                        textLabel='descripción' 
                         textValue={values.familyBackground.brothers.description}  
                         inputId='familyBackground.brothers.description'
                         handleChange={handleChange}
