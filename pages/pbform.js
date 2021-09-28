@@ -6,7 +6,7 @@ import RadioButtons from '../components/RadioButtons'
 import useLocalStorage from '../hooks/useLocalStorage'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
-
+//por favor funciona
 export default function pbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
     function stringToArray(str){ 
