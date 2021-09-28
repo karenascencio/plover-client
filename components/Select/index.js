@@ -12,11 +12,16 @@ export default function Select (props) {
       </label>
       <select
         className='w-full h-30px bg-light-blue text-plover-blue text-sm border-b border-lighter-gray'
+<<<<<<< HEAD
         name={textName}
         value={textValue}
         onChange={handleChange}
         onBlur={handleBlur}
         id={`${selectID}-select`}>
+=======
+        id={`${selectID}-select`}
+      >
+>>>>>>> main
         {
           outputOptions.map((item, index) => {
             return (
