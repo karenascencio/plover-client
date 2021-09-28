@@ -7,7 +7,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
 //por favor funciona
-export default function pbform() {
+export default function Pbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
     function stringToArray(str){ 
          return str.split(',').map(item=>item.trim().split(' ')).reduce((acum,item)=>{
