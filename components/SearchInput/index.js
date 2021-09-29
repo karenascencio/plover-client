@@ -1,15 +1,15 @@
 import React from 'react'
 
 export default function SearchInput (props) {
-  const { textPlaceholder, searchValue } = props
+  const { textPlaceholder, searchInput } = props
   return (
-    <div>
+    <div className='flex-grow mr-2.5'>
       <label htmlFor='' />
       <input
         type='text'
         className='w-full h-12 pl-1 text-base placeholder-plover-blue text-plover-blue bg-input-gray focus:outline-none'
         placeholder={textPlaceholder}
-        onChange={searchValue}
+        onChange={searchInput}
       />
     </div>
   )
