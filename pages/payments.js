@@ -14,9 +14,6 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
-
-
-
 export async function getStaticProps() {
   const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
   return {  
@@ -31,6 +28,7 @@ export async function getStaticProps() {
 export default function Payments({payments}) {
 	const idPatient = '61511de2f6273ea718ebd5f7'
 	const idDentist = '61511d3cf6273ea718ebd5f4'
+	const [staticPayments,setStaticPayments] = useState(payments)
 	const [payment,setPayment] = useState({total:'',date:'',file:'some file',idDentist,idPatient})
 
 	function handleChange(event){
@@ -42,9 +40,8 @@ export default function Payments({payments}) {
 			payment.total = Number(payment.total)
 			payment.date = new Date(payment.date)
 			await api.postPayment(payment)
-
+			setStaticPayments([...staticPayments,payment])
 	}
-
     return (
         <div className='flex flex-col '>
             <Carrusel cards={cardsInfo}/>
@@ -72,7 +69,7 @@ export default function Payments({payments}) {
 									</div>
 
 								{
-									payments.map((item,key)=>{
+									staticPayments.map((item,key)=>{
 										return (
 											<React.Fragment key={key}>
 											<div className='gl:col-span-2'><PlainText text={item.total}/></div>
