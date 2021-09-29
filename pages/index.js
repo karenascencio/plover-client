@@ -25,7 +25,17 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
-export default function Home () {
+export async function getStaticProps () {
+  const dentistInfo = await api.getDentistById('61511d3cf6273ea718ebd5f4')
+  return {
+    props: {
+      dentistInfo
+    }
+  }
+}
+
+export default function Home ({ dentistInfo }) {
+  const { name, lastName, userImage, patients } = dentistInfo
   const [search, setSearch] = useState('')
 
   const searchHandler = event => {
