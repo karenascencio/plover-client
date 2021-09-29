@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 // My components
 import H3 from '../components/H3'
 import H1 from '../components/H1'
@@ -29,6 +30,7 @@ import DateInput from '../components/DateInput'
 import Select from '../components/Select'
 import TitleHeader from '../components/TitleHeader'
 import SettingsProfileCard from '../components/SettingsProfileCard'
+import Modal from '../components/Modal'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -36,6 +38,8 @@ import readAppointment from '../public/readAppointment.svg'
 import clinicBackground from '../public/clinicBackground.svg'
 import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
+import close from '../public/close.svg'
+
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -44,7 +48,11 @@ const cardsInfo = [
 ]
 
 export default function Home () {
+  
+  const [ openModal, setOpenModal] = useState(false)
+
   return (
+    <>
     <div className=''>
       <TitleHeader
         pageTitle='Home'
@@ -136,5 +144,12 @@ export default function Home () {
       </div>
       <AddNewPatientButton title='Nuevo' imagen={addIcon} />
     </div>
-  )
+    <div>
+      <button onClick={()=>{setOpenModal(true)}}>
+        openModal
+      </button>
+      {openModal && <Modal imagen={close} closeModal={setOpenModal} />}
+    </div>
+    </>
+    )
 }
