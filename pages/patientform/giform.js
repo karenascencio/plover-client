@@ -8,7 +8,7 @@ export default function Giform() {
     const [patient,setPatient] = useLocalStorage('patient')
     return (
         <>
-          <H1 textTitle='Informacion General' textColor='plover-blue' />
+          <H1 textTitle='Información General' textColor='plover-blue' />
           <Formik
             initialValues={{
               name:'jorge alfredo',
@@ -35,7 +35,7 @@ export default function Giform() {
               },
               personInCharge:{
                 name:"sofia",
-                lastName:"castuer arroyo",
+                lastName:"castuera arroyo",
                 email:"sofiaCastuera@gmail.com",
                 phoneNumber:"327-27-402-432"
               }

@@ -93,7 +93,7 @@ export default function Pbform() {
                     handleBlur={handleBlur}
                 />
                 <RadioButtons 
-                    textLabel='¿Has tomado pastillas anticonseptivas?'
+                    textLabel='¿Has tomado pastillas anticonceptivas?'
                     options={['si','no']}
                     setFieldValue={setFieldValue}
                     textValue={values.pathologicalBackground.birthControlPills}
@@ -107,7 +107,7 @@ export default function Pbform() {
                     textName='pathologicalBackground.previousOperations'
                 />
                 <RadioButtons 
-                    textLabel='¿Has donado sangre en los ultimos 6 meses?'
+                    textLabel='¿Has donado sangre en los últimos 6 meses?'
                     options={['si','no']}
                     setFieldValue={setFieldValue}
                     textValue={values.pathologicalBackground.bloodDonation}

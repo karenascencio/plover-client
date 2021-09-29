@@ -4,7 +4,7 @@ import TextWithLabel from '../components/TextWithLabel'
 import RadioButtons from '../components/RadioButtons';
 import H3 from '../components/H3';
 export default function Aboutme () {
-    const title='Informacion personal'
+    const title='Informacióa estos n personal'
     const infoGroup= [
         {'clave':'nombres','valor':'jorge alfredo','isInput':false},
         {'clave':'apellidos','valor':'castuera arroyo','isInput':false },
