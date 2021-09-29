@@ -2,7 +2,7 @@ import {React, useState} from 'react'
 import Image from 'next/dist/client/image'
 
 export default function Modal({imagen, closeModal}) {
-
+  
 
     return (
 <div className=' modalBackground flex items-center justify-center fixed left-0 bottom-0 w-full border-black h-full'>
