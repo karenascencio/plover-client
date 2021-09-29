@@ -43,11 +43,11 @@ export default function Payments({payments}) {
 								{
 									payments.map((item,key)=>{
 										return (
-											<>
+											<div key={key}>
 											<div className='col-span-2'><PlainText text={item.total}/></div>
 											<div className='col-span-2'><PlainText text={item.date}/></div>
 											<span>{'agregar'}</span>
-											</>
+											</div>
 										)
 									})
 								}
