@@ -27,13 +27,13 @@ export default function Carrusel (props) {
 
 
   return (
-    <div className='flex'>
+    <div className='flex w-full justify-center'>
       <button
         className='w-2.5vw'
         onClick={handleLeftClick}
       >{'<'}
       </button>
-      <div className='flex justify-between items-center w-full sm:w-65vw h-140px'>
+      <div className='flex justify-between items-center w-11/12  h-140px'>
         {
             size.width <= 640 ? notes.slice(0, 2).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
               : size.width <= 1024 ? notes.slice(0, 3).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)

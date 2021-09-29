@@ -16,20 +16,43 @@ const cardsInfo = [
 
 export async function getStaticProps() {
   const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
+  const appointments = await api.getAppointmentsByPatientId('61511de2f6273ea718ebd5f7')
   return {  
     props: {
-			payments
+			payments,
+			appointments
       }
     }
   }
 
 
 
-export default function Payments({payments}) {
+export default function Payments({payments,appointments}) {
 	const idPatient = '61511de2f6273ea718ebd5f7'
 	const idDentist = '61511d3cf6273ea718ebd5f4'
-	const [staticPayments,setStaticPayments] = useState(payments)
+
+	const [dynamicPayments,setDynamicPayments] = useState(payments)
 	const [payment,setPayment] = useState({total:'',date:'',file:'some file',idDentist,idPatient})
+	console.log(dynamicPayments)
+	const [fullPrice,setFullPrice] = useState(getFullPrice(appointments))
+	const [remaningPrice,setRemaningPrice] = useState(fullPrice-getPaidOut(dynamicPayments))
+
+	console.log(`el total a pagar es ${fullPrice}`)
+	console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
+	function getPaidOut(dynamicPayments){
+		return dynamicPayments.reduce((acum,payment)=>{
+			return acum+payment.total
+		},0)
+	}
+
+	function getFullPrice(appointments){
+		return appointments.reduce((acum,appointment)=>{
+		  return acum+appointment.procedures.reduce((acum,procedure)=>{
+			return acum+procedure.price
+		  },0)
+		},0)
+	  }
+	
 
 	function handleChange(event){
 		console.log(payment)
@@ -40,15 +63,19 @@ export default function Payments({payments}) {
 			payment.total = Number(payment.total)
 			payment.date = new Date(payment.date)
 			await api.postPayment(payment)
-			setStaticPayments([...staticPayments,payment])
+			setDynamicPayments([...dynamicPayments,payment])
 	}
+
+	useEffect(()=>{
+		setRemaningPrice(fullPrice-getPaidOut(dynamicPayments))
+	},[dynamicPayments])
     return (
-        <div className='flex flex-col '>
+        <div className='flex flex-col items-center border border-red-800'>
             <Carrusel cards={cardsInfo}/>
-						<AmountDisplay totalAmount={10000} remaining={1000}/>
-						<div className='flex flex-col '>
-							<H3 textTitle='Pagos' textColor='plover-blue'/>
-							<div className='grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
+						<div className='self-end border border-red-800'><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
+						<div className='w-full flex flex-col border border-green-900'>
+							<div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue'/></div>
+							<div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
 								<div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
 								<div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
 								<label className='text-plover-blue text-base font-thin' htmlFor='calendar'>
@@ -69,7 +96,7 @@ export default function Payments({payments}) {
 									</div>
 
 								{
-									staticPayments.map((item,key)=>{
+									dynamicPayments.map((item,key)=>{
 										return (
 											<React.Fragment key={key}>
 											<div className='gl:col-span-2'><PlainText text={item.total}/></div>
