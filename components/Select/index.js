@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Select (props) {
-  const { selectID, selectQuestion, outputOptions } = props
+  const { selectID, selectQuestion, outputOptions,textName,textValue,handleChange,handleBlur } = props
   return (
     <div className='flex flex-col my-5'>
       <label
@@ -12,8 +12,11 @@ export default function Select (props) {
       </label>
       <select
         className='w-full h-30px bg-light-blue text-plover-blue text-sm border-b border-lighter-gray'
-        id={`${selectID}-select`}
-      >
+        name={textName}
+        value={textValue}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        id={`${selectID}-select`}>
         {
           outputOptions.map((item, index) => {
             return (
