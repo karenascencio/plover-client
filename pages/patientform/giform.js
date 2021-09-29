@@ -44,14 +44,14 @@ export default function Giform() {
             validate={(values)=>{
               let errors = {}
               //validaciones de presencia
-              if(!values.name) errors.name='Por favor ingresa tus nombres'
-              if(!values.lastName) errors.lastName='Por favor ingresa tus apellidos'
-              if(!values.gender) errors.gender='Por favor ingresa tu genero'
-              if(!values.age) errors.age='Por favor ingresa tu edad'
-              if(!values.height) errors.height='Por favor ingresa tu altura'
-              if(!values.weight) errors.weight='Por favor ingresa tus peso'
-              if(!values.bloodType) errors.bloodType='Por favor ingresa tus tipo de sangre'
-              if(!values.maritalState) errors.maritalState='Por favor ingresa tus estado civil'
+              if(!values.name) errors.name='Por favor, ingresa tus nombres'
+              if(!values.lastName) errors.lastName='Por favor, ingresa tus apellidos'
+              if(!values.gender) errors.gender='Por favor, ingresa tu género'
+              if(!values.age) errors.age='Por favor, ingresa tu edad'
+              if(!values.height) errors.height='Por favor, ingresa tu altura'
+              if(!values.weight) errors.weight='Por favor, ingresa tus peso'
+              if(!values.bloodType) errors.bloodType='Por favor, ingresa tus tipo de sangre'
+              if(!values.maritalState) errors.maritalState='Por favor, ingresa tus estado civil'
               //validaciones por expresiones regulares
               return errors
 
@@ -145,7 +145,7 @@ export default function Giform() {
                 />
                 </div>
                 
-                <H3 textTitle='Direccion' textColor='plover-blue'/>
+                <H3 textTitle='Dirección' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <FormInput
                 textName='address.state'
