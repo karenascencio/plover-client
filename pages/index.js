@@ -49,7 +49,7 @@ const cardsInfo = [
 
 export default function Home () {
   
-  const [ openModal, seOpenModal] = useState(false)
+  const [ openModal, setOpenModal] = useState(false)
 
   return (
     <>
@@ -145,8 +145,10 @@ export default function Home () {
       <AddNewPatientButton title='Nuevo' imagen={addIcon} />
     </div>
     <div>
-      <button onClick={()=>{setOpenModal=true}}>open modal</button>
-    <Modal imagen={close} />
+      <button onClick={()=>{setOpenModal(true)}}>
+        openModal
+      </button>
+      {openModal && <Modal imagen={close} closeModal={setOpenModal} />}
     </div>
     </>
     )
