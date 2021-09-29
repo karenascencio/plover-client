@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 // My components
 import TitleHeader from '../components/TitleHeader'
 import Carrusel from '../components/Carrusel'
@@ -15,6 +16,8 @@ import readAppointment from '../public/readAppointment.svg'
 import clinicBackground from '../public/clinicBackground.svg'
 import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
+import close from '../public/close.svg'
+
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -23,6 +26,9 @@ const cardsInfo = [
 ]
 
 export default function Home () {
+  
+  const [ openModal, setOpenModal] = useState(false)
+
   return (
     <>
       <TitleHeader
