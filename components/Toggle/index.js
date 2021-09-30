@@ -3,6 +3,11 @@ import React, { useState } from 'react'
 export default function Toggle (props) {
   const {id,handleToggle} = props
   const [state, setState] = useState(false)
+
+  function handleChange(){
+    setState(!state)
+    handleToggle(id)
+  }
   return (
     <React.Fragment>
       {/* switch */}
@@ -16,7 +21,7 @@ export default function Toggle (props) {
           id={`toggle-${id}`}
           type='checkbox'
           checked={state}
-          onChange={() => {setState(!state);handleToggle(id)}}
+          onChange={handleChange}
           className='hidden'
         />
         {/* slider */}
