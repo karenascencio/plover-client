@@ -4,7 +4,7 @@ import H1 from '../H1'
 export default function TitleHeader (props) {
   const { pageTitle, secondaryText } = props
   return (
-    <div className='h-20 flex justify-between items-center'>
+    <div className='h-20 w-full flex justify-between items-center'>
       <H1
         textTitle={pageTitle}
         textColor='plover-blue'

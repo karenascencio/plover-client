@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import React, { useState } from 'react'
 // My components
 import TitleHeader from '../components/TitleHeader'
 import Carrusel from '../components/Carrusel'
@@ -17,6 +17,7 @@ import clinicBackground from '../public/clinicBackground.svg'
 import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
 import close from '../public/close.svg'
+import PatientCard from '../components/PatientCard'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -25,12 +26,25 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
-export default function Home () {
-  
-  const [ openModal, setOpenModal] = useState(false)
+export async function getStaticProps () {
+  const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
+  return {
+    props: {
+      patientsInfo
+    }
+  }
+}
+
+export default function Home ({ patientsInfo }) {
+  const [search, setSearch] = useState('')
+
+  const searchHandler = event => {
+    const searchInput = event.target.value
+    setSearch(searchInput)
+  }
 
   return (
-    <>
+    <div className='max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
         secondaryText='Próximas citas'
@@ -41,12 +55,33 @@ export default function Home () {
       <div className='w-full flex justify-between items-center mb-5'>
         <SearchInput
           textPlaceholder='Buscar paciente...'
+          searchHandler={searchHandler}
+          searchValue={search}
         />
         <AddNewPatientButton
           title='Nuevo'
           imagen={addIcon}
         />
       </div>
-    </>
+      {
+        search
+          ? patientsInfo.filter(patient => {
+              return patient.name.includes(search) || patient.lastName.includes(search)
+            }).map(patient =>
+              <PatientCard
+                patientName={patient.name + ' ' + patient.lastName}
+                patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+                key={patient._id}
+              />
+            )
+          : patientsInfo.map(patient =>
+            <PatientCard
+              patientName={patient.name + ' ' + patient.lastName}
+              patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+              key={patient._id}
+            />
+          )
+      }
+    </div>
   )
 }

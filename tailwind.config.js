@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'plover-blue': '#274C77',
         'light-blue': '#EDF5FC',
+        'login-blue': '#0A69B0',
         'lighter-gray': '#C4C4C4',
         'darker-gray': '#919390',
         'input-gray': '#FBFBFB'
@@ -44,9 +45,11 @@ module.exports = {
       margin: {
         '5px': '0.313rem',
         '10px': '0.625rem',
+        '50px': '3.125rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
-        '133px': '8.313',
+        '133px': '8.313rem',
+        '166px': '10.375rem',
       },
       width: {
         '15px': '0.938rem',
@@ -55,10 +58,13 @@ module.exports = {
         '92px': '5.75rem',
         '133px': '8.313',
         '180px': '11.25rem',
+        '250px': '15.62rem',
+        '280px': '17.5rem',
         '292px': '18.25rem',
         '392px': '24.5rem',
         '408px': '25.5rem',
-        '676px': '42.188',
+        '539px': '33.68rem',
+        '676px': '42.188rem',
       },
       height: {
         '15px': '0.938rem',
@@ -66,11 +72,14 @@ module.exports = {
         '41px': '2.56rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
-        '676px': '42.188',
+        '676px': '42.188rem',
       }
     }
   },
   variants: {
+    extend: {
+      fontWeight: ['hover'],
+    },
   },
   plugins: [
     require('@tailwindcss/custom-forms'),
