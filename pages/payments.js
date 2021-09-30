@@ -70,12 +70,12 @@ export default function Payments({payments,appointments}) {
 		setRemaningPrice(fullPrice-getPaidOut(dynamicPayments))
 	},[dynamicPayments])
     return (
-        <div className='flex flex-col items-center border border-red-800'>
+        <div className='flex flex-col items-center border border-red-800 max-w-screen-lg'>
             <Carrusel cards={cardsInfo}/>
 						<div className='self-end border border-red-800'><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
 						<div className='w-full flex flex-col border border-green-900'>
 							<div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue'/></div>
-							<div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
+							<div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
 								<div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
 								<div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
 								<label className='text-plover-blue text-base font-thin' htmlFor='calendar'>

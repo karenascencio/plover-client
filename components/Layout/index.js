@@ -6,7 +6,7 @@ export default function Layout ({ children }) {
 
     <div className='flex flex-col sm:flex-row '>
       <NavBar />
-      <main className='flex-grow sm:w-65vw mx-11'>{children}</main>
+      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>{children}</main>
     </div>
   )
 }
