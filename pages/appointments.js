@@ -9,6 +9,8 @@ import PlainText from '../components/PlainText'
 import Toggle from '../components/Toggle'
 import { useState,useEffect } from 'react'
 
+//nota hay un bugsito en el manejo de estado de los toggles
+
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
