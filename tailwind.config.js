@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'plover-blue': '#274C77',
         'light-blue': '#EDF5FC',
+        'login-blue': '#0A69B0',
         'lighter-gray': '#C4C4C4',
         'darker-gray': '#919390',
         'input-gray': '#FBFBFB'
@@ -44,6 +45,7 @@ module.exports = {
       margin: {
         '5px': '0.313rem',
         '10px': '0.625rem',
+        '50px': '3.125rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
         '133px': '8.313rem',
@@ -75,6 +77,9 @@ module.exports = {
     }
   },
   variants: {
+    extend: {
+      fontWeight: ['hover'],
+    },
   },
   plugins: [
     require('@tailwindcss/custom-forms'),

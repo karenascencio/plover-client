@@ -3,38 +3,28 @@ import H1 from '../components/H1'
 import LoginInput from '../components/LoginInput'
 import LoginButtons from '../components/LoginButtons'
 import email from '../public/email.svg'
-import Image from '../next/image'
+import lock from '../public/lock.svg'
+import Image from 'next/image'
 
 export default function Login() {
   return (
     <>
-      <div className='flex  justify-center flex-col justify-center items-center mt-166px'>
-        <div className='text-center flex mb-70px'>
-          <H1
-            textTitle='Recupera tu contraseña'
-            textColor='plover-blue'
-          />
-        </div>
-        <div className='flex justify-center justify-items-center mb-70px'>
-          <div className='invisible sm:visible ml-2' >
-            <Image src={email} height={65} width={65} />
-          </div>
-        <div className='flex justify-center items-center'>
-          <p className='' >
-            Ingresa el correo con el que te
-            registraste y te enviaremos un
-            enlace para crear una nueva
-            contraseña
-          </p>
-        </div>
+    <div className='flex  justify-center flex-col items-center mt-50px md:mt-166px'>
+      <div className='text-center'>
+        <H1
+          textTitle='Iniciar sesión'
+          textColor='plover-blue'
+        />
       </div>
-      <div  className='mb-70px w-200px'>
-        <LoginInput imagen={email} />
+      <div  className=' mb-50px  mt-70px w-200px'>
+        <LoginInput imagen={email} placeHolder='Correo' type='email' />
+        <LoginInput imagen={lock} placeHolder='Contraseña' type='password' />
       </div>
-      <LoginButtons title='Cambiar contraseña' />
-      <div className='mt-4'>
-      </div>
-      </div>
+      <LoginButtons title='Iniciar sesión' />
+      <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?<a className='hover:text-plover-blue hover:font-bold ' href='#'> Registrate</a></p>
+      <p className=' text-login-blue text-14px '><a className='hover:text-plover-blue hover:font-bold ' href='#'>¿Olvidaste la contraseña?</a></p>
+
+     </div>
     </>
 )
 }
