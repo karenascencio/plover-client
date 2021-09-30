@@ -34,6 +34,8 @@ export default function RecoverPassword() {
         <LoginInput imagen={email} />
     </div>
     <LoginButtons title='Cambiar contraseña' />
+    <div className='mt-4'>
+    </div>
   </div>
 
 </>
