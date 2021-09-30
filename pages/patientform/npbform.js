@@ -1,4 +1,3 @@
-import React from 'react'
 import { Formik } from 'formik'
 import FormInput from '../../components/FormInput'
 import Textarea from '../../components/Textarea'
