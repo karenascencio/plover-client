@@ -17,6 +17,7 @@ import clinicBackground from '../public/clinicBackground.svg'
 import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
 import close from '../public/close.svg'
+import PatientCard from '../components/PatientCard'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -26,16 +27,15 @@ const cardsInfo = [
 ]
 
 export async function getStaticProps () {
-  const dentistInfo = await api.getDentistById('61511d3cf6273ea718ebd5f4')
+  const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
   return {
     props: {
-      dentistInfo
+      patientsInfo
     }
   }
 }
 
-export default function Home ({ dentistInfo }) {
-  const { name, lastName, userImage, patients } = dentistInfo
+export default function Home ({ patientsInfo }) {
   const [search, setSearch] = useState('')
 
   const searchHandler = event => {
@@ -44,7 +44,7 @@ export default function Home ({ dentistInfo }) {
   }
 
   return (
-    <>
+    <div className='max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
         secondaryText='Próximas citas'
@@ -55,13 +55,33 @@ export default function Home ({ dentistInfo }) {
       <div className='w-full flex justify-between items-center mb-5'>
         <SearchInput
           textPlaceholder='Buscar paciente...'
-          searchValue={searchHandler}
+          searchHandler={searchHandler}
+          searchValue={search}
         />
         <AddNewPatientButton
           title='Nuevo'
           imagen={addIcon}
         />
       </div>
-    </>
+      {
+        search
+          ? patientsInfo.filter(patient => {
+              return patient.name.includes(search) || patient.lastName.includes(search)
+            }).map(patient =>
+              <PatientCard
+                patientName={patient.name + ' ' + patient.lastName}
+                patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+                key={patient._id}
+              />
+            )
+          : patientsInfo.map(patient =>
+            <PatientCard
+              patientName={patient.name + ' ' + patient.lastName}
+              patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+              key={patient._id}
+            />
+          )
+      }
+    </div>
   )
 }
