@@ -97,7 +97,6 @@ export default function Payments() {
                             </div>
                             <div className=' grid md:grid-cols-2 gap-x-10 border border-red-700 '>
                                 <Textarea 
-                                    textName='annotations'
                                     textLabel='Anotaciones'
                                     textValue={appointment.annotations}
                                     inputId='annotations'
@@ -107,7 +106,6 @@ export default function Payments() {
 
                                     />
                                 <Textarea 
-                                    textName='recommendations'
                                     textLabel='Recomendaciones'
                                     textValue={appointment.recommendations}
                                     inputId='recommendations'
