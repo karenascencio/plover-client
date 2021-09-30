@@ -45,7 +45,6 @@ export default function Payments() {
         setAppointment({...appointment,procedures})
     },[procedures])
 
-
     function handleProcedure(event){
         const {name,value} = event.target
         setProcedure({...procedure,[name]:value})
@@ -101,13 +100,10 @@ export default function Payments() {
                                     textLabel='Anotaciones'
                                     textValue={appointment.annotations}
                                     inputId='annotations'
-                                    textName='annotations'
                                     handleChange={handleChange}
                                     handleBlur={()=>console.log('blur')}
-
                                     />
                                 <Textarea 
-                                    textName='recommendations'
                                     textLabel='Recomendaciones'
                                     textValue={appointment.recommendations}
                                     inputId='recommendations'
