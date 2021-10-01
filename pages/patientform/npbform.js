@@ -1,11 +1,11 @@
 import { Formik } from 'formik'
-import FormInput from '../components/FormInput'
-import Textarea from '../components/Textarea'
-import RadioButtons from '../components/RadioButtons'
-import Select from '../components/Select'
-import useLocalStorage from '../hooks/useLocalStorage'
-import H1 from '../components/H1'
-import H3 from '../components/H3'
+import FormInput from '../../components/FormInput'
+import Textarea from '../../components/Textarea'
+import RadioButtons from '../../components/RadioButtons'
+import Select from '../../components/Select'
+import useLocalStorage from '../../hooks/useLocalStorage'
+import H1 from '../../components/H1'
+import H3 from '../../components/H3'
 
 export default function Npbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
@@ -53,7 +53,7 @@ export default function Npbform() {
             <form action="" onSubmit={handleSubmit} >
               <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <RadioButtons 
-                    textLabel='¿Cómo considera su alimentación?'
+                    textLabel='¿Como considera su alimentacion?'
                     options={['buena','regular','mala']}
                     setFieldValue={setFieldValue}
                     textValue={values.nonPathologicalBackground.feeding}
@@ -106,7 +106,7 @@ export default function Npbform() {
                     textValue={values.nonPathologicalBackground.cigarConsumption}
                     handleChange={handleChange}
                     handleBlur={handleBlur}
-                    selectQuestion='¿Con qué frecuencia fuma?' 
+                    selectQuestion='¿Con que frecuencia fuma?' 
                     outputOptions={[
                         'Nunca he fumado',
                         'No fumo',
@@ -116,7 +116,7 @@ export default function Npbform() {
                         '31 cajetillas por mes ó mas'
                     ]} />
               <RadioButtons 
-                    textLabel='¿Te has tatuado en los últimos 6 meses?'
+                    textLabel='¿Te has tatuado en los ultimos 6 meses?'
                     options={['Si','No']}
                     setFieldValue={setFieldValue}
                     textValue={values.nonPathologicalBackground.recentTattos}
@@ -154,7 +154,7 @@ export default function Npbform() {
 
             <Textarea
                     textName='nonPathologicalBackground.observations' 
-                    textLabel='Observaciones' 
+                    textLabel='Observaciónes' 
                     textValue={values.nonPathologicalBackground.observations}  
                     inputId='nonPathologicalBackground.observations'
                     handleChange={handleChange}
