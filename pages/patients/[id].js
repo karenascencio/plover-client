@@ -35,7 +35,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const id = context.params.id
   const patientInfo = await api.getPatientsById(id)
-  const appointmentsInfo = await api.getAppointmentByPatientId(id)
+  const appointmentsInfo = await api.getAppointmentsByPatientId(id)
   return {
     props: {
       patientInfo,

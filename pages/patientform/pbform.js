@@ -15,7 +15,7 @@ export default function Pbform() {
     }
 
     return (
-        <>
+        <div className='flex flex-col pt-10'>
           <H1 textTitle='Antecedentes patológicos' textColor='plover-blue' />
           <Formik
             initialValues={{
@@ -48,7 +48,7 @@ export default function Pbform() {
           {({values,handleSubmit,handleChange,handleBlur,setFieldValue,errors,touched})=>(
             <>
            
-            <form action="" onSubmit={handleSubmit} >
+            <form  action="" onSubmit={handleSubmit} >
               <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentDiseases'
@@ -82,8 +82,6 @@ export default function Pbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentMedications'
                     textLabel='Medicacion actual' 
@@ -113,8 +111,6 @@ export default function Pbform() {
                     textValue={values.pathologicalBackground.bloodDonation}
                     textName='pathologicalBackground.bloodDonation'
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <Textarea
                         textName='pathologicalBackground.observations' 
                         textLabel='observaciones'
@@ -131,6 +127,6 @@ export default function Pbform() {
             </>
           )}
           </Formik>  
-        </>
+        </div>
     )
 }
