@@ -28,7 +28,7 @@ export async function getStaticProps() {
 
 
 export default function Payments({payments,appointments}) {
-	const idPatient = '61511de2f6273ea718ebd5f7'
+	const idPatient = '6154aa9a44729179b2c5d74f'
 	const idDentist = '61511d3cf6273ea718ebd5f4'
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)

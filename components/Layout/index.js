@@ -10,7 +10,7 @@ export default function Layout ({ children }) {
     <div className='flex flex-col sm:flex-row '>
       <NavBar handleForm={handleForm}/>
       <FormularioContext.Provider value={formulario}>
-        <main formulario='General Information' className='flex justify-center flex-grow sm:w-65vw mx-11'>{children}</main>
+        <main formulario='General Information' className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>{children}</main>
       </FormularioContext.Provider>
     </div>
   )
