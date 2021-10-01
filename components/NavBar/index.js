@@ -6,14 +6,15 @@ import {useState} from 'react'
 import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
 import Link from 'next/link'
-const links = [{title:'Informacion general',link:'/patientform/giform'},
-                {title:'Antecedentes familiares',link:'/patientform/fbform'},
-               {title:'Antecedentes patologicos',link:'/patientform/pbform'},
-                {title:'Antecedentes no-patologicos',link:'/patientform/npbform'},
+const forms = [{title:'Informacion general',form:'General Information'},
+                {title:'Antecedentes familiares',form:'Family Background'},
+               {title:'Antecedentes patologicos',form:'Pathological Background'},
+                {title:'Antecedentes no-patologicos',form:'NonPathological Background'},
                
             ]
 
-export default function NavBar() {
+export default function NavBar(props) {
+    const {handleForm} =props
     const size = useWindowSize()
     const [isOpen,setIsOpen] = useState(false)
     function handleHamburgerMenu(){
@@ -25,8 +26,8 @@ export default function NavBar() {
                 <H1 textTitle='Plover' textColor='white' />
                 <ul className='mt-10 hidden sm:block '>
                     {
-                        links.map((item,key)=>{
-                            return <li className='mb-10' key={key}><Link href={`${item.link}`}><a className='text-white text-xl '>{item.title }</a></Link></li>
+                        forms.map((item,key)=>{
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </ul>
@@ -51,8 +52,8 @@ export default function NavBar() {
                     exit={{ opacity: 0 }}
                     className={` bg-plover-blue w-100vw text-center  absolute md:hidden`}>
                     {
-                        links.map((link,key)=>{
-                            return <li key ={key} className=''><a className='text-white'></a></li>
+                        forms.map((item,key)=>{
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </motion.ul>)

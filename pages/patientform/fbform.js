@@ -12,7 +12,7 @@ export default function Fbform() {
    
  
     return (
-        <div className='w-full max-w-screen-lg  flex flex-col pt-10'>
+        <div className='w-full max-w-screen-lg  flex flex-col'>
           <H1 textTitle='Antecedentes familiares' textColor='plover-blue' />
           <Formik
             initialValues={{
@@ -48,29 +48,17 @@ export default function Fbform() {
               let errors = {}
               //validaciones de presencia
               if(!values.familyBackground.father.pathologies){}
-        
               if(!values.familyBackground.father.description){}
-              
               if(!values.familyBackground.mother.pathologies){}
-
               if(!values.familyBackground.mother.description){}
-              
               if(!values.familyBackground.grandFather.pathologies){}
-   
               if(!values.familyBackground.grandFather.description){} 
-
               if(!values.familyBackground.grandMother.pathologies){}
-      
-              if(!values.familyBackground.grandMother.description){} 
-
+              if(!values.familyBackground.grandMother.description){}
               if(!values.familyBackground.partner.pathologies){}
-      
               if(!values.familyBackground.partner.description){} 
-                
               if(!values.familyBackground.brothers.pathologies){} 
-      
               if(!values.familyBackground.brothers.description){} 
-
               //validaciones por expresiones regulares
               return errors
             }}

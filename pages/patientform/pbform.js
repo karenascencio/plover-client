@@ -82,8 +82,6 @@ export default function Pbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentMedications'
                     textLabel='Medicacion actual' 
@@ -113,8 +111,6 @@ export default function Pbform() {
                     textValue={values.pathologicalBackground.bloodDonation}
                     textName='pathologicalBackground.bloodDonation'
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <Textarea
                         textName='pathologicalBackground.observations' 
                         textLabel='observaciones'

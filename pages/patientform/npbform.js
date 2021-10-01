@@ -85,8 +85,6 @@ export default function Npbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               
               <Select 
                     selectID='alcoholConsumption' 
@@ -133,8 +131,6 @@ export default function Npbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-                </div>
-                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
 
             <FormInput 
                     textName='nonPathologicalBackground.services'
