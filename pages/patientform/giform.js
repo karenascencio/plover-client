@@ -1,44 +1,47 @@
-import React from 'react'
-import { Formik } from 'formik'
+import React, { useState } from 'react'
+import { Formik} from 'formik'
 import FormInput from '../../components/FormInput'
 import useLocalStorage from '../../hooks/useLocalStorage'
+import {useEffect,useRef} from 'react'
 import H1 from '../../components/H1'
 import H3 from '../../components/H3'
 export default function Giform() {
-    const [patient,setPatient] = useLocalStorage('patient')
+
+
     return (
-        <>
+        <div className='w-full max-w-screen-lg flex flex-col'>
           <H1 textTitle='Información General' textColor='plover-blue' />
           <Formik
             initialValues={{
-              name:'jorge alfredo',
-              lastName:'castuera arroyo',
-              gender:'masculino',
-              age:'25',
-              height:'1.8 m',
-              weight:'100 kg',
-              bloodType:'A+',
-              maritalStatus:'soltero',
+              name:'',
+              lastName:'',
+              gender:'',
+              age:'',
+              height:'',
+              weight:'',
+              bloodType:'',
+              maritalStatus:'',
               address:{
-                state:'Nayarit',
-                city:'Rincon de guayabitos',
-                neighborhood:'centro',
-                street:'avenida sol nuevo',
-                streetNumber:'#80',
-                innerNumber:'none'
+                state:'',
+                city:'',
+                neighborhood:'',
+                street:'',
+                streetNumber:'',
+                innerNumber:''
               },
               familyPractitioner:{
-                name:"alfredo",
-                lastName:"renteria",
-                email:"afredoRenteria@gmail.com",
-                phoneNumber:"327-27-402-432"
+                name:"",
+                lastName:"",
+                email:"",
+                phoneNumber:""
               },
               personInCharge:{
-                name:"sofia",
-                lastName:"castuera arroyo",
-                email:"sofiaCastuera@gmail.com",
-                phoneNumber:"327-27-402-432"
-              }
+                name:"",
+                lastName:"",
+                email:"",
+                phoneNumber:""
+              },
+
             }}
 
             validate={(values)=>{
@@ -55,14 +58,12 @@ export default function Giform() {
               //validaciones por expresiones regulares
               return errors
 
-
             }}
     
             onSubmit={(values)=>{
               console.log(values)
               console.log('formulario')
-            }}
-          
+            }}          
           
           >
           {({values,handleSubmit,handleChange,handleBlur,errors,touched})=>(
@@ -86,8 +87,7 @@ export default function Giform() {
                 textValue={values.lastName}  
                 inputId='lastName'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
 
               <FormInput 
@@ -97,7 +97,6 @@ export default function Giform() {
                 inputId='gender'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='age' 
@@ -106,7 +105,6 @@ export default function Giform() {
                 inputId='age'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='height'
@@ -115,7 +113,6 @@ export default function Giform() {
                 inputId='height'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='weight' 
@@ -124,7 +121,6 @@ export default function Giform() {
                 inputId='weight'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='bloodType'
@@ -133,7 +129,6 @@ export default function Giform() {
                 inputId='bloodType'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='maritalStatus' 
@@ -141,8 +136,7 @@ export default function Giform() {
                 textValue={values.maritalStatus}  
                 inputId='maritalStatus'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 </div>
                 
                 <H3 textTitle='Dirección' textColor='plover-blue'/>
@@ -153,8 +147,7 @@ export default function Giform() {
                 textValue={values.address.state}  
                 inputId='address.state'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*validamos que el campo no venga vacio*/}
                 {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
               <FormInput 
@@ -163,8 +156,7 @@ export default function Giform() {
                 textValue={values.address.city}  
                 inputId='address.city'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
 
               <FormInput 
@@ -174,7 +166,6 @@ export default function Giform() {
                 inputId='address.neighborhood'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='address.street' 
@@ -183,7 +174,6 @@ export default function Giform() {
                 inputId='address.street'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='address.streetNumber'
@@ -192,7 +182,6 @@ export default function Giform() {
                 inputId='address.streetNumber'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='address.innerNumber' 
@@ -200,9 +189,7 @@ export default function Giform() {
                 textValue={values.address.innerNumber} 
                 inputId='address.innerNumber'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-
-                />
+                handleBlur={handleBlur}                />
                 </div>
 
                 <H3 textTitle='Médico familiar' textColor='plover-blue'/>
@@ -213,8 +200,7 @@ export default function Giform() {
                 textValue={values.familyPractitioner.name}  
                 inputId='familyPractitioner.name'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*validamos que el campo no venga vacio*/}
                 {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
               <FormInput 
@@ -223,8 +209,7 @@ export default function Giform() {
                 textValue={values.familyPractitioner.lastName}  
                 inputId='familyPractitioner.lastName'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
 
               <FormInput 
@@ -234,7 +219,6 @@ export default function Giform() {
                 inputId='familyPractitioner.email'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='familyPractitioner.phoneNumber' 
@@ -243,7 +227,6 @@ export default function Giform() {
                 inputId='familyPractitioner.phoneNumber'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
                 </div>
 
@@ -255,8 +238,7 @@ export default function Giform() {
                 textValue={values.personInCharge.name}  
                 inputId='personInCharge.name'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*validamos que el campo no venga vacio*/}
                 {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
               <FormInput 
@@ -265,8 +247,7 @@ export default function Giform() {
                 textValue={values.personInCharge.lastName}  
                 inputId='personInCharge.lastName'
                 handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
 
               <FormInput 
@@ -276,7 +257,6 @@ export default function Giform() {
                 inputId='personInCharge.email'
                 handleChange={handleChange}
                 handleBlur={handleBlur}
-
                 />
               <FormInput 
                 textName='personInCharge.phoneNumber' 
@@ -287,11 +267,9 @@ export default function Giform() {
                 handleBlur={handleBlur}
                 />
                 </div>
-
-              <button type='submit' onClick={()=>setPatient({...patient,...values})}>Enviar</button>
             </form>
           )}
           </Formik>  
-        </>
+        </div>
     )
 }

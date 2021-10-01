@@ -6,14 +6,13 @@ import useLocalStorage from '../../hooks/useLocalStorage'
 import H1 from '../../components/H1'
 import H3 from '../../components/H3'
 export default function Fbform() {
-    const [patient,setPatient] = useLocalStorage('patient',{})
-    function stringToArray(str){ 
-         return str.split(',').map(item=>item.trim().split(' ')).reduce((acum,item)=>{
-            return [...acum,...item]},[]).map(item=>item.toLowerCase()).filter(item=>item!=='')
-    }
 
+
+
+   
+ 
     return (
-        <>
+        <div className='w-full max-w-screen-lg  flex flex-col pt-10'>
           <H1 textTitle='Antecedentes familiares' textColor='plover-blue' />
           <Formik
             initialValues={{
@@ -85,8 +84,8 @@ export default function Fbform() {
             <>
             <H3 textTitle='Patologías' textColor='plover-blue'/>
             <form action="" onSubmit={handleSubmit} >
-              <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
-                <div className='flex flex-col'>
+              <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.father.pathologies'
                         textLabel='Padre' 
@@ -108,7 +107,7 @@ export default function Fbform() {
                     {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.mother.pathologies'
                         textLabel='Madre' 
@@ -130,7 +129,7 @@ export default function Fbform() {
                     {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.grandFather.pathologies'
                         textLabel='Abuelo' 
@@ -152,7 +151,7 @@ export default function Fbform() {
                     {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.grandMother.pathologies'
                         textLabel='Abuela' 
@@ -174,7 +173,7 @@ export default function Fbform() {
                     {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.partner.pathologies'
                         textLabel='Pareja' 
@@ -196,7 +195,7 @@ export default function Fbform() {
                     {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
                 </div>
 
-                <div className='flex flex-col'>
+                <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.brothers.pathologies'
                         textLabel='Hermanos' 
@@ -219,11 +218,10 @@ export default function Fbform() {
                 </div>
 
             </div>
-              <button type='submit' onClick={()=>setPatient({...patient,...values})} >Enviar</button>
             </form>
             </>
           )}
           </Formik>  
-        </>
+        </div>
     )
 }

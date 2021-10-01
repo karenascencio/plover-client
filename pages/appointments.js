@@ -22,6 +22,7 @@ const cardsInfo = [
 export async function getStaticProps() {
   return {  
     props: {
+        
       }
     }
   }
