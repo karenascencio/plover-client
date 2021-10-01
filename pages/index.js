@@ -24,6 +24,10 @@ const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
