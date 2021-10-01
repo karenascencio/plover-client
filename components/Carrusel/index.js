@@ -1,47 +1,50 @@
 import React, { useState, useEffect } from 'react'
 import CarruselCard from '../CarruselCard'
-import useWindowSize from '../../hooks/useWindowSize'
+import Slider from "react-slick";
+import "../../node_modules/slick-carousel/slick/slick.css"; 
+import "../../node_modules/slick-carousel/slick/slick-theme.css";
 
 export default function Carrusel (props) {
   const { cards } = props
-  const size = useWindowSize()
-
-  const [notes, setNotes] = useState(cards)
-
-  function rightShift (arr) {
-    arr.unshift(arr.pop())
-    return arr
-  }
-  function leftShift (arr) {
-    arr.push(arr.shift())
-    return arr
-  }
-  function handleRightClick () {
-    console.log(notes)
-    setNotes([...rightShift(notes)])
-  }
-  function handleLeftClick () {
-    console.log(notes)
-    setNotes([...leftShift(notes)])
-  }
-
-
-  return (
-    <div className='flex w-full justify-center'>
-      <button
-        className='w-2.5vw'
-        onClick={handleLeftClick}
-      >{'<'}
-      </button>
-      <div className='flex justify-between items-center w-11/12  h-140px'>
-        {
-            size.width <= 640 ? notes.slice(0, 2).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
-              : size.width <= 1024 ? notes.slice(0, 3).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
-                : notes.slice(0, 4).map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} />)
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          initialSlide: 3
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
       }
-      </div>
-      <button className='w-2.5vw' onClick={handleRightClick}>{'>'}</button>
-
+    ]
+  };
+  return (
+    
+    <div className='flex w-full sm:w-70vw justify-center items-center '>
+      <Slider {...settings} className='flex w-full md:w-70vw'>
+        {cards.map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} /> )}
+      </Slider>
     </div>
   )
 }
