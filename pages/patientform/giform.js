@@ -11,6 +11,9 @@ import H3 from '../../components/H3'
 import api from '../../lib/api'
 import { FormularioContext } from '../../components/Layout'
 
+
+
+//single form
 export default function Giform() {
   const value = useContext(FormularioContext);
   const formulario = value
