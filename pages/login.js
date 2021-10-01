@@ -1,31 +1,31 @@
-import React from 'react'
-import H1 from '../components/H1'
-import LoginInput from '../components/LoginInput'
-import LoginButtons from '../components/LoginButtons'
-import PasswordInput from '../components/PasswordInput'
-import email from '../public/email.svg'
-import lock from '../public/lock.svg'
-import Image from 'next/image'
+import React, {useState} from 'react'
+import { useRouter } from 'next/router'
+import api from '../lib/api'
+// .: Components
+import LoginForm from '../components/LoginForm'
+
 
 export default function Login() {
+  const [userData, setUserData] = useState({ email: '', password: '' })
+  const [error, setError] = useState('')
+
+  const Login = details => {
+    console.log(details)
+    return details
+  }
+
+  const buttonHandler = async () => {
+    try{
+    const response = await api.login(Login)
+    }
+    catch(error){console.log(error.message)}
+
+  }
+
+
   return (
     <>
-    <div className='flex  justify-center flex-col items-center mt-50px md:mt-166px'>
-      <div className='text-center'>
-        <H1
-          textTitle='Iniciar sesión'
-          textColor='plover-blue'
-        />
-      </div>
-      <div  className=' mb-50px  mt-70px w-200px'>
-        <LoginInput imagen={email} placeHolder='Contraseña' type='password' />
-        <LoginInput imagen={lock} placeHolder='Reingresa la contraseña' type='password' />
-      </div>
-      <LoginButtons title='Iniciar sesión' />
-      <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?<a className='hover:text-plover-blue hover:font-bold ' href='#'> Registrate</a></p>
-      <p className=' text-login-blue text-14px '><a className='hover:text-plover-blue hover:font-bold ' href='#'>¿Olvidaste la contraseña?</a></p>
-
-     </div>
+      <LoginForm Login={Login} error={error} buttonHandler={buttonHandler}/>
     </>
 )
 }
