@@ -23,7 +23,7 @@ export default function Carrusel (props) {
         }
       },
       {
-        breakpoint: 768,
+        breakpoint: 974,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -31,7 +31,7 @@ export default function Carrusel (props) {
         }
       },
       {
-        breakpoint: 640,
+        breakpoint: 765,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1
@@ -41,8 +41,8 @@ export default function Carrusel (props) {
   };
   return (
     
-    <div className='flex w-full sm:w-70vw justify-center items-center '>
-      <Slider {...settings} className='flex w-full md:w-70vw'>
+    <div className=' flex w-full sm:w-70vw justify-center items-center my-10'>
+      <Slider {...settings} className=' flex w-full md:w-70vw '>
         {cards.map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} /> )}
       </Slider>
     </div>
