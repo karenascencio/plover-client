@@ -5,14 +5,16 @@ import HamburgerMenu from 'react-hamburger-menu'
 import {useState} from 'react'
 import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
-const links = ['Informacion general',
-                'Antecedentes familiares',
-               'Antecedentes patologicos',
-                'Antecedentes no-patologicos',
-                'Documentos'
+import Link from 'next/link'
+const forms = [{title:'Informacion general',form:'General Information'},
+                {title:'Antecedentes familiares',form:'Family Background'},
+               {title:'Antecedentes patologicos',form:'Pathological Background'},
+                {title:'Antecedentes no-patologicos',form:'NonPathological Background'},
+               
             ]
 
-export default function NavBar() {
+export default function NavBar(props) {
+    const {handleForm} =props
     const size = useWindowSize()
     const [isOpen,setIsOpen] = useState(false)
     function handleHamburgerMenu(){
@@ -22,10 +24,10 @@ export default function NavBar() {
         <div className=''>
         <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
-                <ul className='mt-10 hidden sm:block'>
+                <ul className='mt-10 hidden sm:block '>
                     {
-                        links.map((link,key)=>{
-                            return <li key={key}><H3 className='' textTitle={link} textColor='white'  /></li>
+                        forms.map((item,key)=>{
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </ul>
@@ -48,10 +50,10 @@ export default function NavBar() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className={` bg-plover-blue w-100vw text-center absolute md:hidden`}>
+                    className={` bg-plover-blue w-100vw text-center  absolute md:hidden`}>
                     {
-                        links.map((link,key)=>{
-                            return <li key ={key} className='border-2 border-white'><H3 className=''textTitle={link} textColor='white'  /></li>
+                        forms.map((item,key)=>{
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </motion.ul>)
