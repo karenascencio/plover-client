@@ -66,12 +66,13 @@ export default function Home ({ patientsInfo }) {
       {
         search
           ? patientsInfo.filter(patient => {
-              return patient.name.includes(search) || patient.lastName.includes(search)
+              return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
             }).map(patient =>
               <PatientCard
                 patientName={patient.name + ' ' + patient.lastName}
                 patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
                 key={patient._id}
+                patientId={patient._id}
               />
             )
           : patientsInfo.map(patient =>
@@ -79,6 +80,7 @@ export default function Home ({ patientsInfo }) {
               patientName={patient.name + ' ' + patient.lastName}
               patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
               key={patient._id}
+              patientId={patient._id}
             />
           )
       }
