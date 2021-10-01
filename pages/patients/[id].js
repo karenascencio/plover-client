@@ -54,9 +54,11 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   }
 
   return (
-    <div className='max-w-screen-lg flex flex-col items-center'>
+    <div className='w-full max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Paciente'
+        patientName={name}
+        patientLastName={lastName}
         secondaryText='Próximas citas'
       />
       <Carrusel
@@ -64,7 +66,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
       />
       <div className='w-full flex justify-between items-center mb-5'>
         <SearchInput
-          textPlaceholder='Buscar procedimiento, cita o estado...'
+          textPlaceholder='Buscar procedimiento...'
           searchHandler={searchHandler}
           searchValue={search}
         />
@@ -73,22 +75,39 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
           imagen={addIcon}
         />
       </div>
-      {
-        appointmentsInfo.map(appointments => {
-          const procedureDate = new Date(appointments.date)
-          const appointmentId = appointments._id
-          console.log(appointmentId)
-          return appointments.procedures.map(procedure =>
-            <ProcedureCard
-              key={procedure._id}
-              procedureDate={procedureDate.toGMTString().split(' ').slice(1, 4).join(' ')}
-              procedureName={procedure.name}
-              procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
-              anchor={appointmentId}
-            />
-          )
-        })
-      }
+      <div className='w-full border-t border-lighter-gray'>
+        {
+          search
+            ? appointmentsInfo.map(appointment => {
+                const procedureDate = new Date(appointment.date)
+                const appointmentId = appointment._id
+                return appointment.procedures.filter(procedure =>
+                  procedure.name.includes(search.toLowerCase())).map(procedure =>
+                    <ProcedureCard
+                      key={procedure._id}
+                      procedureDate={procedureDate.toGMTString().split(' ').slice(1, 4).join(' ')}
+                      procedureName={procedure.name}
+                      procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                      anchor={appointmentId}
+                    />
+                )
+              })
+            : appointmentsInfo.map(appointments => {
+              const procedureDate = new Date(appointments.date)
+              const appointmentId = appointments._id
+              console.log(appointmentId)
+              return appointments.procedures.map(procedure =>
+                <ProcedureCard
+                  key={procedure._id}
+                  procedureDate={procedureDate.toGMTString().split(' ').slice(1, 4).join(' ')}
+                  procedureName={procedure.name}
+                  procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                  anchor={appointmentId}
+                />
+              )
+            })
+        }
+      </div>
     </div>
   )
 }

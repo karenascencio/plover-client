@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import React, { useState } from 'react'
 // My components
 import TitleHeader from '../components/TitleHeader'
@@ -9,6 +8,8 @@ import SearchInput from '../components/SearchInput'
 import AddNewPatientButton from '../components/AddNewPatientButton'
 // Api
 import api from '../lib/api'
+// JWT
+import getJwtId from '../lib/jwt'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -44,7 +45,7 @@ export default function Home ({ patientsInfo }) {
   }
 
   return (
-    <div className='max-w-screen-lg flex flex-col items-center'>
+    <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
         secondaryText='Próximas citas'
@@ -63,7 +64,8 @@ export default function Home ({ patientsInfo }) {
           imagen={addIcon}
         />
       </div>
-      {
+      <div className='w-full border-t border-lighter-gray'>
+        {
         search
           ? patientsInfo.filter(patient => {
               return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
@@ -83,7 +85,8 @@ export default function Home ({ patientsInfo }) {
               patientId={patient._id}
             />
           )
-      }
+        }
+      </div>
     </div>
   )
 }

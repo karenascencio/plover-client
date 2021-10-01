@@ -1,11 +1,18 @@
 import React from 'react'
 
 export default function H1 (props) {
-  const { textTitle, textColor } = props
+  const { textTitle, textColor, patientName, patientLastName } = props
 
-  return (
-    <h1 className={`text-${textColor} font-bold text-4xl`}>
+  return textTitle === 'Paciente'
+    ? <div className='flex flex-col lg:flex-row'>
+      <h1 className={`text-${textColor} font-bold text-4xl`}>
+        {textTitle}
+      </h1>
+      <p className='text-lighter-gray font-thin text-4xl pl-1 capitalize'>
+        {patientName.split(' ').slice(0, 1).join(' ') + ' ' + patientLastName.split(' ').slice(0, 1).join(' ')}
+      </p>
+    </div>
+    : <h1 className={`text-${textColor} font-bold text-4xl`}>
       {textTitle}
     </h1>
-  )
 }
