@@ -28,8 +28,8 @@ export default function Giform() {
     async function SeeState(values){
       console.log(values)
       values.idDetist='61511d3cf6273ea718ebd5f5'
-      values.email = `user${Math.random}@gmail.com`
-      values.password=`password${Math.random}@gmail.com`
+      values.email = `user${Math.random()}@gmail.com`
+      values.password=`password${Math.random()}@gmail.com`
       values.age=Number(values.age)
       values.height=Number(values.height)
       values.weight=Number(values.weight)
@@ -695,40 +695,6 @@ export default function Giform() {
             </div>
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
             </form>
           )}
