@@ -2,6 +2,7 @@ import React from 'react'
 import H1 from '../components/H1'
 import LoginInput from '../components/LoginInput'
 import LoginButtons from '../components/LoginButtons'
+import PasswordInput from '../components/PasswordInput'
 import email from '../public/email.svg'
 import lock from '../public/lock.svg'
 import Image from 'next/image'
@@ -17,8 +18,8 @@ export default function Login() {
         />
       </div>
       <div  className=' mb-50px  mt-70px w-200px'>
-        <LoginInput imagen={email} placeHolder='Correo' type='email' />
-        <LoginInput imagen={lock} placeHolder='Contraseña' type='password' />
+        <LoginInput imagen={email} placeHolder='Contraseña' type='password' />
+        <LoginInput imagen={lock} placeHolder='Reingresa la contraseña' type='password' />
       </div>
       <LoginButtons title='Iniciar sesión' />
       <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?<a className='hover:text-plover-blue hover:font-bold ' href='#'> Registrate</a></p>
