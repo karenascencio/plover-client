@@ -8,6 +8,7 @@ import Textarea from '../components/Textarea'
 import PlainText from '../components/PlainText'
 import Toggle from '../components/Toggle'
 import { useState,useEffect } from 'react'
+import {useRouter} from 'next/router' 
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
@@ -30,7 +31,11 @@ export async function getStaticProps() {
 
 
 export default function Newappointment() {
-	const idPatient = '6154aa9a44729179b2c5d74f'
+    const router = useRouter()
+    const {idPatient:patientId,idDentist:dentistId} = router.query
+    console.log(router.query)
+    
+    const idPatient = '6154aa9a44729179b2c5d74f'
 	const idDentist = '61511d3cf6273ea718ebd5f4'
     const [procedures,setProcedures] = useState([])
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })

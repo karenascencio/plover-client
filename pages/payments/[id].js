@@ -6,6 +6,7 @@ import H3 from '../../components/H3'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -39,7 +40,7 @@ export async function getStaticProps(context) {
   return {  
     props: {
 			payments,
-			appointments
+			appointments,
       }
     }
   }
@@ -49,7 +50,12 @@ export async function getStaticProps(context) {
 export default function Payments({payments,appointments}){
     console.log(`los pagos son: ${payments}`)
     console.log(`los citas son: ${appointments}`)
-    const {idDentist,idPatient}=payments[0]
+    const router = useRouter()
+    const idPatient = router.query.id
+    console.log(`el id de paciente es ${idPatient}`)
+    const idDentist = router.query.dentistId
+    console.log(`el id de odontologo  es ${idDentist}`)
+    
 
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)
