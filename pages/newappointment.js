@@ -118,8 +118,6 @@ export default function Newappointment() {
                             <div><button onClick={handleSubmit} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Enviar</button> </div>
 						</div>
                  
-
-
         </div>
     )
 }
