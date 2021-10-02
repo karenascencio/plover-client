@@ -6,6 +6,7 @@ import Select from '../../components/Select'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import H1 from '../../components/H1'
 import H3 from '../../components/H3'
+import { useEffect } from 'react'
 
 export default function Npbform() {
     const [patient,setPatient] = useLocalStorage('patient',{})
@@ -13,9 +14,10 @@ export default function Npbform() {
          return str.split(',').map(item=>item.trim().split(' ')).reduce((acum,item)=>{
             return [...acum,...item]},[]).map(item=>item.toLowerCase()).filter(item=>item!=='')
     }
+    
 
     return (
-        <>
+        <div className='flex flex-col pt-10'>
           <H1 textTitle='Antecedentes patológicos' textColor='plover-blue' />
           <Formik
             initialValues={{
@@ -83,8 +85,6 @@ export default function Npbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-            </div>
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               
               <Select 
                     selectID='alcoholConsumption' 
@@ -131,8 +131,6 @@ export default function Npbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-                </div>
-                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
 
             <FormInput 
                     textName='nonPathologicalBackground.services'
@@ -172,6 +170,6 @@ export default function Npbform() {
             </>
           )}
           </Formik>  
-        </>
+        </div>
     )
 }

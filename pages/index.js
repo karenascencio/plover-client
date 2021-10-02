@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import React, { useState } from 'react'
 // My components
 import TitleHeader from '../components/TitleHeader'
@@ -9,6 +8,8 @@ import SearchInput from '../components/SearchInput'
 import AddNewPatientButton from '../components/AddNewPatientButton'
 // Api
 import api from '../lib/api'
+// JWT
+import getJwtId from '../lib/jwt'
 // My images
 import addAppointment from '../public/addAppointment.svg'
 import addIcon from '../public/addIcon.svg'
@@ -20,6 +21,10 @@ import close from '../public/close.svg'
 import PatientCard from '../components/PatientCard'
 
 const cardsInfo = [
+  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
   { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -44,7 +49,7 @@ export default function Home ({ patientsInfo }) {
   }
 
   return (
-    <div className='max-w-screen-lg flex flex-col items-center'>
+    <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
         secondaryText='Próximas citas'
@@ -63,15 +68,17 @@ export default function Home ({ patientsInfo }) {
           imagen={addIcon}
         />
       </div>
-      {
+      <div className='w-full border-t border-lighter-gray'>
+        {
         search
           ? patientsInfo.filter(patient => {
-              return patient.name.includes(search) || patient.lastName.includes(search)
+              return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
             }).map(patient =>
               <PatientCard
                 patientName={patient.name + ' ' + patient.lastName}
                 patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
                 key={patient._id}
+                patientId={patient._id}
               />
             )
           : patientsInfo.map(patient =>
@@ -79,9 +86,11 @@ export default function Home ({ patientsInfo }) {
               patientName={patient.name + ' ' + patient.lastName}
               patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
               key={patient._id}
+              patientId={patient._id}
             />
           )
-      }
+        }
+      </div>
     </div>
   )
 }
