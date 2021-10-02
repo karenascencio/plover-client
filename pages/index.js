@@ -21,26 +21,29 @@ import close from '../public/close.svg'
 import PatientCard from '../components/PatientCard'
 
 const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
 ]
 
 export async function getStaticProps () {
   const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
+  const appointmentsInfo = await api.getAppointmentByDentistId('61511d3cf6273ea718ebd5f4')
   return {
     props: {
-      patientsInfo
+      patientsInfo,
+      appointmentsInfo
     }
   }
 }
 
-export default function Home ({ patientsInfo }) {
+export default function Home ({ patientsInfo, appointmentsInfo }) {
+  console.log(appointmentsInfo)
   const [search, setSearch] = useState('')
 
   const searchHandler = event => {
@@ -76,7 +79,7 @@ export default function Home ({ patientsInfo }) {
             }).map(patient =>
               <PatientCard
                 patientName={patient.name + ' ' + patient.lastName}
-                patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+                patientImage='https://api.multiavatar.com/car%20pls.png'
                 key={patient._id}
                 patientId={patient._id}
               />
@@ -84,7 +87,7 @@ export default function Home ({ patientsInfo }) {
           : patientsInfo.map(patient =>
             <PatientCard
               patientName={patient.name + ' ' + patient.lastName}
-              patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+              patientImage='https://api.multiavatar.com/car%20pls.png'
               key={patient._id}
               patientId={patient._id}
             />

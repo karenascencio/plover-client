@@ -59,7 +59,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         pageTitle='Paciente'
         patientName={name}
         patientLastName={lastName}
-        secondaryText='Próximas citas'
+        patientImage='https://api.multiavatar.com/car%20pls.png'
       />
       <Carrusel
         cards={cardsInfo}
