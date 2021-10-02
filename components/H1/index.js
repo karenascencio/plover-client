@@ -9,7 +9,7 @@ export default function H1 (props) {
         {textTitle}
       </h1>
       <p className='text-lighter-gray font-thin text-4xl pl-1 capitalize'>
-        {patientName.split(' ').slice(0, 1).join(' ') + ' ' + patientLastName.split(' ').slice(0, 1).join(' ')}
+        {patientName}
       </p>
     </div>
     : <h1 className={`text-${textColor} font-bold text-4xl`}>
