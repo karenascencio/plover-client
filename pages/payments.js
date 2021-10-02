@@ -14,6 +14,9 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
+
+
+
 export async function getStaticProps() {
   const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
   const appointments = await api.getAppointmentsByPatientId('61511de2f6273ea718ebd5f7')
