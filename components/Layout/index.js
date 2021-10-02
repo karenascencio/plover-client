@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import NavBar from '../NavBar'
+
 export const FormularioContext = React.createContext();
 export default function Layout ({ children }) {
   const [formulario,setFormulario] = useState('General Information')

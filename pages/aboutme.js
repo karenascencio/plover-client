@@ -1,17 +1,43 @@
 import React,{useContext,createContext} from 'react';
+import { useRouter } from 'next/router'
 
-export const UserContext = createContext();
 
 export default function App() {
+  const router = useRouter()
+  console.log(router)
+  
   return (
-    <UserContext.Provider value={{name:'jorge', lastName:'castuera'}}>
-      <User />
-    </UserContext.Provider>
+      <Nav behavior={'dentista'}/>
   )
 }
 
-function User() {
-  const value = useContext(UserContext);  
-    
-  return <><h1>{value.name}</h1><br /><h2>{value.lastName}</h2></>;
+function Nav(props) {
+  const {behavior} = props
+  const listaFormulario = [
+    'Informacion Genera',
+    'Antecedentes Familiares',
+    'Antecedentes Patologios',
+    'Antecedentes no Patologicos'
+  ]
+
+  const listaOdontologo = [
+    'crear paciente',
+    'crear cita',
+    'crear pago',
+    'ver paciente',
+    'ver citas',
+    'ver pagos'
+  ]    
+  return (
+    <div className='flex flex-col'>
+    {
+      behavior === 'formulario' && 
+        listaFormulario.map(item=> <div>{item}</div>)
+    }
+    {
+      behavior === 'dentista' && 
+        listaOdontologo.map(item=> <div>{item}</div>)
+    }
+    </div>
+    )
 }

@@ -6,6 +6,8 @@ import {useState} from 'react'
 import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 const forms = [{title:'Informacion general',form:'General Information'},
                 {title:'Antecedentes familiares',form:'Family Background'},
                {title:'Antecedentes patologicos',form:'Pathological Background'},
@@ -14,6 +16,9 @@ const forms = [{title:'Informacion general',form:'General Information'},
             ]
 
 export default function NavBar(props) {
+    const router = useRouter()
+    console.log(router.pathname)
+    const pathname = router.pathname
     const {handleForm} =props
     const size = useWindowSize()
     const [isOpen,setIsOpen] = useState(false)
@@ -22,8 +27,12 @@ export default function NavBar(props) {
     }
     return (
         <div className='z-50'>
+        {pathname == '/patientform' &&
+        <>
         <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
+                
+                
                 <ul className='mt-10 hidden sm:block '>
                     {
                         forms.map((item,key)=>{
@@ -59,6 +68,12 @@ export default function NavBar(props) {
                 </motion.ul>)
                 }
                 </AnimatePresence>
+                </>
+            }
+            {
+                pathname !== '/patientform' &&
+                <h1>hola doctor</h1>
+            }
             </div>
     )
 }
