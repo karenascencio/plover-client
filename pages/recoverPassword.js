@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import H1 from '../components/H1'
 import LoginInput from '../components/LoginInput'
 import LoginButtons from '../components/LoginButtons'
@@ -7,7 +8,8 @@ import teeth from '../public/teeth.svg'
 import Image from 'next/image'
 
 export default function RecoverPassword() {
-
+  const [seePassword, setSeePassword] = useState(false)
+  
     return(
  <>
   <div className='flex  justify-center flex-col justify-center items-center mt-166px'>
@@ -37,7 +39,6 @@ export default function RecoverPassword() {
     <div className='mt-4'>
     </div>
   </div>
-
 </>
  )
 }

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import CarruselCard from '../CarruselCard'
-import Slider from "react-slick";
-import "../../node_modules/slick-carousel/slick/slick.css"; 
-import "../../node_modules/slick-carousel/slick/slick-theme.css";
+import Slider from 'react-slick'
+import '../../node_modules/slick-carousel/slick/slick.css'
+import '../../node_modules/slick-carousel/slick/slick-theme.css'
 
 export default function Carrusel (props) {
   const { cards } = props
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -18,7 +18,7 @@ export default function Carrusel (props) {
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
-          infinite: true,
+          infinite: false,
           dots: true
         }
       },
@@ -38,12 +38,11 @@ export default function Carrusel (props) {
         }
       }
     ]
-  };
+  }
   return (
-    
     <div className=' flex w-full sm:w-70vw justify-center items-center my-10'>
       <Slider {...settings} className=' flex w-full md:w-70vw '>
-        {cards.map((item, key) => <CarruselCard key={key} name={item.name} procedure={item.procedure} date={item.date} /> )}
+        {cards.map((item, key) => <CarruselCard key={key} title={item.title} subtitle={item.subtitle} thirdTitle={item.thirdTitle} />)}
       </Slider>
     </div>
   )
