@@ -5,20 +5,23 @@ import api from '../lib/api'
 import LoginForm from '../components/LoginForm'
 
 export default function Login() {
-  // const [userData, setUserData] = useState({ email: '', password: '' })
+  const [userData, setUserData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
 
   const Login = async details => {
-    console.log(details)
+    console.log('login INFO', userData)
+    setUserData(details)
   }
   
   const buttonHandler = async () => {
     try {
-      const response = await api.login(Login)
+      console.log('handler', userData)
+      const response = await api.login(userData)
       console.log(response)
     }
     catch (error) { console.log(error.message) }
   }
+
   return (
     <>
       <LoginForm Login={Login} error={error} buttonHandler={buttonHandler} />
