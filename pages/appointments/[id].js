@@ -45,8 +45,6 @@ export async function getStaticProps(context) {
 
 
 export default function appointment({appointmentFetched}) {
-	const idPatient = '6154aa9a44729179b2c5d74f'
-	const idDentist = '61511d3cf6273ea718ebd5f4'
     const [procedures,setProcedures] = useState(appointmentFetched.procedures)
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })
     const [appointment,setAppointment] = useState(appointmentFetched)
@@ -71,7 +69,7 @@ export default function appointment({appointmentFetched}) {
         setAppointment({...appointment,[name]:value})
     }
     async function handleSubmit(){
-        await api.postAppointment(appointment)
+        await api.patchAppointment(appointment,appointmentFetched._id)
     }
 
 
