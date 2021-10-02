@@ -1,10 +1,10 @@
 import React from 'react'
-import api from '../lib/api'
-import Carrusel from '../components/Carrusel'
-import AmountDisplay from '../components/AmountDisplay'
-import H3 from '../components/H3'
-import FormInput from '../components/FormInput'
-import PlainText from '../components/PlainText'
+import api from '../../lib/api'
+import Carrusel from '../../components/Carrusel'
+import AmountDisplay from '../../components/AmountDisplay'
+import H3 from '../../components/H3'
+import FormInput from '../../components/FormInput'
+import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
 
 const cardsInfo = [
@@ -14,9 +14,28 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
-export async function getStaticProps() {
-  const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
-  const appointments = await api.getAppointmentsByPatientId('61511de2f6273ea718ebd5f7')
+
+
+export async function getStaticPaths(){
+    const ids = await api.getAllPatientsIds()
+    const paths = ids.map(item=>{
+        return {
+            params:{id:item}
+        }
+    })
+
+    return {
+        paths,
+        fallback:false
+    }
+}
+
+
+export async function getStaticProps(context) {
+  const id = context.params.id
+  console.log(`el id es: ${id}`)
+  const payments = await api.getPaymentsByPatientId(id)
+  const appointments = await api.getAppointmentsByPatientId(id)
   return {  
     props: {
 			payments,
@@ -27,9 +46,11 @@ export async function getStaticProps() {
 
 
 
-export default function Payments({payments,appointments}) {
-	const idPatient = '6154aa9a44729179b2c5d74f'
-	const idDentist = '61511d3cf6273ea718ebd5f4'
+export default function Payments({payments,appointments}){
+    console.log(`los pagos son: ${payments}`)
+    console.log(`los citas son: ${appointments}`)
+    const {idDentist,idPatient}=payments[0]
+
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)
 	const [payment,setPayment] = useState({total:'',date:'',file:'some file',idDentist,idPatient})
