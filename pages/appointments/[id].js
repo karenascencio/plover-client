@@ -1,12 +1,12 @@
 import React from 'react'
-import api from '../lib/api'
-import Carrusel from '../components/Carrusel'
-import Calendar from '../components/Calendar'
-import H3 from '../components/H3'
-import FormInput from '../components/FormInput'
-import Textarea from '../components/Textarea'
-import PlainText from '../components/PlainText'
-import Toggle from '../components/Toggle'
+import api from '../../lib/api'
+import Carrusel from '../../components/Carrusel'
+import Calendar from '../../components/Calendar'
+import H3 from '../../components/H3'
+import FormInput from '../../components/FormInput'
+import Textarea from '../../components/Textarea'
+import PlainText from '../../components/PlainText'
+import Toggle from '../../components/Toggle'
 import { useState,useEffect } from 'react'
 
 //nota hay un bugsito en el manejo de estado de los toggles
@@ -19,29 +19,37 @@ const cardsInfo = [
   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
 ]
 
-export async function getStaticProps() {
-  return {  
-    props: {
-        
+export async function getStaticPaths(){
+    const ids = await api.getAllAppointmentsIds()
+    const paths = ids.map(item=>{
+        return {
+            params:{id:item}
+        }
+    })
+
+    return {
+        paths,
+        fallback:false
+    }
+}
+
+export async function getStaticProps(context) {
+    const id = context.params.id
+    const appointment = await api.getAppointmentById(id)
+    return {  
+      props: {
+          appointmentFetched:appointment
+        }
       }
     }
-  }
 
 
-
-export default function Payments() {
+export default function appointment({appointmentFetched}) {
 	const idPatient = '6154aa9a44729179b2c5d74f'
 	const idDentist = '61511d3cf6273ea718ebd5f4'
-    const [procedures,setProcedures] = useState([])
+    const [procedures,setProcedures] = useState(appointmentFetched.procedures)
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })
-    const [appointment,setAppointment] = useState({
-                                                idPatient,
-                                                idDentist,
-                                                procedures,
-                                                annotations:'',
-                                                recommendations:'',
-                                                date:new Date()
-                                            })
+    const [appointment,setAppointment] = useState(appointmentFetched)
 
     useEffect(()=>{
         setAppointment({...appointment,procedures})
@@ -118,8 +126,6 @@ export default function Payments() {
                             <div><button onClick={handleSubmit} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Enviar</button> </div>
 						</div>
                  
-
-
         </div>
     )
 }
