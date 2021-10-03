@@ -8,13 +8,13 @@ export default function Carrusel (props) {
   const { cards } = props
   const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1500,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -23,7 +23,7 @@ export default function Carrusel (props) {
         }
       },
       {
-        breakpoint: 974,
+        breakpoint: 1300,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -31,17 +31,24 @@ export default function Carrusel (props) {
         }
       },
       {
-        breakpoint: 765,
+        breakpoint: 1000,
         settings: {
           slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 400,
+        settings: {
+          slidesToShow: 1,
           slidesToScroll: 1
         }
       }
     ]
   }
   return (
-    <div className=' flex w-full sm:w-70vw justify-center items-center my-10'>
-      <Slider {...settings} className=' flex w-full md:w-70vw '>
+    <div className=' w-90vw sm:w-60vw my-10 '>
+      <Slider {...settings} >
         {cards.map((item, key) => <CarruselCard key={key} title={item.title} subtitle={item.subtitle} thirdTitle={item.thirdTitle} />)}
       </Slider>
     </div>

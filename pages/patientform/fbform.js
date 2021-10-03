@@ -70,7 +70,6 @@ export default function Fbform() {
           >
           {({values,handleSubmit,handleChange,handleBlur,errors,touched})=>(
             <>
-            <H3 textTitle='Patologías' textColor='plover-blue'/>
             <form action="" onSubmit={handleSubmit} >
               <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
                 <div className='flex flex-col border-b border-lighter-gray'>

@@ -9,17 +9,18 @@ import {useEffect,useContext} from 'react'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
 import api from '../lib/api'
-import { FormularioContext } from '../components/Layout'
+import NavBarPatient from '../components/NavBarPatient'
 
 
 
 //single form
 export default function Giform() {
-  const value = useContext(FormularioContext);
-  const formulario = value
-  console.log(value)
+  const [formulario,setFormulario] = useState('General Information')
  
-
+  function handleOption(value){
+    setFormulario(value)
+  }
+  
   
   function stringToArray(string){
     if(typeof string == 'string'){
@@ -56,6 +57,9 @@ export default function Giform() {
       await api.postPatient(values)
     }
     return (
+      <div className='flex flex-col sm:flex-row '>
+      <NavBarPatient formulario={formulario} handleOption={handleOption} />
+      <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>        
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik
             initialValues={{
@@ -703,5 +707,7 @@ export default function Giform() {
           )}
           </Formik>  
         </div>
+      </main>
+      </div>
     )
 }
