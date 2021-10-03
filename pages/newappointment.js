@@ -80,12 +80,13 @@ export default function Newappointment() {
               <div className='max-w-screen-lg w-full flex flex-col items-center'>
 						<div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
 						<div className='w-full flex flex-col w-1/2 '>
-							<div className='self-start'><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
-                            <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
-
+                            <div className='flex justify-between items-center'>
+							    <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
+                                <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
+                            </div>
                             <div className='flex border border-red-500 '>
-                            <div className='w-full grid grid-cols-5 gap-x-5'>
-								<div className='col-span-2'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                            <div className='w-full grid grid-cols-6 gap-x-5'>
+								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
                                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col  justify-around items-start pb-5 text-plover-blue '>
 									
@@ -94,7 +95,7 @@ export default function Newappointment() {
 									procedures.map((procedure,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='col-span-2'><PlainText text={procedure.name}/></div>
+											<div className='col-span-3'><PlainText text={procedure.name}/></div>
 											<div className='col-span-2'><PlainText text={procedure.price}/></div>
                                             <div className=''>
                                                 <Toggle id={key}  handleToggle={handleToggle}/>
@@ -105,7 +106,7 @@ export default function Newappointment() {
 							    }
 							</div>
                             </div>
-                            <div className=' grid md:grid-cols-2 gap-x-10'>
+                            <div className=' grid md:grid-cols-2 gap-x-5'>
                                 <Textarea 
                                     textName='annotations'
                                     textLabel='Anotaciones'
