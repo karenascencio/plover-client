@@ -46,7 +46,7 @@ export async function getStaticProps(context) {
     }
 
 
-export default function appointment({appointmentFetched}) {
+export default function Appointment({appointmentFetched}) {
     const {idPatient,idDentist} = appointmentFetched
     console.log('el id de paciente es ', idPatient)
     console.log('el id de odontologo es ', idDentist)
