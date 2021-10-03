@@ -16,6 +16,7 @@ const forms = [{title:'Informacion general',form:'General Information'},
             ]
 
 export default function NavBarPatient(props) {
+    const {formulario,handleOption} = props
 
     const [isOpen,setIsOpen] = useState(false)
     function handleHamburgerMenu(){
@@ -31,10 +32,11 @@ export default function NavBarPatient(props) {
                 <ul className='mt-10 hidden sm:block '>
                     {
                         forms.map((item,key)=>{
-                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleOption(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </ul>
+                <Link href='/'><a className='w-11/12 bg-white block text-plover-blue text-center text-xl  py-2 rounded-lg'>Home</a></Link>
                 <HamburgerMenu className='sm:hidden mr-3'
                     isOpen={isOpen}
                     menuClicked={handleHamburgerMenu}

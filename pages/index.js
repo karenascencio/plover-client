@@ -58,7 +58,7 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
   return (
 
 <div className='flex flex-col sm:flex-row '>
-  <NavBarDentist />
+  <NavBarDentist isHome={true}/>
   <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'> 
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
@@ -74,14 +74,13 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
           searchHandler={searchHandler}
           searchValue={search}
         />
-        <Link href='/patientform'>
-          <a>
+
           <AddNewPatientButton
             title='Nuevo'
             imagen={addIcon}
+            idDentist ={dentistId}
           />
-          </a>
-        </Link>
+   
       </div>
       <div className='w-full border-t border-lighter-gray'>
         {

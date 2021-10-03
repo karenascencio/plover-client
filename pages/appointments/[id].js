@@ -8,6 +8,7 @@ import Textarea from '../../components/Textarea'
 import PlainText from '../../components/PlainText'
 import Toggle from '../../components/Toggle'
 import { useState,useEffect } from 'react'
+import NavBarDentist from '../../components/NavBarDentist'
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
@@ -45,6 +46,10 @@ export async function getStaticProps(context) {
 
 
 export default function appointment({appointmentFetched}) {
+    const {idPatient,idDentist} = appointmentFetched
+    console.log('el id de paciente es ', idPatient)
+    console.log('el id de odontologo es ', idDentist)
+
     const [procedures,setProcedures] = useState(appointmentFetched.procedures)
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })
     const [appointment,setAppointment] = useState(appointmentFetched)
@@ -74,7 +79,11 @@ export default function appointment({appointmentFetched}) {
 
 
     return (
-        <div className='flex flex-col items-center border border-red-800'>
+
+        <div className='flex flex-col sm:flex-row '>
+        	<NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
+        		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
+                    <div className='flex flex-col items-center border border-red-800'>
                         <Carrusel cards={cardsInfo}/>
 						<div className='self-end border border-red-800'><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
 						<div className='w-full flex flex-col border border-green-900'>
@@ -123,7 +132,8 @@ export default function appointment({appointmentFetched}) {
                             </div>
                             <div><button onClick={handleSubmit} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Enviar</button> </div>
 						</div>
-                 
-        </div>
+                    </div>
+                </main>
+            </div>
     )
 }

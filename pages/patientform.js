@@ -17,6 +17,9 @@ import NavBarPatient from '../components/NavBarPatient'
 export default function Giform() {
   const [formulario,setFormulario] = useState('General Information')
  
+  function handleOption(value){
+    setFormulario(value)
+  }
   
   
   function stringToArray(string){
@@ -55,7 +58,7 @@ export default function Giform() {
     }
     return (
       <div className='flex flex-col sm:flex-row '>
-      <NavBarPatient />
+      <NavBarPatient formulario={formulario} handleOption={handleOption} />
       <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>        
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik

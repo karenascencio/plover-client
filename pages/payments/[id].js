@@ -7,6 +7,7 @@ import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
 import { useRouter } from 'next/router'
+import NavBarDentist from '../../components/NavBarDentist'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -51,6 +52,7 @@ export default function Payments({payments,appointments}){
     console.log(`los pagos son: ${payments}`)
     console.log(`los citas son: ${appointments}`)
     const router = useRouter()
+    console.log(router.query)
     const idPatient = router.query.id
     console.log(`el id de paciente es ${idPatient}`)
     const idDentist = router.query.dentistId
@@ -97,12 +99,15 @@ export default function Payments({payments,appointments}){
 		setRemaningPrice(fullPrice-getPaidOut(dynamicPayments))
 	},[dynamicPayments])
     return (
-        <div className='flex flex-col items-center border border-red-800 max-w-screen-lg'>
+<div className='flex flex-col sm:flex-row '>
+    <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
+        <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
+        <div className='flex flex-col items-center max-w-screen-lg '>
             <Carrusel cards={cardsInfo}/>
-						<div className='self-end border border-red-800'><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
-						<div className='w-full flex flex-col border border-green-900'>
+						<div className='self-end '><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
+						<div className='w-10/12 flex flex-col  '>
 							<div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue'/></div>
-							<div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
+							<div className='-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
 								<div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
 								<div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
 								<label className='text-plover-blue text-base font-thin' htmlFor='calendar'>
@@ -117,7 +122,7 @@ export default function Payments({payments,appointments}){
 									onChange={handleChange}
         					/>
 								</div>
-								<div className='flex flex-col border w-28 border-yellow-400 justify-around items-start pb-5 text-plover-blue '>
+								<div className='flex flex-col  w-28  justify-around items-start pb-5 text-plover-blue '>
 									<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
 									<span className=''>Comprobante</span>
 									</div>
@@ -135,6 +140,8 @@ export default function Payments({payments,appointments}){
 								}
 							</div>
 						</div>
+                </div>
+            </main>
         </div>
     )
 }
