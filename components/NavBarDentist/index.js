@@ -15,8 +15,8 @@ export default function NavBarDentist(props) {
     const {isHome,idPatient,idDentist} = props
 
     const options = [{title:'Home',link:'/'},
-                {title:'Agregar cita',link:`/newappointment?dentistid=${idDentist}&patientid=${idPatient}`},
-               {title:'Consultar citas',link:`/patients/${idPatient}`},
+                {title:'Agregar cita',link:`/newappointment?dentistId=${idDentist}&patientId=${idPatient}`},
+                {title:'Consultar citas',link:`/patients/${idPatient}`},
                 {title:'Historial clínico',link:`/medicalrecord/${idPatient}`},
                 {title:'Historial de pagos',link:`/payments/${idPatient}?dentistId=${idDentist}`},
                 {title:'Configuración',link:'/configuration '},               
