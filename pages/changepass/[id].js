@@ -11,15 +11,6 @@ import hidepsw from '../../public/hidepsw.svg'
 import Image from 'next/image'
 
 // .: Take the id from params
-//export const getStaticProps = async (context) => {
-  //const id =  context.params.id
-  //const idUser = await api.resetPassword(id)
-  //return {
-  //  props: {
-  //    idUser
-  //  }
- // }
-//}
 
 export default function ChangePass() {
   const [seePassword, setSeePassword]= useState(false)
@@ -57,6 +48,8 @@ export default function ChangePass() {
   const buttonHandler = async () => {
     try {
       console.log('handler', resetPassword)
+      const response = await api.resetPassword(resetPassword)
+      console.log(response)
     }
     catch (error) { console.log(error.message) }
   }
