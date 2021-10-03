@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import api from '../../lib/api'
 import H1 from '../../components/H1'
 import PasswordInput from '../../components/PasswordInput'
@@ -10,23 +11,14 @@ import showpsw from '../../public/showpsw.svg'
 import hidepsw from '../../public/hidepsw.svg'
 import Image from 'next/image'
 
-// .: Take the id from params
-//export const getStaticProps = async (context) => {
-  //const id =  context.params.id
-  //const idUser = await api.resetPassword(id)
-  //return {
-  //  props: {
-  //    idUser
-  //  }
- // }
-//}
+
 
 export default function ChangePass() {
   const [seePassword, setSeePassword]= useState(false)
   const [differentPassword, setDifferentPassword] = useState(true)
   const [resetPassword, setResetPassword] = useState({password: '', verifyPassword: ''})
   const passwordRequirement = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  
+  const {query} = useRouter()
   const newPassword = newCode =>{
     //console.log('contraseña:', newCode)
     //setResetPassword(newCode)
@@ -47,16 +39,18 @@ export default function ChangePass() {
       setDifferentPassword(false)
       console.log('La contraseña no cumple los requisitos')
     } else {
-      
-      console.log('se pudo')
+
       setDifferentPassword(true)
       newPassword(resetPassword)
     }
   }
 
+
   const buttonHandler = async () => {
     try {
       console.log('handler', resetPassword)
+      const response = await api.resetPassword(resetPassword, query.id)
+      console.log(response)
     }
     catch (error) { console.log(error.message) }
   }
