@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Image from 'next/image'
 // .: Components
 import H1 from '../../components/H1'

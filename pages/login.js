@@ -6,6 +6,7 @@ import LoginForm from '../components/LoginForm'
 
 export default function Login() {
   const [userData, setUserData] = useState({ email: '', password: '' })
+  const [errorLogin, setErrorLogin] = useState(false)
   const [error, setError] = useState('')
 
   const Login = async details => {
@@ -19,7 +20,10 @@ export default function Login() {
       const response = await api.login(userData)
       console.log(response)
     }
-    catch (error) { console.log(error.message) }
+    catch (error) { 
+      setErrorLogin 
+      console.log(error.message)
+    }
   }
 
   return (
