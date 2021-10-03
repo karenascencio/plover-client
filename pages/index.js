@@ -57,10 +57,11 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
 
   return (
 
-<div className='flex flex-col sm:flex-row '>
-  <NavBarDentist isHome={true}/>
-  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'> 
+    <div className='flex flex-col sm:flex-row '>
+  <NavBarDentist isHome />
+  <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
+      Hello, hello!
       <TitleHeader
         pageTitle='Home'
         secondaryText='Próximas citas'
@@ -75,12 +76,12 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
           searchValue={search}
         />
 
-          <AddNewPatientButton
+        <AddNewPatientButton
             title='Nuevo'
             imagen={addIcon}
-            idDentist ={dentistId}
+            idDentist={dentistId}
           />
-   
+
       </div>
       <div className='w-full border-t border-lighter-gray'>
         {
