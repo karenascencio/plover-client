@@ -13,7 +13,8 @@ export default function ChangePass() {
   const [seePassword, setSeePassword]= useState(false)
   const [differentPassword, setDifferentPassword] = useState(true)
   const [resetPassword, setResetPassword] = useState({password: '', verifyPassword: ''})
-
+  const passwordRequirement = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  
   const newPassword = newCode =>{
     console.log('contraseña:', newCode)
     setResetPassword(newCode)
@@ -22,7 +23,9 @@ export default function ChangePass() {
   const handlerSubmit = event => {
     event.preventDefault()
     const {password, verifyPassword} = resetPassword
-    if(password != verifyPassword){
+    console.log('regex', password, passwordRequirement.test(password))
+
+    if(password != verifyPassword && passwordRequirement.test(password) ){
       setDifferentPassword(false)
       console.log('contraseñas diferentes')
     } else {
@@ -30,6 +33,7 @@ export default function ChangePass() {
       newPassword(resetPassword)
     }
   }
+
 
   const buttonHandler = async () => {
     try{
