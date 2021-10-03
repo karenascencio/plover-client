@@ -23,7 +23,7 @@ export default function NavBarDentist(props) {
             ]
 
 const optionsHome = [{title:'Home',link:'/'},
-                {title:'Configuracion',link:`/configuration/${idDentist}`},               
+                {title:'Configuración ',link:`/configuration/${idDentist}`},               
             ]
 
 
