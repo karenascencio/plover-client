@@ -12,7 +12,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
-//corregimos el carrusel y los links
+//corregimos el carrusel y los links y los erroes de vercel
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
