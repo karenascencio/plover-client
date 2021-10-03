@@ -25,7 +25,7 @@ export default function ChangePass() {
     const {password, verifyPassword} = resetPassword
     console.log('regex', password, passwordRequirement.test(password))
 
-    if(password != verifyPassword && passwordRequirement.test(password) ){
+    if(password != verifyPassword &passwordRequirement.test(password) ){
       setDifferentPassword(false)
       console.log('contraseñas diferentes')
     } else {
