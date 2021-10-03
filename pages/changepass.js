@@ -22,24 +22,28 @@ export default function ChangePass() {
 
   const handlerSubmit = event => {
     event.preventDefault()
-    const {password, verifyPassword} = resetPassword
+
+    const { password, verifyPassword } = resetPassword
+
     console.log('regex', password, passwordRequirement.test(password))
 
-    if(password != verifyPassword &passwordRequirement.test(password) ){
+    const matchPassword = password !== verifyPassword
+    const requirements = passwordRequirement.test(password)
+    
+    if (matchPassword && requirements) {
       setDifferentPassword(false)
-      console.log('contraseñas diferentes')
+      console.log('La contraseña no cumple los requisitos')
     } else {
       setDifferentPassword(true)
       newPassword(resetPassword)
     }
   }
 
-
   const buttonHandler = async () => {
-    try{
-    console.log('handler', resetPassword)
+    try {
+      console.log('handler', resetPassword)
     }
-    catch(error){console.log(error.message)}
+    catch (error) { console.log(error.message) }
   }
 
   return (
