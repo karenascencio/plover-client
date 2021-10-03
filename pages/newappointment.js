@@ -34,7 +34,7 @@ export async function getStaticProps() {
 export default function Newappointment() {
     const router = useRouter()
 		console.log(router.query)
-    const {patientid:idPatient,dentistid:idDentist} = router.query
+    const {patientId:idPatient,dentistId:idDentist} = router.query
 
 		console.log('el id de paciente es: ',idPatient)
 		console.log('el id de dentista es: ',idDentist)

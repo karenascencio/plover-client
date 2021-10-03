@@ -12,6 +12,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
+//corregimos el carrusel y los links
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -83,16 +84,16 @@ export default function appointment({appointmentFetched}) {
         <div className='flex flex-col sm:flex-row '>
         	<NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
         		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
-                    <div className='flex flex-col items-center border border-red-800'>
+                    <div className='flex flex-col items-center '>
                         <Carrusel cards={cardsInfo}/>
-						<div className='self-end border border-red-800'><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
-						<div className='w-full flex flex-col border border-green-900'>
+						<div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
+						<div className='w-full flex flex-col '>
 							<div className='self-start'><H3 textTitle='Citas' textColor='plover-blue'/></div>
 							<div className='flex '>
-                            <div className=' w-4/5 border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
+                            <div className=' w-4/5  grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
 								<div className='gl:col-span-2'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
                                 <div className='gl:col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-								<div className='flex flex-col border w-28 border-yellow-400 justify-around items-start pb-5 text-plover-blue '>
+								<div className='flex flex-col  w-28  justify-around items-start pb-5 text-plover-blue '>
 									
 									<span className=''>Estado</span>
 									</div>
@@ -111,7 +112,7 @@ export default function appointment({appointmentFetched}) {
 							</div>
                                 <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
                             </div>
-                            <div className=' grid md:grid-cols-2 gap-x-10 border border-red-700 '>
+                            <div className=' grid md:grid-cols-2 gap-x-10 '>
                                 <Textarea 
                                     textName='annotations'
                                     textLabel='Anotaciones'
