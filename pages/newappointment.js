@@ -72,38 +72,38 @@ export default function Newappointment() {
         await api.postAppointment(appointment)
     }
 
-
     return (
         <div className='flex flex-col sm:flex-row '>
         	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
-        		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11 max-w-screen-lg'>
-              <div className='flex flex-col items-center'>
-              <Carrusel cards={cardsInfo}/>
+                {/*el w-full rompe el layout*/}
+        		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
+              <div className='max-w-screen-lg w-full flex flex-col items-center'>
 						<div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
-						<div className='w-full flex flex-col '>
-							<div className='self-start'><H3 textTitle='Citas' textColor='plover-blue'/></div>
-							<div className='flex '>
-                            <div className=' w-4/5 grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
-								<div className='gl:col-span-2'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-                                <div className='gl:col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+						<div className='w-full flex flex-col w-1/2 '>
+							<div className='self-start'><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
+                            <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
+
+                            <div className='flex border border-red-500 '>
+                            <div className='w-full grid grid-cols-5 gap-x-5'>
+								<div className='col-span-2'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col  justify-around items-start pb-5 text-plover-blue '>
 									
-									<span className=''>Estado</span>
 									</div>
 								{
 									procedures.map((procedure,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='gl:col-span-2'><PlainText text={procedure.name}/></div>
-											<div className='gl:col-span-2'><PlainText text={procedure.price}/></div>
-                                            <Toggle id={key}  handleToggle={handleToggle}/>
-
+											<div className='col-span-2'><PlainText text={procedure.name}/></div>
+											<div className='col-span-2'><PlainText text={procedure.price}/></div>
+                                            <div className=''>
+                                                <Toggle id={key}  handleToggle={handleToggle}/>
+                                            </div>
 											</React.Fragment>
 										)
 									})
 							    }
 							</div>
-                                <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
                             </div>
                             <div className=' grid md:grid-cols-2 gap-x-10'>
                                 <Textarea 
