@@ -19,6 +19,9 @@ import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
 import close from '../public/close.svg'
 import PatientCard from '../components/PatientCard'
+import Link from 'next/link'
+import NavBarPatient from '../components/NavBarPatient'
+import NavBarDentist from '../components/NavBarDentist'
 
 const cardsInfo = [
   { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
@@ -43,6 +46,7 @@ export async function getStaticProps () {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo }) {
+  const dentistId = '61511d3cf6273ea718ebd5f4'
   console.log(appointmentsInfo)
   const [search, setSearch] = useState('')
 
@@ -52,6 +56,10 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
   }
 
   return (
+
+<div className='flex flex-col sm:flex-row '>
+  <NavBarDentist isHome={true}/>
+  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'> 
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
@@ -66,10 +74,13 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
           searchHandler={searchHandler}
           searchValue={search}
         />
-        <AddNewPatientButton
-          title='Nuevo'
-          imagen={addIcon}
-        />
+
+          <AddNewPatientButton
+            title='Nuevo'
+            imagen={addIcon}
+            idDentist ={dentistId}
+          />
+   
       </div>
       <div className='w-full border-t border-lighter-gray'>
         {
@@ -82,6 +93,7 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
                 patientImage='https://api.multiavatar.com/car%20pls.png'
                 key={patient._id}
                 patientId={patient._id}
+                dentistId={dentistId}
               />
             )
           : patientsInfo.map(patient =>
@@ -90,10 +102,13 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
               patientImage='https://api.multiavatar.com/car%20pls.png'
               key={patient._id}
               patientId={patient._id}
+              dentistId={dentistId}
             />
           )
         }
       </div>
     </div>
+  </main>
+</div>
   )
 }

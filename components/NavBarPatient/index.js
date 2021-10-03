@@ -6,6 +6,8 @@ import {useState} from 'react'
 import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
 const forms = [{title:'Informacion general',form:'General Information'},
                 {title:'Antecedentes familiares',form:'Family Background'},
                {title:'Antecedentes patologicos',form:'Pathological Background'},
@@ -13,24 +15,28 @@ const forms = [{title:'Informacion general',form:'General Information'},
                
             ]
 
-export default function NavBar(props) {
-    const {handleForm} =props
-    const size = useWindowSize()
+export default function NavBarPatient(props) {
+    const {formulario,handleOption} = props
+
     const [isOpen,setIsOpen] = useState(false)
     function handleHamburgerMenu(){
         setIsOpen(!isOpen)
     }
     return (
         <div className='z-50'>
+     
         <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
+                
+                
                 <ul className='mt-10 hidden sm:block '>
                     {
                         forms.map((item,key)=>{
-                            return <li className='mb-10' key={key}><button onClick={(()=>handleForm(item.form))} className='text-white text-xl '>{item.title }</button></li>
+                            return <li className='mb-10' key={key}><button onClick={(()=>handleOption(item.form))} className='text-white text-xl '>{item.title }</button></li>
                         })
                     }
                 </ul>
+                <Link href='/'><a className='w-11/12 bg-white block text-plover-blue text-center text-xl  py-2 rounded-lg'>Home</a></Link>
                 <HamburgerMenu className='sm:hidden mr-3'
                     isOpen={isOpen}
                     menuClicked={handleHamburgerMenu}
@@ -60,5 +66,6 @@ export default function NavBar(props) {
                 }
                 </AnimatePresence>
             </div>
+       
     )
 }

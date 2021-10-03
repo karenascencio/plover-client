@@ -18,7 +18,7 @@ export default function Npbform() {
 
     return (
         <div className='flex flex-col pt-10'>
-          <H1 textTitle='Antecedentes patológicos' textColor='plover-blue' />
+          <H1 textTitle='Antecedentes no patológicos' textColor='plover-blue' />
           <Formik
             initialValues={{
                 nonPathologicalBackground:{
@@ -158,7 +158,6 @@ export default function Npbform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}
                 />
-
             </div>
 
 

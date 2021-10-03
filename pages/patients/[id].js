@@ -9,6 +9,7 @@ import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ProcedureCard from '../../components/ProcedureCard'
 // My images
 import addIcon from '../../public/addIcon.svg'
+import NavBarDentist from '../../components/NavBarDentist'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -45,6 +46,10 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo }) {
+  console.log(patientInfo)
+  const {_id:idPatient,idDentist} = patientInfo
+  console.log('el id de paciente es: ', idPatient)
+  console.log('el id de odontologo es: ',idDentist)
   console.log(appointmentsInfo)
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
@@ -54,6 +59,10 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   }
 
   return (
+
+  <div className='flex flex-col sm:flex-row '>
+    <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
+    <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
     <div className='w-full max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Paciente'
@@ -109,5 +118,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         }
       </div>
     </div>
+  </main>
+</div>
   )
 }
