@@ -24,7 +24,7 @@ export default function ChangePass() {
     event.preventDefault()
 
     const { password, verifyPassword } = resetPassword
-    console.log('pass',password)
+    console.log('pass', password)
     console.log('regex', password, passwordRequirement.test(password))
 
     const matchPassword = password === verifyPassword
@@ -35,6 +35,7 @@ export default function ChangePass() {
       setDifferentPassword(false)
       console.log('La contraseña no cumple los requisitos')
     } else {
+      
       console.log('se pudo')
       setDifferentPassword(true)
       newPassword(resetPassword)
