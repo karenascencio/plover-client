@@ -199,10 +199,19 @@ export default function Giform() {
                 errors.street='La caller no puede contener numeros ni caracteres especiales'
               }
               //validacion de numero exterior
-              //if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
-             //else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
-               // errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
-             //}
+              if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
+               else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
+               errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+             }
+             //validaciones de numero interior
+               if(!/^[0-9]{1,5}$/.test(values.address.innerNumber)   ){
+               errors.innerNumber='El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+            }
+            //validacion de medico familiar
+            //validacion de nombre 
+
+
+
               
               //validacion de numero interior
               //if(!values.address.innerNumber) errors.innerNumber ='Ingresa el numero interior del paciente'
@@ -378,20 +387,23 @@ export default function Giform() {
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                 />
+                   {getIn(touched,'address.streetNumber') && getIn(errors,'streetNumber') && <div className='text-plover-blue text-sm' >{errors.streetNumber}</div>} 
               </div>
               <div className='flex flex-col'>
                 <FormInput 
                   textName='address.innerNumber' 
-                  textLabel='Número interior' 
+                  textLabel='Número interior (opcional)' 
                   textValue={values.address.innerNumber} 
                   inputId='address.innerNumber'
                   handleChange={handleChange}
                   handleBlur={handleBlur}                />
+                  {getIn(touched,'address.innerNumber') && getIn(errors,'innerNumber') && <div className='text-plover-blue text-sm' >{errors.innerNumber}</div>} 
               </div>
+              
 
                 </div>
 
-                <H3 textTitle='Médico familiar' textColor='plover-blue'/>
+                <H3 textTitle='Médico familiar (opcional)' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <FormInput
                 textName='familyPractitioner.name'
