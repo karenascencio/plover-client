@@ -10,7 +10,7 @@ export default function ProcedureCard (props) {
           <p className='text-lg font-lato text-plover-blue capitalize'>
             {procedureName}
           </p>
-          <p className='text-xs font-lato text-lighter-gray'>
+          <p className='text-xs font-lato text-lighter-gray capitalize'>
             {procedureDate}
           </p>
         </div>
