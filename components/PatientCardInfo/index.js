@@ -9,7 +9,7 @@ export default function PatientCardInfo (props) {
       <img
         src={patientImage}
         alt='dentist-profile'
-        className='w-050 md:w-060 h-050 md:h-060 rounded-full object-cover'
+        className='w-10 md:w-12 h-10 md:h-12 rounded-full object-cover'
       />
       <Link href={`/patients/${patientId}`}>
         <a className='capitalize text-plover-blue text-sm md:text-lg m-2.5'>
