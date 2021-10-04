@@ -79,7 +79,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         patientImage='https://api.multiavatar.com/car%20pls.png'
       />
       <div className='flex justify-start w-full'>
-        <p className='text-2xl text-darker-gray font-thin mb-5'>
+        <p className='text-2xl text-darker-gray font-thin'>
           Próximas citas
         </p>
       </div>

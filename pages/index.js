@@ -36,6 +36,7 @@ export async function getStaticProps () {
 export default function Home ({ patientsInfo, appointmentsInfo }) {
   const [search, setSearch] = useState('')
   let cardsInfo = []
+  const dentistId = '61511d3cf6273ea718ebd5f4'
   appointmentsInfo.forEach(appointment => {
     const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -60,7 +61,7 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
         secondaryText='Próximas citas'
       />
       <div className='flex justify-start w-full'>
-        <p className='text-2xl text-darker-gray font-thin mb-5'>
+        <p className='text-2xl text-darker-gray font-thin'>
           Próximas citas
         </p>
       </div>
