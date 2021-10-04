@@ -47,9 +47,14 @@ export default function Medicalrecord({patientFetched}) {
     setFormulario(value)
   } 
 
-  function capitaliceName(string){
+  function capitalizeName(string){
     return string.split(' ').map(item=>item.charAt(0).toUpperCase()+item.slice(1)).join(' ')
   }
+  function capitalize(string){
+    return string.charAt(0).toUpperCase() + string.slice(1)
+
+  }
+
     return (
 
       <div className='flex flex-col sm:flex-row '>
@@ -70,15 +75,15 @@ export default function Medicalrecord({patientFetched}) {
                     <TextWithLabel 
                         textId='names' 
                         textLabel='Nombres' 
-                        textValue={capitaliceName(patientFetched.name)} />
+                        textValue={capitalizeName(patientFetched.name)} />
                     <TextWithLabel 
                         textId='lastNames' 
                         textLabel='Apellidos' 
-                        textValue={capitaliceName(patientFetched.lastName)} />
+                        textValue={capitalizeName(patientFetched.lastName)} />
                     <TextWithLabel 
                         textId='gender' 
                         textLabel='Género' 
-                        textValue={capitaliceName(patientFetched.gender)} />
+                        textValue={capitalizeName(patientFetched.gender)} />
                     <TextWithLabel 
                         textId='age' 
                         textLabel='Edad' 
@@ -98,26 +103,26 @@ export default function Medicalrecord({patientFetched}) {
                     <TextWithLabel 
                         textId='maritalStatus' 
                         textLabel='maritalStatus' 
-                        textValue={capitaliceName(patientFetched.maritalStatus)} /> 
+                        textValue={capitalizeName(patientFetched.maritalStatus)} /> 
                 </div>
                 <H3 textTitle='Dirección' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-5 pb-8 border-b border-lighter-gray'}>
                     <TextWithLabel 
                         textId='address.state' 
                         textLabel='Estado' 
-                        textValue={capitaliceName(patientFetched.address.state)} /> 
+                        textValue={capitalizeName(patientFetched.address.state)} /> 
                     <TextWithLabel 
                         textId='address.city' 
                         textLabel='Ciudad' 
-                        textValue={capitaliceName(patientFetched.address.city)} /> 
+                        textValue={capitalizeName(patientFetched.address.city)} /> 
                     <TextWithLabel 
                         textId='address.neighborhood' 
                         textLabel='Colonia' 
-                        textValue={capitaliceName(patientFetched.address.neighborhood)} /> 
+                        textValue={capitalizeName(patientFetched.address.neighborhood)} /> 
                     <TextWithLabel 
                         textId='address.street' 
                         textLabel='Calle' 
-                        textValue={capitaliceName(patientFetched.address.street)} /> 
+                        textValue={capitalizeName(patientFetched.address.street)} /> 
                     <TextWithLabel 
                         textId='address.streetNumber' 
                         textLabel='Número exterior' 
@@ -133,11 +138,11 @@ export default function Medicalrecord({patientFetched}) {
                     <TextWithLabel 
                         textId='familyPractitioner.name' 
                         textLabel='Nombres' 
-                        textValue={capitaliceName(patientFetched.familyPractitioner.name)} /> 
+                        textValue={capitalizeName(patientFetched.familyPractitioner.name)} /> 
                     <TextWithLabel 
                         textId='familyPractitioner.lastName' 
                         textLabel='Apellidos' 
-                        textValue={capitaliceName(patientFetched.familyPractitioner.lastName)} /> 
+                        textValue={capitalizeName(patientFetched.familyPractitioner.lastName)} /> 
                     <TextWithLabel 
                         textId='familyPractitioner.email' 
                         textLabel='Email' 
@@ -153,11 +158,11 @@ export default function Medicalrecord({patientFetched}) {
                     <TextWithLabel 
                         textId='personInCharge.name' 
                         textLabel='Nombres' 
-                        textValue={capitaliceName(patientFetched.personInCharge.name)} /> 
+                        textValue={capitalizeName(patientFetched.personInCharge.name)} /> 
                     <TextWithLabel 
                         textId='personInCharge.lastName' 
                         textLabel='Apellidos' 
-                        textValue={capitaliceName(patientFetched.personInCharge.lastName)} /> 
+                        textValue={capitalizeName(patientFetched.personInCharge.lastName)} /> 
                     <TextWithLabel 
                         textId='personInCharge.email' 
                         textLabel='Email' 
@@ -319,112 +324,67 @@ export default function Medicalrecord({patientFetched}) {
                     secondaryText=''
                 />
               <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
-              <RadioButtons 
-                    textLabel='¿Como considera su alimentacion?'
-                    options={['buena','regular','mala']}
-                    setFieldValue={setFieldValue}
-                    textValue={patientFetched.nonPathologicalBackground.feeding}
-                    textName='nonPathologicalBackground.feeding'
-                />
-                <FormInput 
-                    textName='nonPathologicalBackground.toothBrushingFrequency'
-                    textLabel='¿Con qué frecuencia se cepilla los dientes?' 
-                    textValue={patientFetched.nonPathologicalBackground.toothBrushingFrequency}  
-                    inputId='nonPathologicalBackground.toothBrushingFrequency'
-                    
-                    
-                />
-                <FormInput 
-                    textName='nonPathologicalBackground.vaccines'
-                    textLabel='Vacunas' 
-                    textValue={patientFetched.nonPathologicalBackground.vaccines}  
-                    inputId='nonPathologicalBackground.vaccines'
-                    
-                    
-                />
-                  <FormInput 
-                    textName='nonPathologicalBackground.addictions'
-                    textLabel='Adicciones' 
-                    textValue={patientFetched.nonPathologicalBackground.addictions}  
-                    inputId='nonPathologicalBackground.addictions'
-                    
-                    
-                />
-              
-              <Select 
-                    selectID='alcoholConsumption' 
-                    textName='nonPathologicalBackground.alcoholConsumption'
-                    textValue={patientFetched.nonPathologicalBackground.alcoholConsumption}
-                    
-                    
-                    selectQuestion='¿Bebe alcohol frecuentemente?' 
-                    outputOptions={[
-                        'Nunca he tomado',
-                        'No tomo',
-                        'Una vez al día',
-                        'Una vez cada quince días',
-                        'Una vez al mes'
-                    ]} />
-                <Select 
-                    selectID='cigarConsumption' 
-                    textName='nonPathologicalBackground.cigarConsumption'
-                    textValue={patientFetched.nonPathologicalBackground.cigarConsumption}
-                    
-                    
-                    selectQuestion='¿Con que frecuencia fuma?' 
-                    outputOptions={[
-                        'Nunca he fumado',
-                        'No fumo',
-                        '10 ó menos cajetillas por mes',
-                        '11 a 20 cajetillas por mes',
-                        '21 a 30 cajetillas por mes',
-                        '31 cajetillas por mes ó mas'
-                    ]} />
-              <RadioButtons 
-                    textLabel='¿Te has tatuado en los ultimos 6 meses?'
-                    options={['Si','No']}
-                    setFieldValue={setFieldValue}
-                    textValue={patientFetched.nonPathologicalBackground.recentTattos}
-                    textName='nonPathologicalBackground.recentTattos'
-                />
+           
+                <AnotationsCard 
+                        label={'Alimentacion'}
+                        text={patientFetched.nonPathologicalBackground.feeding=='buena'?
+                            'El paciente cuenta con buena alimentacion':
+                            patientFetched.nonPathologicalBackground.feeding=='regular'?
+                            'El paciente tiene una alimentacion regular':
+                            'El paciente tiene una alimentacion mala'
+                        }
+                            />
 
-            <Textarea
-                    textName='nonPathologicalBackground.hygieneDescription' 
-                    textLabel='Describa su higiene personal' 
-                    textValue={patientFetched.nonPathologicalBackground.hygieneDescription}  
-                    inputId='nonPathologicalBackground.hygieneDescription'
-                    
-                    
-                />
+                <AnotationsCard 
+                        label={'Higiene dental'}
+                        text={`El paciente se cepilla los dientes ${patientFetched.nonPathologicalBackground.toothBrushingFrequency} veces al dia`
+                        }
+                            />
+                <PlainList 
+                        textId='pathologicalBackground.vaccines' 
+                        textLabel='Vacunas' 
+                        textValues={patientFetched.nonPathologicalBackground.vaccines}
+                        />
+                <PlainList 
+                        textId='pathologicalBackground.addictions' 
+                        textLabel='Adicciones' 
+                        textValues={patientFetched.nonPathologicalBackground.addictions}
+                        />
+                <AnotationsCard 
+                        label={'Consumo de alcohol'}
+                        text={capitalize(patientFetched.nonPathologicalBackground.alcoholConsumption)}
+                            />
+                <AnotationsCard 
+                        label={'Consumo de cigarros'}
+                        text={capitalize(patientFetched.nonPathologicalBackground.cigarConsumption)}
+                            />
+                <AnotationsCard  
+                        label={'Tatuajes recientes'}
+                        text={patientFetched.nonPathologicalBackground.cigarConsumption=='si'?
+                                'El paciente se ha tatuado en los ultimos seis meses':
+                                'El paciente no se ha tatuado en los ultimos sesi meses'
+                        }
+                        />
+                <AnotationsCard  
+                        label={'Higiene personal'}
+                        text={patientFetched.nonPathologicalBackground.hygieneDescription}
+                        />
 
-            <FormInput 
-                    textName='nonPathologicalBackground.services'
-                    textLabel='Servicios básicos' 
-                    textValue={patientFetched.nonPathologicalBackground.services}  
-                    inputId='nonPathologicalBackground.services'
-                    
-                    
-                />
-
-            <Textarea
-                    textName='nonPathologicalBackground.unusualHabits' 
-                    textLabel='Hábitos extraños' 
-                    textValue={patientFetched.nonPathologicalBackground.unusualHabits}  
-                    inputId='nonPathologicalBackground.unusualHabits'
-                    
-                    
-                />
-
-            <Textarea
-                    textName='nonPathologicalBackground.observations' 
-                    textLabel='Observaciónes' 
-                    textValue={patientFetched.nonPathologicalBackground.observations}  
-                    inputId='nonPathologicalBackground.observations'
-                    
-                    
-                />
+                <PlainList 
+                        textId='nonPathologicalBackground.services' 
+                        textLabel='Servicios basicos' 
+                        textValues={patientFetched.nonPathologicalBackground.services}
+                        />
+                <AnotationsCard  
+                        label={'Hábitos extraños'}
+                        text={patientFetched.nonPathologicalBackground.unusualHabits}
+                        />
+                 <AnotationsCard  
+                        label={'Observaciónes'}
+                        text={patientFetched.nonPathologicalBackground.observations}
+                        />
             </div>
-            <button type='submit' onClick={()=>SeeState(patientFetched)}>Enviar </button>
+            <button className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1' type='submit' onClick={()=>SeeState(patientFetched)}>Enviar </button>
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
             
