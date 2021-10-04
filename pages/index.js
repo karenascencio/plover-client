@@ -19,28 +19,35 @@ import deleteIcon from '../public/deleteIcon.svg'
 import paymentHistory from '../public/paymentHistory.svg'
 import close from '../public/close.svg'
 import PatientCard from '../components/PatientCard'
+import Link from 'next/link'
+import NavBarPatient from '../components/NavBarPatient'
+import NavBarDentist from '../components/NavBarDentist'
 
 const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
+  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
 ]
 
 export async function getStaticProps () {
   const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
+  const appointmentsInfo = await api.getAppointmentByDentistId('61511d3cf6273ea718ebd5f4')
   return {
     props: {
-      patientsInfo
+      patientsInfo,
+      appointmentsInfo
     }
   }
 }
 
-export default function Home ({ patientsInfo }) {
+export default function Home ({ patientsInfo, appointmentsInfo }) {
+  const dentistId = '61511d3cf6273ea718ebd5f4'
+  console.log(appointmentsInfo)
   const [search, setSearch] = useState('')
 
   const searchHandler = event => {
@@ -49,6 +56,10 @@ export default function Home ({ patientsInfo }) {
   }
 
   return (
+
+<div className='flex flex-col sm:flex-row '>
+  <NavBarDentist isHome={true}/>
+  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'> 
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
@@ -63,10 +74,13 @@ export default function Home ({ patientsInfo }) {
           searchHandler={searchHandler}
           searchValue={search}
         />
-        <AddNewPatientButton
-          title='Nuevo'
-          imagen={addIcon}
-        />
+
+          <AddNewPatientButton
+            title='Nuevo'
+            imagen={addIcon}
+            idDentist ={dentistId}
+          />
+   
       </div>
       <div className='w-full border-t border-lighter-gray'>
         {
@@ -76,21 +90,25 @@ export default function Home ({ patientsInfo }) {
             }).map(patient =>
               <PatientCard
                 patientName={patient.name + ' ' + patient.lastName}
-                patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+                patientImage='https://api.multiavatar.com/car%20pls.png'
                 key={patient._id}
                 patientId={patient._id}
+                dentistId={dentistId}
               />
             )
           : patientsInfo.map(patient =>
             <PatientCard
               patientName={patient.name + ' ' + patient.lastName}
-              patientImage='https://api.multiavatar.com/Apricot%20Apricot.png'
+              patientImage='https://api.multiavatar.com/car%20pls.png'
               key={patient._id}
               patientId={patient._id}
+              dentistId={dentistId}
             />
           )
         }
       </div>
     </div>
+  </main>
+</div>
   )
 }
