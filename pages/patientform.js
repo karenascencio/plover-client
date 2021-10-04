@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Formik} from 'formik'
+import { Formik, getIn} from 'formik'
 import FormInput from '../components/FormInput'
 import Textarea from '../components/Textarea'
 import RadioButtons from '../components/RadioButtons'
@@ -175,26 +175,29 @@ export default function Giform() {
               }
               //validacion de direccion
               //validacion de estado
-              //if(!values.address.state){
-                //errors.state ='Ingresa el estado donde reside el paciente'}
-              //else if(!/^[a-z ,.'-]+$/i.test(values.address.state)){
-                //errors.state='El estado no puede contener numeros ni caracteres especiales'}
+              if(!values.address.state){
+                errors.state ='Ingresa el estado donde reside el paciente'
+                }
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.state)){
+                errors.state='El estado no puede contener numeros ni caracteres especiales'
+                }
               //validacion de ciudad
-              //if(!values.address.city){
-                //errors.city ='Ingresa la ciudad donde reside el paciente'}
-              //else if(!/^[a-z ,.'-]+$/i.test(values.address.city)){
-               //errors.city='La ciudad no puede contener numeros ni caracteres especiales'}
+              if(!values.address.city){
+                errors.city ='Ingresa la ciudad donde reside el paciente'}
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.city)){
+                errors.city='La ciudad no puede contener numeros ni caracteres especiales'}
               //validacion de colonia
-              //if(!values.address.neighborhood){errors.neighborhood ='Ingresa la colonia donde reside el paciente'}
-              //else if(!/^[a-z ,.'-]+$/i.test(values.address.neighborhood)){
-                //errors.neighborhood='La colonia no puede contener numeros ni caracteres especiales'}
+              if(!values.address.neighborhood){
+                errors.neighborhood ='Ingresa la colonia donde reside el paciente'}
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.neighborhood)){
+                errors.neighborhood='La colonia no puede contener numeros ni caracteres especiales'}
               //validacion de calle
-              //if(!values.address.street){
-                //errors.street ='Ingresa la calle donde reside el paciente'
-              //}
-              //else if(!/^[a-z ,.'-]+$/i.test(values.address.street)){
-                //errors.street='La caller no puede contener numeros ni caracteres especiales'
-              //}
+              if(!values.address.street){
+                errors.street ='Ingresa la calle donde reside el paciente'
+              }
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.street)){
+                errors.street='La caller no puede contener numeros ni caracteres especiales'
+              }
               //validacion de numero exterior
               //if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
              //else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
@@ -327,6 +330,9 @@ export default function Giform() {
                       handleChange={handleChange}
                       handleBlur={handleBlur}                />
                   {/*validamos que el campo no venga vacio*/}
+                  {getIn(touched,'address.state') && getIn(errors,'state') && <div className='text-plover-blue text-sm' >{errors.state}</div>}
+
+
                 </div>
                 <div className='flex flex-col'>
                   <FormInput 
@@ -337,6 +343,7 @@ export default function Giform() {
                     handleChange={handleChange}
                     handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
+                {getIn(touched,'address.city') && getIn(errors,'city') && <div className='text-plover-blue text-sm' >{errors.city}</div>}
               </div>
               <div className='flex flex-col'>
                 <FormInput 
@@ -347,6 +354,7 @@ export default function Giform() {
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                   />
+                {getIn(touched,'address.neighborhood') && getIn(errors,'neighborhood') && <div className='text-plover-blue text-sm' >{errors.neighborhood}</div>}
 
               </div>
               <div className='flex flex-col'>
@@ -358,6 +366,8 @@ export default function Giform() {
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                   />
+                {getIn(touched,'address.street') && getIn(errors,'street') && <div className='text-plover-blue text-sm' >{errors.street}</div>}
+
               </div>
               <div className='flex flex-col'>
                 <FormInput 
