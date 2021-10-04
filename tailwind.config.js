@@ -83,6 +83,7 @@ module.exports = {
   variants: {
     extend: {
       fontWeight: ['hover'],
+      backgroundColor: ['active'],
     },
   },
   plugins: [
