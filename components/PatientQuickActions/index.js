@@ -20,7 +20,7 @@ export default function PatientQuickActions (props) {
       <CardButtonPatient
         title='Historial clínico'
         image={clinicalRecord}
-        reference={`/medicalredords/${patientId}`}
+        reference={`/medicalrecords/${patientId}`}
       />
       <PaymentHistoryButton
         image={payments}

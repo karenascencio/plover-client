@@ -38,12 +38,11 @@ const optionsHome = [{title:'Home',link:'/'},
         setIsOpen(!isOpen)
     }
     return (   
-        <div className=''>
+        <div className='z-50'>
         
             <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
                 <div className='flex  '>
                     <H1 textTitle='Plover' textColor='white' />
-                    <Image src={logo} width={100} height={100} />
                 </div>
                 <ProfilePicture  profilePicture={'https://api.multiavatar.com/jorge%20castuera.png'} />
                 <div className='hidden sm:block'><Greeting userName='mariana'/></div>

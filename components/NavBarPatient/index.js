@@ -27,19 +27,18 @@ export default function NavBarPatient(props) {
     return (
         <div className='z-50'>
      
-        <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
+        <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
                 <div className='flex flex-col '>
-                    <Image src={logo} width={120} height={120} />
                     <div className='mt-5'><H1 textTitle='Plover' textColor='white' /></div>
                 </div>
-                <ul className='mt-10 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 border border-red-600 '>
+                <ul className='mt-10 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 '>
                     {
                         forms.map((item,key)=>{
                             return <li className='mb-10 ' key={key}><button onClick={(()=>handleOption(item.form))} className='text-white text-lg '>{item.title }</button></li>
                         })
                     }
                 </ul>
-                <Link href='/'><a className='w-11/12 bg-white block text-plover-blue text-center text-xl  py-2 rounded-lg'>Home</a></Link>
+                <Link href='/'><a className='w-11/12 sm:block max-w-10rem bg-white block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'>Home</a></Link>
                 <HamburgerMenu className='sm:hidden mr-3'
                     isOpen={isOpen}
                     menuClicked={handleHamburgerMenu}
