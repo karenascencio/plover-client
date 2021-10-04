@@ -10,7 +10,7 @@ import H1 from '../components/H1'
 import H3 from '../components/H3'
 import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
-
+import TitleHeader from '../components/TitleHeader'
 
 
 //single form
@@ -164,7 +164,10 @@ export default function Giform() {
             {formulario =='General Information' && (
               <div id='General Information'>
                 <div className='flex flex-col'>
-                  <H1 textTitle='Información General' textColor='plover-blue' />
+                <TitleHeader
+                    pageTitle='Información general'
+                    secondaryText=''
+                  />
                   <H3 textTitle='Paciente' textColor='plover-blue'/>
                 </div>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
@@ -372,7 +375,10 @@ export default function Giform() {
               {formulario=='Family Background' && (
               <div id='Family Background'>
                 <div className='flex flex-col'>
-                  <H1 textTitle='Antecedentes familiares' textColor='plover-blue' />
+                <TitleHeader
+                    pageTitle='Antecedentes Familiares'
+                    secondaryText=''
+                  />
                   <H3 textTitle='Patologías' textColor='plover-blue'/>
                 </div>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
@@ -514,8 +520,11 @@ export default function Giform() {
             {/*aqui comienza el formulario de antecedentes patologicos*/}
             {formulario=='Pathological Background' && (
             <div id='Pathological Background'>
-            <H1 textTitle='Antecedentes patológicos' textColor='plover-blue' />
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+            <TitleHeader
+                    pageTitle='Antecedentes patológicos'
+                    secondaryText=''
+                />
+            <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentDiseases'
                     textLabel='Enfermedades actuales' 
@@ -593,8 +602,11 @@ export default function Giform() {
             {/*aqui comienza el formulario de antecedentes no patologicos*/}
             {formulario=='NonPathological Background' && (
             <div id='NonPathological Background'>
-              <H1 textTitle='Antecedentes no patológicos' textColor='plover-blue' />
-              <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+              <TitleHeader
+                    pageTitle='Antecedentes no patológicos'
+                    secondaryText=''
+                />
+              <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <RadioButtons 
                     textLabel='¿Como considera su alimentacion?'
                     options={['buena','regular','mala']}
@@ -700,9 +712,10 @@ export default function Giform() {
                     handleBlur={handleBlur}
                 />
             </div>
+            <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
-                <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
+                
             </form>
           )}
           </Formik>  

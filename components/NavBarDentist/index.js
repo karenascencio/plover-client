@@ -8,6 +8,8 @@ import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
 import Link from 'next/link'
 import ProfilePicture from '../ProfilePicture'
+import logo from '../../public/logo.svg'
+import Image from 'next/image'
 
 
 
@@ -35,12 +37,12 @@ const optionsHome = [{title:'Home',link:'/'},
     function handleHamburgerMenu(){
         setIsOpen(!isOpen)
     }
-    return (
-
-        <div className='z-50'>
+    return (   
+        <div className=''>
+        
             <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
                 <H1 textTitle='Plover' textColor='white' />
-
+                <Image src={logo} width={150} height={150} />
                 <ProfilePicture  profilePicture={'https://api.multiavatar.com/jorge%20castuera.png'} />
                 <div className='hidden sm:block'><Greeting userName='mariana'/></div>
                 

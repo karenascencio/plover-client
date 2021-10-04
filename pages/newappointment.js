@@ -62,6 +62,7 @@ export default function Newappointment() {
     }
     function handleAddProcedure(){
         setProcedures([...procedures,procedure])
+        setProcedure({name:'',price:0,status:false })
     }
     function handleToggle(index){
         procedures[index].status= !procedures[index].status 
@@ -79,8 +80,8 @@ export default function Newappointment() {
         <div className='flex flex-col sm:flex-row '>
         	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
                 {/*el w-full rompe el layout*/}
-        		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
-              <div className='max-w-screen-lg w-full flex flex-col items-center'>
+        	  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11 '>
+              <div className='max-w-screen-lg w-full flex flex-col items-center '>
                         <Carrusel cards={cardsInfo}/>
                         <div className='w-full flex justify-between '> 
                             <H1 textTitle='Cita' textColor='plover-blue'/>
@@ -100,9 +101,10 @@ export default function Newappointment() {
                             <div className='w-full grid grid-cols-6 gap-x-5'>
 								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
                                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-								<div className='flex flex-col  justify-around items-start pb-5 text-plover-blue '>
-									
-									</div>
+								<div className='flex flex-col items-end mt-5 '>
+                                    <span className='text-plover-blue self-center text-sm mb-2'>Estatus</span>
+                                    <Toggle handleToggle={handleToggle} disabled={true}/>
+								</div>
 								{
 									procedures.map((procedure,key)=>{
 										return (

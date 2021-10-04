@@ -13,7 +13,7 @@ export default function Toggle (props) {
       {/* switch */}
       <label
         htmlFor={`toggle-${id}`}
-        className={`mb-2 flex lg:justify-around flex-${!state ? 'row' : 'row-reverse'} items-center w-12 md:w-16  lg:w-110px h-8 px-1 transition duration-500 ease-in-out transform bg-${!state ? 'plover-blue' : 'darker-gray'}`}
+        className={`mb-2 flex lg:justify-around flex-${!state ? 'row' : 'row-reverse'} items-center w-12 md:w-16  lg:w-100px h-8 px-1 transition duration-500 ease-in-out transform bg-${!state ? 'plover-blue' : 'darker-gray'}`}
         style={{ borderRadius: '30px' }}
       >
         {/* checkbox */}
@@ -31,8 +31,8 @@ export default function Toggle (props) {
           style={{ borderRadius: '50%' }}
         />
         {state
-          ? <span className='hidden lg:block text-sm text-white pb-1'>hecho</span>
-          : <span className='hidden lg:block  text-sm text-white pb-1'>pendiente</span>}
+          ? <span className='hidden lg:block text-sm text-white pb-1 pt-0.5'>hecho</span>
+          : <span className='hidden lg:block  text-sm text-white pb-1 pt-0.5'>pendiente</span>}
       </label>
     </React.Fragment>
   )
