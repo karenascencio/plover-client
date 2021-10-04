@@ -13,11 +13,11 @@ export default function TitleHeader (props) {
           patientLastName={patientLastName}
         />
         <img
-          className='h-10 w-10 rounded-full'
+          className='h-10 w-10 rounded-full hidden md:block'
           src={patientImage}
           alt='patient-image'
         />
-        </div>
+      </div>
       : <div className='md:h-20 w-full flex justify-between items-center'>
         <H1
           textTitle={pageTitle}
@@ -25,9 +25,6 @@ export default function TitleHeader (props) {
           patientName={patientName}
           patientLastName={patientLastName}
         />
-        <p className='text-2xl text-plover-blue'>
-          {secondaryText}
-        </p>
-        </div>
+      </div>
   )
 }

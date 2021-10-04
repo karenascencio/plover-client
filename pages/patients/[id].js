@@ -1,4 +1,9 @@
 import React, { useState } from 'react'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+
 // Api
 import api from '../../lib/api'
 // My components
@@ -10,13 +15,6 @@ import ProcedureCard from '../../components/ProcedureCard'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
-
-const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
-]
 
 export const getStaticPaths = async () => {
   const response = await api.getPatients()
@@ -53,6 +51,16 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   console.log(appointmentsInfo)
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
+  const cardsInfo = []
+
+  appointmentsInfo.forEach(appointment => {
+    const now = dayjs.utc()
+    const appointmentDate = dayjs.utc(appointment.date)
+    appointment.procedures.forEach(procedure => {
+      appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    })
+  })
+
   const searchHandler = event => {
     const searchInput = event.target.value
     setSearch(searchInput)
@@ -70,6 +78,11 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         patientLastName={lastName}
         patientImage='https://api.multiavatar.com/car%20pls.png'
       />
+      <div className='flex justify-start w-full'>
+        <p className='text-2xl text-darker-gray font-thin'>
+          Próximas citas
+        </p>
+      </div>
       <Carrusel
         cards={cardsInfo}
       />
@@ -88,27 +101,26 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         {
           search
             ? appointmentsInfo.map(appointment => {
-                const procedureDate = new Date(appointment.date)
+                const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
                 const appointmentId = appointment._id
                 return appointment.procedures.filter(procedure =>
                   procedure.name.includes(search.toLowerCase())).map(procedure =>
                     <ProcedureCard
                       key={procedure._id}
-                      procedureDate={procedureDate.toGMTString().split(' ').slice(1, 4).join(' ')}
+                      procedureDate={procedureDate}
                       procedureName={procedure.name}
                       procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
                       anchor={appointmentId}
                     />
                 )
               })
-            : appointmentsInfo.map(appointments => {
-              const procedureDate = new Date(appointments.date)
-              const appointmentId = appointments._id
-              console.log(appointmentId)
-              return appointments.procedures.map(procedure =>
+            : appointmentsInfo.map(appointment => {
+              const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
+              const appointmentId = appointment._id
+              return appointment.procedures.map(procedure =>
                 <ProcedureCard
                   key={procedure._id}
-                  procedureDate={procedureDate.toGMTString().split(' ').slice(1, 4).join(' ')}
+                  procedureDate={procedureDate}
                   procedureName={procedure.name}
                   procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
                   anchor={appointmentId}
