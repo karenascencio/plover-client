@@ -18,6 +18,9 @@ import getJwtId from '../lib/jwt'
 // My images
 import addIcon from '../public/addIcon.svg'
 import PatientCard from '../components/PatientCard'
+import Link from 'next/link'
+import NavBarPatient from '../components/NavBarPatient'
+import NavBarDentist from '../components/NavBarDentist'
 
 export async function getStaticProps () {
   const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
@@ -32,15 +35,6 @@ export async function getStaticProps () {
 
 export default function Home ({ patientsInfo, appointmentsInfo }) {
   const [search, setSearch] = useState('')
-  // const cardsInfo = appointmentsInfo.filter(appointment => {
-  //   const appontmentId = appointment._id
-  //   const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
-  //   const now = dayjs.utc()
-  //   const appointmentDate = dayjs.utc(appointment.date)
-  //   return appointment.procedures.filter(procedure => appointmentDate >= now).map(procedure => {
-  //     return { title: trimmedName, subtitle: procedure.name, thirdTitle: appointmentDate.locale('es').format('dddd D MMMM') }
-  //   })
-  // })
   let cardsInfo = []
   appointmentsInfo.forEach(appointment => {
     const appontmentId = appointment._id
@@ -56,6 +50,10 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
   }
 
   return (
+
+<div className='flex flex-col sm:flex-row '>
+  <NavBarDentist isHome={true}/>
+  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'> 
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
@@ -75,10 +73,13 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
           searchHandler={searchHandler}
           searchValue={search}
         />
-        <AddNewPatientButton
-          title='Nuevo'
-          imagen={addIcon}
-        />
+
+          <AddNewPatientButton
+            title='Nuevo'
+            imagen={addIcon}
+            idDentist ={dentistId}
+          />
+   
       </div>
       <div className='w-full border-t border-lighter-gray'>
         {
@@ -91,6 +92,7 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
                 patientImage='https://api.multiavatar.com/car%20pls.png'
                 key={patient._id}
                 patientId={patient._id}
+                dentistId={dentistId}
               />
             )
           : patientsInfo.map(patient =>
@@ -99,10 +101,13 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
               patientImage='https://api.multiavatar.com/car%20pls.png'
               key={patient._id}
               patientId={patient._id}
+              dentistId={dentistId}
             />
           )
         }
       </div>
     </div>
+  </main>
+</div>
   )
 }
