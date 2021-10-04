@@ -14,10 +14,9 @@ import showpsw from '../../public/showpsw.svg'
 import hidepsw from '../../public/hidepsw.svg'
 import api from '../../lib/api'
 
-export default function LoginForm ({ Login, error, buttonHandler }) {
+export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
   const [details, setDetails] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
-
   const handlerSubmit = event => {
     event.preventDefault()
     Login(details)
@@ -33,7 +32,14 @@ export default function LoginForm ({ Login, error, buttonHandler }) {
               textColor='plover-blue'
             />
           </div>
-
+          {
+           !webToken &&
+             <div className=' w-100 d-flex justify-content-center mt-8'>
+                <p className='text-danger'>
+                  Please enter valid credentials
+                </p>
+              </div>
+          }
           <div className='mb-50px  mt-70px w-200px'>
             <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-250px md:w-408px lg:w-539px'>
               <Image src={emailImg} heigth={40} width={40} />
@@ -67,7 +73,13 @@ export default function LoginForm ({ Login, error, buttonHandler }) {
           </div>
           <LoginButtons title='Iniciar sesión' type='submit' buttonHandler={buttonHandler} />
           <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?<a className='hover:text-plover-blue hover:font-bold ' href='#'> Registrate</a></p>
-          <p className=' text-login-blue text-14px '><a className='hover:text-plover-blue hover:font-bold ' href='#'>¿Olvidaste la contraseña?</a></p>
+          <p className=' text-login-blue text-14px '>
+            <Link href="/recovery-password">
+              <a className='hover:text-plover-blue hover:font-bold ' href='#'>
+              ¿Olvidaste la contraseña?
+            </a>
+            </Link>
+          </p>
         </div>
       </form>
     </>

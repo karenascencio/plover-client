@@ -1,34 +1,38 @@
-import React, {useState, useEffect} from 'react'
-import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
+import router, { useRouter } from 'next/router'
+import Link from 'next/link'
 import api from '../lib/api'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
-export default function Login() {
+export default function Login () {
   const [userData, setUserData] = useState({ email: '', password: '' })
-  const [errorLogin, setErrorLogin] = useState(false)
+  const [webToken, setWebToken] = useState('')
   const [error, setError] = useState('')
-
+  const router = useRouter()
   const Login = async details => {
     console.log('login INFO', userData)
     setUserData(details)
   }
-  
+
   const buttonHandler = async () => {
     try {
       console.log('handler', userData)
       const response = await api.login(userData)
-      console.log(response)
-    }
-    catch (error) { 
-      setErrorLogin 
-      console.log(error.message)
-    }
+      response.success ? setWebToken(response.data.token) : setWebToken('')
+      if (response.success) {
+        if (!localStorage.getItem('user-info')) {
+          localStorage.setItem('user-info', JSON.stringify(api.parseJwt(response.data.token)))
+        }
+        router.push('/')
+      } else {
+        console.log('no hay web token')
+      }
+    } catch (error) { console.log(error.message) }
   }
-
   return (
     <>
-      <LoginForm Login={Login} error={error} buttonHandler={buttonHandler} />
+      <LoginForm Login={Login} error={error} buttonHandler={buttonHandler} webtoken={webToken} />
     </>
-)
+  )
 }
