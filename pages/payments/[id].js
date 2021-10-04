@@ -3,6 +3,7 @@ import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import AmountDisplay from '../../components/AmountDisplay'
 import H3 from '../../components/H3'
+import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
@@ -104,26 +105,30 @@ export default function Payments({payments,appointments}){
         <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
         <div className='flex flex-col items-center max-w-screen-lg '>
             <Carrusel cards={cardsInfo}/>
-						<div className='self-end '><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
-						<div className='w-10/12 flex flex-col  '>
-							<div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue'/></div>
-							<div className='-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
-								<div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
-								<div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
-								<label className='text-plover-blue text-base font-thin' htmlFor='calendar'>
-          				Selecciona una fecha:
-       				 </label>
-        				<input
-          				className='text-plover-blue text-base border rounded font-thin ml-1 px-1'
-          				type='date'
-          				id='calendar'
-									name='date'
-									value={payment.date}
-									onChange={handleChange}
-        					/>
+						<div className='w-full flex justify-between' >
+							<H1 textTitle='Pagos' textColor='plover-blue'/>
+							<AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/>
+						</div>
+						<div className='w-full flex flex-col'>
+							<div className='self-start'>
+								<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
+							</div>
+							<div className='grid grid-cols-5 gap-x-5'>
+								<div className='col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
+								<div className='col-span-2  flex flex-col justify-end items-center pb-4'>
+									<label className='text-plover-blue text-sm pb-2 self-start' htmlFor='calendar'>
+          								Fecha:
+       				 				</label>
+        							<input
+          								className='text-plover-blue text-sm border rounded ml-1 py-1.5 px-1 w-full'
+          								type='date'
+          								id='calendar'
+										name='date'
+										value={payment.date}
+										onChange={handleChange}
+        							/>
 								</div>
 								<div className='flex flex-col  w-28  justify-around items-start pb-5 text-plover-blue '>
-									<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
 									<span className=''>Comprobante</span>
 									</div>
 
@@ -131,9 +136,9 @@ export default function Payments({payments,appointments}){
 									dynamicPayments.map((item,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='gl:col-span-2'><PlainText text={item.total}/></div>
-											<div className='gl:col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
-											<button className='text-white bg-plover-blue w-28 h-30px rounded my-1'>{'agregar'}</button>
+											<div className='col-span-2'><PlainText text={item.total}/></div>
+											<div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
+											<button className='text-white bg-plover-blue w-30px h-30px rounded my-1'>{'+'}</button>
 											</React.Fragment>
 										)
 									})

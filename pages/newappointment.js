@@ -102,7 +102,7 @@ export default function Newappointment() {
 								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
                                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col items-end mt-5 '>
-                                    <span className='text-plover-blue self-center text-sm mb-2'>Estatus</span>
+                                    <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
                                     <Toggle handleToggle={handleToggle} disabled={true}/>
 								</div>
 								{

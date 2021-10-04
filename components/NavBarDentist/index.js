@@ -40,17 +40,19 @@ const optionsHome = [{title:'Home',link:'/'},
     return (   
         <div className=''>
         
-            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
-                <H1 textTitle='Plover' textColor='white' />
-                <Image src={logo} width={150} height={150} />
+            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
+                <div className='flex  '>
+                    <H1 textTitle='Plover' textColor='white' />
+                    <Image src={logo} width={100} height={100} />
+                </div>
                 <ProfilePicture  profilePicture={'https://api.multiavatar.com/jorge%20castuera.png'} />
                 <div className='hidden sm:block'><Greeting userName='mariana'/></div>
                 
                 
-                <ul className='mt-10 hidden w-11/12 sm:block'>
+                <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
                     {
                         items.map((item,key)=>{
-                            return <li className='mb-6' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-xl  py-2 rounded-lg'>{item.title}</a></Link></li>
+                            return <li className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></li>
                         })
                     }
                 </ul>
