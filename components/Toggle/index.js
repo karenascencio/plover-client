@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 export default function Toggle (props) {
-  const {id,handleToggle, disabled} = props
-  const [state, setState] = useState(disabled?true:false)
+  const {id,handleToggle, disabled,status} = props
+  const [state, setState] = useState(disabled?status:true)
 
   function handleChange(){
     setState(!state)

@@ -9,6 +9,9 @@ import PlainText from '../../components/PlainText'
 import Toggle from '../../components/Toggle'
 import { useState,useEffect } from 'react'
 import NavBarDentist from '../../components/NavBarDentist'
+import H1 from '../../components/H1'
+import Image from 'next/image'
+import addIcon from '../../public/addIcon.svg'
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
@@ -80,39 +83,50 @@ export default function Appointment({appointmentFetched}) {
 
 
     return (
-
         <div className='flex flex-col sm:flex-row '>
-        	<NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
-        		<main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
-                    <div className='flex flex-col items-center '>
+        	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
+                {/*el w-full rompe el layout*/}
+        	  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11 '>
+              <div className='max-w-screen-lg w-full flex flex-col items-center '>
                         <Carrusel cards={cardsInfo}/>
-						<div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
-						<div className='w-full flex flex-col '>
-							<div className='self-start'><H3 textTitle='Citas' textColor='plover-blue'/></div>
-							<div className='flex '>
-                            <div className=' w-4/5  grid grid-cols-3 gl:grid-cols-5 gap-x-5'>
-								<div className='gl:col-span-2'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-                                <div className='gl:col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-								<div className='flex flex-col  w-28  justify-around items-start pb-5 text-plover-blue '>
-									
-									<span className=''>Estado</span>
-									</div>
+                        <div className='w-full flex justify-between '> 
+                            <H1 textTitle='Cita' textColor='plover-blue'/>
+						    <div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
+						</div>
+                        <div className='w-full flex flex-col w-1/2 '>
+                            <div className='flex justify-between items-center'>
+							    <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
+                               
+                                <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
+                                    <div className='pt-1'><Image src={addIcon} height={15} width={15}/></div>
+                                    <span className='hidden sm:inline-block pl-3 text-sm pt-0.5' >Agregar</span>
+                                    </button> 
+                                </div>
+                            </div>
+                            <div className='flex'>
+                            <div className='w-full grid grid-cols-6 gap-x-5'>
+								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+								<div className='flex flex-col items-end mt-5 '>
+                                    <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
+                                    <Toggle handleToggle={handleToggle} disabled={true}/>
+								</div>
 								{
 									procedures.map((procedure,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='gl:col-span-2'><PlainText text={procedure.name}/></div>
-											<div className='gl:col-span-2'><PlainText text={procedure.price}/></div>
-                                            <Toggle id={key}  handleToggle={handleToggle}/>
-
+											<div className='col-span-3'><PlainText text={procedure.name}/></div>
+											<div className='col-span-2'><PlainText text={procedure.price}/></div>
+                                            <div className='flex justify-end'>
+                                                <Toggle id={key}  handleToggle={handleToggle} status={procedure.status}/>
+                                            </div>
 											</React.Fragment>
 										)
 									})
 							    }
 							</div>
-                                <div><button onClick={handleAddProcedure} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar</button> </div>
                             </div>
-                            <div className=' grid md:grid-cols-2 gap-x-10 '>
+                            <div className=' grid md:grid-cols-2 gap-x-5'>
                                 <Textarea 
                                     textName='annotations'
                                     textLabel='Anotaciones'
@@ -131,10 +145,10 @@ export default function Appointment({appointmentFetched}) {
 
                                 />
                             </div>
-                            <div><button onClick={handleSubmit} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Enviar</button> </div>
+                            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
 						</div>
-                    </div>
-                </main>
-            </div>
+        </div>
+			</main>
+		</div>
     )
 }
