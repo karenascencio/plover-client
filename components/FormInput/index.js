@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function FormInput (props) {
-  const { textLabel, textValue, inputID, handleChange, handleBlur, textName } = props
+  const { textLabel, textValue, inputID, handleChange, handleBlur, textName, textPlaceholder } = props
   return (
     <div className=' my-5 flex flex-col flex-auto'>
       <label
@@ -18,6 +18,7 @@ export default function FormInput (props) {
         value={textValue}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder={textPlaceholder}
       />
     </div>
   )
