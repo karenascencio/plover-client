@@ -16,6 +16,7 @@ module.exports = {
         '050': '3.125rem',
         '080': '2.125rem',
         '700px': '700px',
+        '100px' : '100px',
         '110px': '110px',
         '100px': '100px',
         '95px': '95px',
@@ -33,7 +34,8 @@ module.exports = {
         '034': '8.125rem',
         '30px': '1.875rem',
         '60vw': '60vw',
-        '90vw': '90vw'
+        '90vw': '90vw',
+        '18rem': '18rem'
       },
       fontSize: {
         '14px': '14px',
@@ -68,7 +70,7 @@ module.exports = {
         '392px': '24.5rem',
         '408px': '25.5rem',
         '539px': '33.68rem',
-        '676px': '42.188rem',
+        '676px': '42.188rem'
       },
       height: {
         '15px': '0.938rem',
@@ -77,6 +79,11 @@ module.exports = {
         '70px': '4.37rem',
         '90px': '5.62rem',
         '676px': '42.188rem',
+      },
+      maxWidth:{
+        '18rem': '18rem',
+        '26rem': '26rem',
+        '10rem': '10rem'
       }
     }
   },
