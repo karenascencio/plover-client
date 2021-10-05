@@ -1,24 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import { Formik, Form, useField} from 'formik'
+import * as Yup from 'yup'
 
-export default function RegisterInput (props) {
-  const { textLabel, textValue, inputID, handleChange, handleBlur, textName, typeInput } = props
+const RegisterInput = ({label, ...props}) => {
+  const [field, meta] = useField(props)
   return (
     <div className=' my-5 flex flex-col flex-auto'>
       <label
         className='text-sm text-plover-blue mb-2.5'
-        htmlFor={`${inputID}-input`}
+        htmlFor={props.id || props.name}
       >
-        {textLabel}
+        {label}
       </label>
       <input
         className='h-30px pl-1 text-base rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black'
-        name={textName}
-        type={typeInput}
-        id={`${inputID}-input`}
-        value={textValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        {...field}
+        {...props}
       />
+      {meta.touched && meta.error ? (
+         <div className="text-red-500 bg-red-200 text-center rounded">{meta.error}</div>
+       ) : null}
     </div>
   )
 }
+
+export default RegisterInput

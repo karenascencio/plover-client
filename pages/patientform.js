@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Formik} from 'formik'
+import { Formik, getIn} from 'formik'
 import FormInput from '../components/FormInput'
 import Textarea from '../components/Textarea'
 import RadioButtons from '../components/RadioButtons'
@@ -10,7 +10,7 @@ import H1 from '../components/H1'
 import H3 from '../components/H3'
 import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
-
+import TitleHeader from '../components/TitleHeader'
 
 
 //single form
@@ -145,8 +145,70 @@ export default function Giform() {
 
             validate={(values)=>{
               let errors = {}
-              //validaciones de presencia
-              //validaciones por expresiones regulares
+              //validacion de nombre
+              if(!values.name) {errors.name='Por favor ingrese el nombre del paciente'
+                
+                }
+              else if(!/^[a-z ,.'-]+$/i.test(values.name)) errors.name='El nombre no puede contener numeros ni caracteres especiales'
+              //validacion de apellido
+              if(!values.lastName) errors.lastName='Por favor ingrese los apellidos del paciente'
+              else if(!/^[a-z ,.'-]+$/i.test(values.lastName)) errors.lastName='Los apellidos no puede contener numeros ni caracteres especiales'
+              //validacion por genero
+              if(!values.gender) errors.gender='Por favor ingrese el genero del paciente'
+              else if(!['masculino','femenio','otro'].includes(values.gender)){
+                errors.gender='el genero tiene que ser alguno de los siguientes: masculino,femenino u otro'
+              }
+              //validacion por edad
+              if(!values.age) errors.age ='Por favor ingrese la edad del paciente'
+              else if(!/^[0-9]{1,3}$/.test(values.age)){
+                errors.age='La edad tiene que ser un numero no mayor de tres digitos y positivo'
+              }
+              //validacion por altura
+              if(!values.height) errors.height ='Por favor ingrese la altura del paciente'
+              else if(!/^[0-9]{2,3}$/.test(values.height)){
+                errors.height='Ingresa la altura del paciente en centimetros por favor'
+              }
+              //validacion por peso
+              if(!values.weight) errors.weight ='Ingresa el peso del paciente'
+              else if(!/^[0-9]{2,3}$/.test(values.weight)){
+                errors.weight='El peso debe estar en kilogramos'
+              }
+              //validacion de direccion
+              //validacion de estado
+              if(!values.address.state){
+                errors.state ='Ingresa el estado donde reside el paciente'
+                }
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.state)){
+                errors.state='El estado no puede contener numeros ni caracteres especiales'
+                }
+              //validacion de ciudad
+              if(!values.address.city){
+                errors.city ='Ingresa la ciudad donde reside el paciente'}
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.city)){
+                errors.city='La ciudad no puede contener numeros ni caracteres especiales'}
+              //validacion de colonia
+              if(!values.address.neighborhood){
+                errors.neighborhood ='Ingresa la colonia donde reside el paciente'}
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.neighborhood)){
+                errors.neighborhood='La colonia no puede contener numeros ni caracteres especiales'}
+              //validacion de calle
+              if(!values.address.street){
+                errors.street ='Ingresa la calle donde reside el paciente'
+              }
+              else if(!/^[a-z ,.'-]+$/i.test(values.address.street)){
+                errors.street='La caller no puede contener numeros ni caracteres especiales'
+              }
+              //validacion de numero exterior
+              //if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
+             //else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
+               // errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+             //}
+              
+              //validacion de numero interior
+              //if(!values.address.innerNumber) errors.innerNumber ='Ingresa el numero interior del paciente'
+              //else if(!/^[0-9]{1,5}$/.test(values.address.innerNumber)){
+                //errors.innerNumber='El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+              //}
               return errors
             }}
             onSubmit={(values) => {
@@ -164,130 +226,169 @@ export default function Giform() {
             {formulario =='General Information' && (
               <div id='General Information'>
                 <div className='flex flex-col'>
-                  <H1 textTitle='Información General' textColor='plover-blue' />
+                <TitleHeader
+                    pageTitle='Información general'
+                    secondaryText=''
+                  />
                   <H3 textTitle='Paciente' textColor='plover-blue'/>
                 </div>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
-                  <FormInput
-                    textName='name'
-                    textLabel='Nombres' 
-                    textValue={values.name}  
-                    inputId='name'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                    {/*validamos que el campo no venga vacio*/}
-                    {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
-                  <FormInput 
-                    textName='lastName' 
-                    textLabel='Apellidos' 
-                    textValue={values.lastName}  
-                    inputId='lastName'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-
+                  <div className='flex flex-col'>
+                    <FormInput
+                      textName='name'
+                      textLabel='Nombres' 
+                      textValue={values.name}  
+                      inputId='name'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                     />
-                    {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
-                  <FormInput 
-                    textName='gender'
-                    textLabel='Género' 
-                    textValue={values.gender}  
-                    inputId='gender'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                  <FormInput 
-                    textName='age' 
-                    textLabel='Edad' 
-                    textValue={values.age}  
-                    inputId='age'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                  <FormInput 
-                    textName='height'
-                    textLabel='Altura' 
-                    textValue={values.height}  
-                    inputId='height'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                  <FormInput 
-                    textName='weight' 
-                    textLabel='Peso' 
-                    textValue={values.weight} 
-                    inputId='weight'
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                  />
-                  <FormInput 
+                    {/*validamos que el campo no venga vacio*/}
+                    {touched.name && errors.name && <div className='text-plover-blue text-sm'>{errors.name}</div>}
+                  </div>
+                  <div className='flex flex-col'>
+                    <FormInput 
+                      textName='lastName' 
+                      textLabel='Apellidos' 
+                      textValue={values.lastName}  
+                      inputId='lastName'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                    />
+                    {touched.lastName && errors.lastName && <div className='text-plover-blue text-sm' >{errors.lastName}</div>}
+                  </div>
+                  <div className='flex flex-col'>
+                    <Select 
+                      selectID='gender' 
+                      textName='gender'
+                      textValue={values.gender}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                      selectQuestion='Género' 
+                      outputOptions={['masculino','femenino','otro']} />
+                  </div>
+                  <div className='flex flex-col'>
+                    <FormInput 
+                      textName='age' 
+                      textLabel='Edad' 
+                      textValue={values.age}  
+                      inputId='age'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                    />
+                    {touched.age && errors.age && <div className='text-plover-blue text-sm' >{errors.age}</div>}
+                  </div>
+                  <div className='flex flex-col'>
+                    <FormInput 
+                      textName='height'
+                      textLabel='Altura' 
+                      textValue={values.height}  
+                      inputId='height'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                    />
+                    {touched.height && errors.height && <div className='text-plover-blue text-sm' >{errors.height}</div>}
+                  </div>
+                  <div className='flex flex-col'>
+                    <FormInput 
+                      textName='weight' 
+                      textLabel='Peso' 
+                      textValue={values.weight} 
+                      inputId='weight'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                    />
+                    {touched.weight && errors.weight && <div className='text-plover-blue text-sm' >{errors.weight}</div>}
+                  </div>
+            
+                    <Select 
+                    selectID='bloodType' 
                     textName='bloodType'
-                    textLabel='Tipo de sangre' 
-                    textValue={values.bloodType}  
-                    inputId='bloodType'
+                    textValue={values.bloodType}
                     handleChange={handleChange}
                     handleBlur={handleBlur}
-                  />
-                  <FormInput 
-                    textName='maritalStatus' 
-                    textLabel='Estado Civil' 
-                    textValue={values.maritalStatus}  
-                    inputId='maritalStatus'
+                    selectQuestion='Tipo de sangre' 
+                    outputOptions={['A+','O+','B+','AB+','A-','O-','B-','AB-']} />
+
+                  <Select 
+                    selectID='maritalStatus' 
+                    textName='maritalStatus'
+                    textValue={values.maritalStatus}
                     handleChange={handleChange}
-                    handleBlur={handleBlur}                />
+                    handleBlur={handleBlur}
+                    selectQuestion='Estado civil' 
+                    outputOptions={['soltero','casado','divorciado','separación en proceso judicial','viudo','concubinato']} />
                   </div>
                 
                 <H3 textTitle='Dirección' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
-              <FormInput
-                textName='address.state'
-                textLabel='Estado' 
-                textValue={values.address.state}  
-                inputId='address.state'
-                handleChange={handleChange}
-                handleBlur={handleBlur}                />
-                {/*validamos que el campo no venga vacio*/}
-                {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
-              <FormInput 
-                textName='address.city' 
-                textLabel='Ciudad' 
-                textValue={values.address.city}  
-                inputId='address.city'
-                handleChange={handleChange}
-                handleBlur={handleBlur}                />
-                {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
+                  <div className='flex flex-col'>
+                    <FormInput
+                      textName='address.state'
+                      textLabel='Estado' 
+                      textValue={values.address.state}  
+                      inputId='address.state'
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}                />
+                  {/*validamos que el campo no venga vacio*/}
+                  {getIn(touched,'address.state') && getIn(errors,'state') && <div className='text-plover-blue text-sm' >{errors.state}</div>}
 
-              <FormInput 
-                textName='address.neighborhood'
-                textLabel='Colonia' 
-                textValue={values.address.neighborhood}  
-                inputId='address.neighborhood'
-                handleChange={handleChange}
-                handleBlur={handleBlur}
+
+                </div>
+                <div className='flex flex-col'>
+                  <FormInput 
+                    textName='address.city' 
+                    textLabel='Ciudad' 
+                    textValue={values.address.city}  
+                    inputId='address.city'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}                />
+                {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
+                {getIn(touched,'address.city') && getIn(errors,'city') && <div className='text-plover-blue text-sm' >{errors.city}</div>}
+              </div>
+              <div className='flex flex-col'>
+                <FormInput 
+                  textName='address.neighborhood'
+                  textLabel='Colonia' 
+                  textValue={values.address.neighborhood}  
+                  inputId='address.neighborhood'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  />
+                {getIn(touched,'address.neighborhood') && getIn(errors,'neighborhood') && <div className='text-plover-blue text-sm' >{errors.neighborhood}</div>}
+
+              </div>
+              <div className='flex flex-col'>
+                <FormInput 
+                  textName='address.street' 
+                  textLabel='Calle' 
+                  textValue={values.address.street}  
+                  inputId='address.street'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  />
+                {getIn(touched,'address.street') && getIn(errors,'street') && <div className='text-plover-blue text-sm' >{errors.street}</div>}
+
+              </div>
+              <div className='flex flex-col'>
+                <FormInput 
+                  textName='address.streetNumber'
+                  textLabel='Número exterior' 
+                  textValue={values.address.streetNumber}  
+                  inputId='address.streetNumber'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
                 />
-              <FormInput 
-                textName='address.street' 
-                textLabel='Calle' 
-                textValue={values.address.street}  
-                inputId='address.street'
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
-              <FormInput 
-                textName='address.streetNumber'
-                textLabel='Número exterior' 
-                textValue={values.address.streetNumber}  
-                inputId='address.streetNumber'
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
-              <FormInput 
-                textName='address.innerNumber' 
-                textLabel='Número interior' 
-                textValue={values.address.innerNumber} 
-                inputId='address.innerNumber'
-                handleChange={handleChange}
-                handleBlur={handleBlur}                />
+              </div>
+              <div className='flex flex-col'>
+                <FormInput 
+                  textName='address.innerNumber' 
+                  textLabel='Número interior' 
+                  textValue={values.address.innerNumber} 
+                  inputId='address.innerNumber'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}                />
+              </div>
+
                 </div>
 
                 <H3 textTitle='Médico familiar' textColor='plover-blue'/>
@@ -372,7 +473,10 @@ export default function Giform() {
               {formulario=='Family Background' && (
               <div id='Family Background'>
                 <div className='flex flex-col'>
-                  <H1 textTitle='Antecedentes familiares' textColor='plover-blue' />
+                <TitleHeader
+                    pageTitle='Antecedentes Familiares'
+                    secondaryText=''
+                  />
                   <H3 textTitle='Patologías' textColor='plover-blue'/>
                 </div>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
@@ -514,8 +618,11 @@ export default function Giform() {
             {/*aqui comienza el formulario de antecedentes patologicos*/}
             {formulario=='Pathological Background' && (
             <div id='Pathological Background'>
-            <H1 textTitle='Antecedentes patológicos' textColor='plover-blue' />
-            <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+            <TitleHeader
+                    pageTitle='Antecedentes patológicos'
+                    secondaryText=''
+                />
+            <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentDiseases'
                     textLabel='Enfermedades actuales' 
@@ -593,8 +700,11 @@ export default function Giform() {
             {/*aqui comienza el formulario de antecedentes no patologicos*/}
             {formulario=='NonPathological Background' && (
             <div id='NonPathological Background'>
-              <H1 textTitle='Antecedentes no patológicos' textColor='plover-blue' />
-              <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+              <TitleHeader
+                    pageTitle='Antecedentes no patológicos'
+                    secondaryText=''
+                />
+              <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <RadioButtons 
                     textLabel='¿Como considera su alimentacion?'
                     options={['buena','regular','mala']}
@@ -700,9 +810,10 @@ export default function Giform() {
                     handleBlur={handleBlur}
                 />
             </div>
+            <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
-                <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
+                
             </form>
           )}
           </Formik>  

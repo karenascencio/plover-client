@@ -8,6 +8,8 @@ import useWindowSize from '../../hooks/useWindowSize'
 import {motion,AnimatePresence} from 'framer-motion'
 import Link from 'next/link'
 import ProfilePicture from '../ProfilePicture'
+import logo from '../../public/logo.svg'
+import Image from 'next/image'
 
 
 
@@ -16,14 +18,14 @@ export default function NavBarDentist(props) {
 
     const options = [{title:'Home',link:'/'},
                 {title:'Agregar cita',link:`/newappointment?dentistId=${idDentist}&patientId=${idPatient}`},
-               {title:'Consultar citas',link:`/patients/${idPatient}`},
+                {title:'Consultar citas',link:`/patients/${idPatient}`},
                 {title:'Historial clínico',link:`/medicalrecord/${idPatient}`},
                 {title:'Historial de pagos',link:`/payments/${idPatient}?dentistId=${idDentist}`},
                 {title:'Configuración',link:'/configuration '},               
             ]
 
 const optionsHome = [{title:'Home',link:'/'},
-                {title:'Configuracion',link:`/configuration/${idDentist}`},               
+                {title:'Configuración ',link:`/configuration/${idDentist}`},               
             ]
 
 
@@ -35,20 +37,21 @@ const optionsHome = [{title:'Home',link:'/'},
     function handleHamburgerMenu(){
         setIsOpen(!isOpen)
     }
-    return (
-
+    return (   
         <div className='z-50'>
-            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm  bg-plover-blue'>
-                <H1 textTitle='Plover' textColor='white' />
-
+        
+            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
+                <div className='flex  '>
+                    <H1 textTitle='Plover' textColor='white' />
+                </div>
                 <ProfilePicture  profilePicture={'https://api.multiavatar.com/jorge%20castuera.png'} />
                 <div className='hidden sm:block'><Greeting userName='mariana'/></div>
                 
                 
-                <ul className='mt-10 hidden w-11/12 sm:block'>
+                <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
                     {
                         items.map((item,key)=>{
-                            return <li className='mb-6' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-xl  py-2 rounded-lg'>{item.title}</a></Link></li>
+                            return <li className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></li>
                         })
                     }
                 </ul>
