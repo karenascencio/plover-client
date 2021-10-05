@@ -1,5 +1,5 @@
 import React from 'react'
-import S3FileUpload from 'react-s3'
+// import S3FileUpload from 'react-s3'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import NavBarDentist from '../../components/NavBarDentist'
