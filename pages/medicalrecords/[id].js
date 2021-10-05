@@ -30,7 +30,6 @@ import cigar from '../../public/cigar.png'
 import tattoo from '../../public/tattoo-machine.png'
 import higiene from '../../public/hygienic.png'
 import oddHabits from '../../public/broken-tooth.png'
-//terminamos cinical record
 
 
 
