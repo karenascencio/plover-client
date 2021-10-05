@@ -14,7 +14,7 @@ const RegisterSelectInput = ({ label, ...props }) => {
         {label}
       </label>
       <select
-        className='h-30px w-280px pl-1 text-plover-blue rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black'
+        className='h-30px w-280px pl-1 text-plover-blue rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-input-hover focus:text-black'
         {...field}
         {...props}
       />

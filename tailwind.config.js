@@ -9,7 +9,8 @@ module.exports = {
         'login-blue': '#0A69B0',
         'lighter-gray': '#C4C4C4',
         'darker-gray': '#919390',
-        'input-gray': '#FBFBFB'
+        'input-gray': '#FBFBFB',
+        'input-hover': '#DDECFF',
       },
       spacing: {
         '060': '3.75rem',
