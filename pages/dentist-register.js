@@ -15,19 +15,27 @@ import ChangePicture from '../components/ChangePicture'
 
 export default function DentistRegister () {
   const router = useRouter()
-  // .: hook for show password
+  // .: hooks
+  const [popModal, setPopModal] = useState(false)
+
   // .: Handdler
-  const buttonHandler = async (values) => {
+  const registerHandler = async (values) => {
     try {
       console.log(values)
-      if(values){
-      const response = await api.signIn(values)
-      console.log(response)
-      router.push('/login')
-    } else throw new Error
+      if (values) {
+        const response = await api.signIn(values)
+        const success = response.success
+        if (success) {
+          console.log('Se ha mandado un correo para verificar tu cuenta')
+          setPopModal(true)
+          // (router.push('/login')
+        } else {
+          console.log('El correo está registrado, utiliza otro por favor')
+          setPopModal(true)
+        }
+      } else throw new Error()
+    } catch (error) { console.log((error.message)) }
   }
-  catch(error){ console.log( (error.message) ) }
-}
   return (
     <>
       <Formik
@@ -56,7 +64,7 @@ export default function DentistRegister () {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
-            buttonHandler(values)
+            registerHandler(values)
           }, 400)
         }}
       >
@@ -172,7 +180,7 @@ export default function DentistRegister () {
                 placeholder='Reingresa tú contraseña'
               />
               <div className='mt-50px'>
-                <button buttonHandler={buttonHandler} type='submit' className=' mr-1 w-280px md:w-408px lg:w-539px h-30px mb-1 bg-plover-blue hover:bg-blue-700 text-white font-normal rounded'>
+                <button type='submit' className=' mr-1 w-280px md:w-408px lg:w-539px h-30px mb-1 bg-plover-blue hover:bg-blue-700 text-white font-normal rounded'>
                   Registrarse
                 </button>
               </div>
