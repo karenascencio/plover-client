@@ -36,14 +36,25 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Configuration ({ dentistInfo }) {
-  const { userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
+  const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
+  const [dentistUpdate, setDentistUpdate] = useState({})
 
+  const inputHandler = event => {
+    const { name, value } = event.target
+    value && setDentistUpdate({ ...dentistUpdate, [name]: value })
+  }
+
+  const buttonHandler = async () => {
+    console.log('clic activado')
+    const response = await api.patchDentist(dentistUpdate, _id)
+    console.log(response)
+  }
 
   return (
     <div className='flex flex-col sm:flex-row '>
       <NavBarDentist isHome />
-      <main className='flex w-full justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Configuración'
@@ -79,11 +90,13 @@ export default function Configuration ({ dentistInfo }) {
                 textLabel='Número de teléfono'
                 textPlaceholder={telephoneNumber}
                 textName='telephoneNumber'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Correo Electrónico'
                 textPlaceholder={email}
                 textName='email'
+                handleChange={inputHandler}
               />
             </div>
           </div>
@@ -97,31 +110,37 @@ export default function Configuration ({ dentistInfo }) {
                 textLabel='Nombre del consultorio'
                 textPlaceholder={clinicName}
                 textName='clinicName'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Teléfono del consultorio'
                 textPlaceholder={clinicNumber}
                 textName='clinicNumber'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Correo electrónico del consultorio'
                 textPlaceholder={clinicEmail}
                 textName='clinicEmail'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Dirección del consultorio'
                 textPlaceholder={clinicAdress}
                 textName='clinicAdress'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Colonia'
                 textPlaceholder={neighborhood}
                 textName='neighborhood'
+                handleChange={inputHandler}
               />
               <FormInput
                 textLabel='Código postal'
                 textPlaceholder={zipCode}
                 textName='zipCode'
+                handleChange={inputHandler}
               />
             </div>
           </div>
@@ -147,7 +166,10 @@ export default function Configuration ({ dentistInfo }) {
           </div>
           <div className='flex flex-col items-center w-full'>
             <div className='w-2/4 lg:w-3/12'>
-              <button className='w-full my-5 py-1.5 text-white rounded bg-plover-blue hover:bg-login-blue'>
+              <button
+                className='w-full my-5 py-1.5 text-white rounded bg-plover-blue hover:bg-login-blue'
+                onClick={buttonHandler}
+              >
                 Guardar cambios
               </button>
               <div className='flex justify-center w-full mb-5 py-0.5 text-plover-blue rounded border-2 border-plover-blue hover:border-login-blue hover:text-login-blue'>
