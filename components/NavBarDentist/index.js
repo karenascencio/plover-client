@@ -13,6 +13,7 @@ import Image from 'next/image'
 
 
 
+
 export default function NavBarDentist(props) {
     const {isHome,idPatient,idDentist} = props
 
@@ -51,7 +52,9 @@ const optionsHome = [{title:'Home',link:'/'},
                 <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
                     {
                         items.map((item,key)=>{
-                            return <li className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></li>
+                            return <motion.li 
+                                 whileHover={{ scale: 1.2 }}
+                                className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></motion.li>
                         })
                     }
                 </ul>
