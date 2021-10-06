@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Formik, Form, useField } from 'formik'
 import * as Yup from 'yup'
@@ -7,63 +8,21 @@ import api from '../lib/api'
 // .: userSchema
 import { dentistSchema } from '../lib/DentistSchemaValidation'
 // .: components
-// import RegisterInput from '../components/dentistRegisterInput'
-// import RegisterSelectInput from '../components/RegisterSelectInput'
-import LoginButtons from '../components/LoginButtons'
+import RegisterInput from '../components/dentistRegisterInput'
+import RegisterSelectInput from '../components/RegisterSelectInput'
 import PasswordInput from '../components/PasswordInput'
-// .: Images
-import lock from '../public/lock.svg'
-import showpsw from '../public/showpsw.svg'
-import hidepsw from '../public/hidepsw.svg'
-
-const RegisterInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props)
-  return (
-    <div className=' my-5 flex flex-col flex-auto'>
-      <label
-        className='text-sm text-plover-blue mb-2.5'
-        htmlFor={props.id || props.name}
-      >
-        {label}
-      </label>
-      <input
-        className='h-30px pl-1 text-base rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black'
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
-        <div className='text-red-500 bg-red-200 text-center rounded'>{meta.error}</div>
-      ) : null}
-    </div>
-  )
-}
-
-const RegisterSelectInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props)
-  return (
-    <div className=' my-5 flex flex-col flex-auto'>
-      <label
-        className='text-sm text-bold text-plover-blue mb-2.5'
-        htmlFor={props.id || props.name}
-      >
-        {label}
-      </label>
-      <select
-        className='h-30px w-280px pl-1 text-plover-blue rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-input-hover focus:text-black'
-        {...field}
-        {...props}
-      />
-      {meta.touched && meta.error ? (
-        <div className='error'>{meta.error}</div>
-      ) : null}
-    </div>
-  )
-}
+import ChangePicture from '../components/ChangePicture'
 
 export default function DentistRegister () {
+  const router = useRouter()
   // .: hook for show password
   // .: Handdler
+  const buttonHandler = async (values) => {
+    console.log(values)
+    if(values){
 
+    }
+  }
   return (
     <>
       <Formik
@@ -84,7 +43,7 @@ export default function DentistRegister () {
           college: '',
           profesionalLicense: '',
           password: '',
-          comparePassword: '',
+          comparePassword: ''
         }}
         /* .: Validation Schema using Yup */
         validationSchema={dentistSchema}
@@ -92,16 +51,18 @@ export default function DentistRegister () {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
+            buttonHandler(values)
           }, 400)
         }}
       >
         <Form>
-          <div className='flex justify-center'>
+          <div className='flex justify-center mb-50px'>
             <div classNam='w-280px'>
               {/* Section 1 */}
-              <div className='mt-90px mb-50px border-b-2 border-black'>
+              <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos Personales</h3>
               </div>
+              {/* <ChangePicture /> */}
               <RegisterInput
                 label='Nombre'
                 name='name'
@@ -126,7 +87,7 @@ export default function DentistRegister () {
                 type='number'
                 placeholder='(123)-123-1234'
               />
-              <div className='mt-90px mb-50px border-b-2 border-black'>
+              <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos del consultorio</h3>
               </div>
               <RegisterInput
@@ -165,7 +126,7 @@ export default function DentistRegister () {
                 type='text'
                 placeholder='8080'
               />
-              <div className='mt-90px mb-50px border-b-2 border-black'>
+              <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos del Profesionales</h3>
               </div>
               <RegisterInput
@@ -196,18 +157,20 @@ export default function DentistRegister () {
                 placeholder='plover@plover.com'
               />
               <PasswordInput
-              label='Contraseña'
-              name='password'
-              placeholder='Contraseña'
+                label='Contraseña'
+                name='password'
+                placeholder='Contraseña'
               />
               <PasswordInput
-              label='Contraseña'
-              name='comparePassword'
-              placeholder='Reingresa tú contraseña'
+                label='Contraseña'
+                name='comparePassword'
+                placeholder='Reingresa tú contraseña'
               />
-              <button type='submit' className=' mr-1 w-280px md:w-408px lg:w-539px h-30px mb-1 bg-plover-blue hover:bg-blue-700 text-white font-normal rounded'>
-                Registrarse
-              </button>
+              <div className='mt-50px'>
+                <button buttonHandler={buttonHandler} type='submit' className=' mr-1 w-280px md:w-408px lg:w-539px h-30px mb-1 bg-plover-blue hover:bg-blue-700 text-white font-normal rounded'>
+                  Registrarse
+                </button>
+              </div>
             </div>
           </div>
         </Form>
