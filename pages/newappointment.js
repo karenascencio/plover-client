@@ -102,12 +102,12 @@ export default function Newappointment() {
                                 </div>
                             </div>
                             <div className='flex'>
-                            <div className='w-full grid grid-cols-6 gap-x-2'>
+                            <div className='w-full grid grid-cols-7 gap-x-3'>
 								<div className='col-span-4'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-                                <div className='col-span-1'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col  mt-5'>
                                     <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                                    <div className='flex'>
+                                    <div className='flex justify-end'>
                                         <Toggle handleToggle={handleToggle} disabled={true}/>
                                     </div>
 								</div>
@@ -116,8 +116,8 @@ export default function Newappointment() {
 										return (
 											<React.Fragment key={key}>
 											<div className='col-span-4'><PlainText text={procedure.name}/></div>
-											<div className='col-span-1'><PlainText text={procedure.price}/></div>
-                                            <div className='flex'>
+											<div className='col-span-2'><PlainText text={procedure.price}/></div>
+                                            <div className='flex justify-end'>
                                                 <Toggle id={key}  handleToggle={handleToggle}/>
                                             </div>
 											</React.Fragment>
