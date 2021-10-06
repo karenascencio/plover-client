@@ -204,12 +204,10 @@ errors.name = 'Por favor ingrese el nombre del paciente'
             if(!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.name)){
               {formulario == 'General Information' && (
               <div id='General Information'>
-=======
             
             {/*aqui comienza el formulario de informacion general*/}
             {formulario =='General Information' && (
               <div id='General Information' className='mt-10'>
->>>>>>> f37921f7ced7c6ae481804f594f3df787ba7525c
                 <div className='flex flex-col'>
                   <TitleHeader
                   pageTitle='Información general'

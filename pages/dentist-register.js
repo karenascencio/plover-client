@@ -70,7 +70,7 @@ export default function DentistRegister () {
       >
         <Form>
           <div className='flex justify-center mb-50px'>
-            <div classNam='w-280px'>
+            <div className='w-280px'>
               {/* Section 1 */}
               <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos Personales</h3>
