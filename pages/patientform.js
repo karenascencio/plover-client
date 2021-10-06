@@ -271,7 +271,7 @@ export default function Giform() {
           >
           {({values,handleSubmit,handleChange,handleBlur,setFieldValue,errors,touched})=>(
             
-            <form onSubmit={handleSubmit} >
+            <form className=' mt-16 sm:mt-0' onSubmit={handleSubmit} >
 
             
             {/*aqui comienza el formulario de informacion general*/}

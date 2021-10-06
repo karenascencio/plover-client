@@ -65,6 +65,8 @@ export async function getStaticProps(context) {
 export default function Medicalrecord({patientFetched}) {
   console.log(patientFetched)
   const [formulario,setFormulario] = useState('General Information')
+
+
   function handleOption(value){
     setFormulario(value)
   } 
@@ -80,8 +82,8 @@ export default function Medicalrecord({patientFetched}) {
     return (
 
       <div className='flex flex-col sm:flex-row '>
-      <NavBarPatient formulario={formulario} handleOption={handleOption} />
-      <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11'>        
+      <NavBarPatient formulario={formulario} handleOption={handleOption}  closed={closed}/>
+      <main className= 'flex mt-16 sm:mt-1 justify-center flex-grow sm:w-65vw mx-11'>        
         <div className='w-full max-w-screen-lg flex flex-col'>      
             {/*aqui comienza el formulario de informacion general*/}
             {formulario =='General Information' && (
