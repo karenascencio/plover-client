@@ -16,9 +16,8 @@ module.exports = {
         '050': '3.125rem',
         '080': '2.125rem',
         '700px': '700px',
-        '100px' : '100px',
-        '110px': '110px',
         '100px': '100px',
+        '110px': '110px',
         '95px': '95px',
         '80px': '80px',
         '65vw': '65vw',
@@ -78,21 +77,28 @@ module.exports = {
         '41px': '2.56rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
-        '676px': '42.188rem',
+        '676px': '42.188rem'
       },
-      maxWidth:{
+      maxWidth: {
         '18rem': '18rem',
         '26rem': '26rem',
         '10rem': '10rem'
       }
+    },
+    minWidth: {
+      '0': '0',
+      '1/4': '25%',
+      '1/2': '50%',
+      'full': '100%',
+      '200': '200px'
     }
   },
   variants: {
     extend: {
-      fontWeight: ['hover'],
-    },
+      fontWeight: ['hover']
+    }
   },
   plugins: [
-    require('@tailwindcss/custom-forms'),
+    require('@tailwindcss/custom-forms')
   ]
 }
