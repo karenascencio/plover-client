@@ -263,8 +263,9 @@ export default function Giform() {
               //}
               return errors
             }}
-            onSubmit={(values) => {
-              formatPatient(values)
+            onSubmit={async (values) => {
+              alert(JSON.stringify(values, null, 2));
+              await formatPatient(values)
               router.push(`/`)
             }}         
           >
@@ -876,7 +877,7 @@ export default function Giform() {
                     handleBlur={handleBlur}
                 />
             </div>
-            <button type='submit'  className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
+            <button type='submit' className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
 
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
