@@ -66,11 +66,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
 
   <div className='flex flex-col sm:flex-row '>
     <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
-<<<<<<< HEAD
     <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
-=======
-    <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11'>
->>>>>>> d66b3c916e9ecd8d6d3b2cf65c6fb03a7910f226
     <div className='w-full max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Paciente'
