@@ -84,6 +84,11 @@ module.exports = {
         '18rem': '18rem',
         '26rem': '26rem',
         '10rem': '10rem'
+      },
+      minWidth:{
+        '25%': '25%',
+        '30%': '30%',
+        '100px':'100px'
       }
     }
   },

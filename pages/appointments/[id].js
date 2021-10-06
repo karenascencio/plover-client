@@ -16,6 +16,7 @@ import addIcon from '../../public/addIcon.svg'
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
 //corregimos el carrusel y los links y los erroes de vercel
+//arreglamos el problema con el w-full en main
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },

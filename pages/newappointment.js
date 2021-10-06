@@ -93,7 +93,7 @@ export default function Newappointment() {
 						</div>
                         <div className='w-full flex flex-col w-1/2 '>
                             <div className='flex justify-between items-center'>
-							    <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
+							    <div className='self-start '><H3 textTitle='Lista de procedimientos' textColor='plover-blue'/></div>
                                
                                 <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                                     <div className='pt-1'><Image src={addIcon} height={15} width={15}/></div>
@@ -102,9 +102,9 @@ export default function Newappointment() {
                                 </div>
                             </div>
                             <div className='flex'>
-                            <div className='w-full grid grid-cols-6 gap-x-5'>
-								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-                                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                            <div className='w-full grid grid-cols-6 gap-x-2'>
+								<div className='col-span-4'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+                                <div className='col-span-1'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col items-end mt-5 '>
                                     <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
                                     <Toggle handleToggle={handleToggle} disabled={true}/>
@@ -113,8 +113,8 @@ export default function Newappointment() {
 									procedures.map((procedure,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='col-span-3'><PlainText text={procedure.name}/></div>
-											<div className='col-span-2'><PlainText text={procedure.price}/></div>
+											<div className='col-span-4'><PlainText text={procedure.name}/></div>
+											<div className='col-span-1'><PlainText text={procedure.price}/></div>
                                             <div className='flex justify-end'>
                                                 <Toggle id={key}  handleToggle={handleToggle}/>
                                             </div>
