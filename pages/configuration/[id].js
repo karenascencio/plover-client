@@ -1,5 +1,5 @@
-import React from 'react'
-// import S3FileUpload from 'react-s3'
+import React, { useState } from 'react'
+import Link from 'next/link'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import NavBarDentist from '../../components/NavBarDentist'
@@ -37,9 +37,12 @@ export const getStaticProps = async (context) => {
 
 export default function Configuration ({ dentistInfo }) {
   const { userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
+  const [profileImage, setProfileImage] = useState(userImage)
+
+
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={true} />
+      <NavBarDentist isHome />
       <main className='flex w-full justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
@@ -47,14 +50,15 @@ export default function Configuration ({ dentistInfo }) {
           />
           <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
             <ChangePicture
-              profilePicture={userImage}
+              profilePicture={profileImage}
+              // uploadHandler={handleFileChange}
             />
             <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
               {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
             </h2>
           </div>
           <div className='flex flex-col w-full border-b border-lighter-gray'>
-            <div className='w-2/4'>
+            <div className='w-full md:w-2/4'>
               <H3
                 textTitle='Información personal'
                 textColor='plover-blue'
@@ -84,7 +88,7 @@ export default function Configuration ({ dentistInfo }) {
             </div>
           </div>
           <div className='flex flex-col w-full border-b border-lighter-gray'>
-            <div className='w-2/4'>
+            <div className='w-full md:w-2/4'>
               <H3
                 textTitle='Datos del consultorio'
                 textColor='plover-blue'
@@ -122,7 +126,7 @@ export default function Configuration ({ dentistInfo }) {
             </div>
           </div>
           <div className='flex flex-col w-full border-b border-lighter-gray'>
-            <div className='w-2/4'>
+            <div className='w-full md:w-2/4'>
               <H3
                 textTitle='Datos profesionales'
                 textColor='plover-blue'
@@ -139,6 +143,18 @@ export default function Configuration ({ dentistInfo }) {
                 textLabel='Cédula profesional'
                 textValue={profesionalLicense}
               />
+            </div>
+          </div>
+          <div className='flex flex-col items-center w-full'>
+            <div className='w-2/4 lg:w-3/12'>
+              <button className='w-full my-5 py-1.5 text-white rounded bg-plover-blue hover:bg-login-blue'>
+                Guardar cambios
+              </button>
+              <div className='flex justify-center w-full mb-5 py-0.5 text-plover-blue rounded border-2 border-plover-blue hover:border-login-blue hover:text-login-blue'>
+                <Link href={`/changepassword/${'61511d3cf6273ea718ebd5f4'}`}>
+                  <a>Cambiar de contraseña</a>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
