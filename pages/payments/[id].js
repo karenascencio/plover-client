@@ -9,6 +9,8 @@ import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
 import { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
+import bill from '../../public/bill.svg'
+import Image from 'next/image'
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -102,18 +104,18 @@ export default function Payments({payments,appointments}){
     return (
 <div className='flex flex-col sm:flex-row '>
     <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
-        <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
+        <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='flex flex-col items-center max-w-screen-lg '>
             <Carrusel cards={cardsInfo}/>
 						<div className='w-full flex justify-between' >
 							<H1 textTitle='Pagos' textColor='plover-blue'/>
-							<AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/>
+							<div className='mr-4'><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
 						</div>
 						<div className='w-full flex flex-col'>
 							<div className='self-start'>
-								<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
+								<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1 '>Agregar pago</button>
 							</div>
-							<div className='grid grid-cols-5 gap-x-5'>
+							<div className='grid grid-cols-5 gap-x-5 place-items-stretch'>
 								<div className='col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
 								<div className='col-span-2  flex flex-col justify-end items-center pb-4'>
 									<label className='text-plover-blue text-sm pb-2 self-start' htmlFor='calendar'>
@@ -128,9 +130,7 @@ export default function Payments({payments,appointments}){
 										onChange={handleChange}
         							/>
 								</div>
-								<div className='flex flex-col  w-28  justify-around items-start pb-5 text-plover-blue '>
-									<span className=''>Comprobante</span>
-									</div>
+								
 
 								{
 									dynamicPayments.map((item,key)=>{
@@ -138,7 +138,7 @@ export default function Payments({payments,appointments}){
 											<React.Fragment key={key}>
 											<div className='col-span-2'><PlainText text={item.total}/></div>
 											<div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
-											<button className='text-white bg-plover-blue w-30px h-30px rounded my-1'>{'+'}</button>
+											<div className='px-6'><button className='p-1 text-white bg-plover-blue w-30px h-30px rounded my-1'><Image src={bill} /></button></div>
 											</React.Fragment>
 										)
 									})

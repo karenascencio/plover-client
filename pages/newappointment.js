@@ -37,7 +37,7 @@ export async function getStaticProps() {
 export default function Newappointment() {
     const router = useRouter()
 		console.log(router.query)
-    const {patientId:idPatient,dentistId:idDentist} = router.query
+    const {idPatient:idPatient,idDentist:idDentist} = router.query
 
 		console.log('el id de paciente es: ',idPatient)
 		console.log('el id de dentista es: ',idDentist)
@@ -72,15 +72,19 @@ export default function Newappointment() {
         const {name,value} = event.target
         setAppointment({...appointment,[name]:value})
     }
-    async function handleSubmit(){
+    async function handleSubmit(e){
         await api.postAppointment(appointment)
+        e.preventDefault()
+        console.log(`te quieres mover a /patients/${idPatient}`)
+        router.push(`/patients/${idPatient}`)
+
     }
 
     return (
         <div className='flex flex-col sm:flex-row '>
         	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
                 {/*el w-full rompe el layout*/}
-        	  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11 '>
+        	  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11 '>
               <div className='max-w-screen-lg w-full flex flex-col items-center '>
                         <Carrusel cards={cardsInfo}/>
                         <div className='w-full flex justify-between '> 

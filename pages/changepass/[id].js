@@ -87,7 +87,7 @@ export default function ChangePass() {
             <input
               className='w-full py-1 pl-1 border-0 focus:outline-none'
               type={seePassword ? 'text' : 'password' }
-              placeholder='Contraseña'
+              placeholder='Confirmar contraseña'
               onChange={event => setResetPassword({...resetPassword, verifyPassword: event.target.value })}
               value={resetPassword.verifyPassword}
               required

@@ -7,6 +7,7 @@ import '../../node_modules/slick-carousel/slick/slick-theme.css'
 export default function Carrusel (props) {
   const { cards } = props
   const settings = {
+    arrows:false,
     dots: true,
     infinite: true,
     speed: 500,
