@@ -58,7 +58,7 @@ export default function Payments({payments,appointments}){
     console.log(router.query)
     const idPatient = router.query.id
     console.log(`el id de paciente es ${idPatient}`)
-    const idDentist = router.query.dentistId
+    const idDentist = router.query.idDentist
     console.log(`el id de odontologo  es ${idDentist}`)
     
 
@@ -68,6 +68,9 @@ export default function Payments({payments,appointments}){
 	console.log(dynamicPayments)
 	const [fullPrice,setFullPrice] = useState(getFullPrice(appointments))
 	const [remaningPrice,setRemaningPrice] = useState(fullPrice-getPaidOut(dynamicPayments))
+	const [initial,setInitial] = useState(false)
+	const [error,setError] = useState(true)
+	const [errorDate,setErrorDate] = useState(true)
 
 	console.log(`el total a pagar es ${fullPrice}`)
 	console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
@@ -87,11 +90,30 @@ export default function Payments({payments,appointments}){
 	
 
 	function handleChange(event){
+		setInitial(true)
 		console.log(payment)
 		const {name,value} = event.target
+		console.log(`el nombre del input es ${name} y su valor es ${value}`)
+		if(name=='total' && (isNaN(value) || value == '' || Number(value)<=0)){
+			setError(true)
+		}
+
+		else if(name=='total' && !isNaN(value)){
+			setError(false)
+		}
+		if(name=='date' && value ==''){
+			setErrorDate(true)
+		}
+		else if(name=='date' && value !=' '){
+			setErrorDate(false)
+		}
+	
+
+
 		setPayment({...payment,[name]:value})
 	}
 	async function handlePayment(){
+			setInitial(true)
 			payment.total = Number(payment.total)
 			payment.date = new Date(payment.date)
 			await api.postPayment(payment)
@@ -113,10 +135,14 @@ export default function Payments({payments,appointments}){
 						</div>
 						<div className='w-full flex flex-col'>
 							<div className='self-start'>
-								<button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1 '>Agregar pago</button>
+								<button disabled={errorDate} onClick={handlePayment} className={`text-white ${error?'bg-lighter-gray':'bg-plover-blue'} w-28 h-30px rounded my-1 `}>Agregar pago</button>
+								<div> </div>
 							</div>
 							<div className='grid grid-cols-5 gap-x-5 place-items-stretch'>
-								<div className='col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} /></div>
+								<div className='col-span-2 flex flex-col'>
+									<FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} />
+									{initial && error && <div className='text-sm text-plover-blue -mt-5'>Ingresa el costo </div>}
+								</div>
 								<div className='col-span-2  flex flex-col justify-end items-center pb-4'>
 									<label className='text-plover-blue text-sm pb-2 self-start' htmlFor='calendar'>
           								Fecha:
