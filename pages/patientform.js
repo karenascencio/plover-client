@@ -11,15 +11,21 @@ import H3 from '../components/H3'
 import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
+import { useRouter } from 'next/router'
 
 // single form
 export default function Giform () {
   const [formulario, setFormulario] = useState('General Information')
 
-  function handleOption (value) {
+  const router = useRouter()
+  console.log(router.query)
+  const idDentist = router.query.idDentist
+  console.log(idDentist)
+  const [formulario,setFormulario] = useState('General Information')
+ 
+  function handleOption(value){
     setFormulario(value)
   }
-
 
   function stringToArray (string) {
     if (typeof string === 'string') {
@@ -28,55 +34,26 @@ export default function Giform () {
     return []
   }
 
-  async function SeeState (values) {
-    console.log(values)
-    values.idDetist = '61511d3cf6273ea718ebd5f5'
-    values.email = `user${Math.random()}@gmail.com`
-    values.password = `password${Math.random()}@gmail.com`
-    values.age = Number(values.age)
-    values.height = Number(values.height)
-    values.weight = Number(values.weight)
-
-    values.familyBackground.father.pathologies = stringToArray(values.familyBackground.father.pathologies)
-    values.familyBackground.mother.pathologies = stringToArray(values.familyBackground.mother.pathologies)
-    values.familyBackground.grandFather.pathologies = stringToArray(values.familyBackground.grandFather.pathologies)
-    values.familyBackground.grandMother.pathologies = stringToArray(values.familyBackground.grandMother.pathologies)
-    values.familyBackground.partner.pathologies = stringToArray(values.familyBackground.partner.pathologies)
-    values.familyBackground.brothers.pathologies = stringToArray(values.familyBackground.brothers.pathologies)
-    values.pathologicalBackground.currentDiseases = stringToArray(values.pathologicalBackground.currentDiseases)
-    values.pathologicalBackground.previousDiseases = stringToArray(values.pathologicalBackground.previousDiseases)
-    values.pathologicalBackground.generalAllergies = stringToArray(values.pathologicalBackground.generalAllergies)
-    values.pathologicalBackground.drugAllergies = stringToArray(values.pathologicalBackground.drugAllergies)
-    values.pathologicalBackground.currentMedications = stringToArray(values.pathologicalBackground.currentMedications)
-    values.nonPathologicalBackground.vaccines = stringToArray(values.nonPathologicalBackground.vaccines)
-    values.nonPathologicalBackground.addictions = stringToArray(values.nonPathologicalBackground.addictions)
-    values.nonPathologicalBackground.services = stringToArray(values.nonPathologicalBackground.services)
-    values.nonPathologicalBackground.alcoholConsumption = values.nonPathologicalBackground.alcoholConsumption.toLowerCase()
-    values.nonPathologicalBackground.cigarConsumption = values.nonPathologicalBackground.cigarConsumption.toLowerCase()
-    await api.postPatient(values)
-  }
-  return (
       <div className='flex flex-col sm:flex-row '>
         <NavBarPatient formulario={formulario} handleOption={handleOption} />
         <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik
             initialValues={{
-              name: '',
-              lastName: '',
-              gender: '',
-              age: '',
-              height: '',
-              weight: '',
-              bloodType: '',
-              maritalStatus: '',
-              address: {
-                state: '',
-                city: '',
-                neighborhood: '',
-                street: '',
-                streetNumber: '',
-                innerNumber: ''
+              name:'',
+              lastName:'',
+              gender:'masculino',
+              age:'',
+              height:'',
+              weight:'',
+              bloodType:'A+',
+              address:{
+                state:'',
+                city:'',
+                neighborhood:'',
+                street:'',
+                streetNumber:'',
+                innerNumber:''
               },
               familyPractitioner: {
                 name: '',
@@ -107,13 +84,29 @@ export default function Giform () {
                   pathologies: '',
                   description: ''
                 },
-                partner: {
-                  pathologies: '',
-                  description: ''
+                pathologicalBackground:{
+                  currentDiseases:"",
+                  previousDiseases:"",
+                  generalAllergies:"",
+                  drugAllergies:"",
+                  currentMedications:"",
+                  previousOperations:"si",
+                  bloodDonation:"si",
+                  birthControlPills:"si",
+                  observations:""
                 },
-                brothers: {
-                  pathologies: '',
-                  description: ''
+                nonPathologicalBackground:{
+                    feeding:'buena',
+                    toothBrushingFrequency:'',
+                    vaccines:'',
+                    addictions:'',
+                    alcoholConsumption:'Nunca he tomado',
+                    cigarConsumption:'Nunca he fumado',
+                    recentTattos:'si',
+                    hygieneDescription:'',
+                    services:'',
+                    unusualHabits:'',
+                    observations:''
                 }
               },
               pathologicalBackground: {
@@ -198,32 +191,25 @@ errors.name = 'Por favor ingrese el nombre del paciente'
               } else if (!/^[a-z ,.'-]+$/i.test(values.address.street)) {
                 errors.street = 'La caller no puede contener numeros ni caracteres especiales'
               }
-              // validacion de numero exterior
-              // if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
-              // else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
-              // errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
-              // }
-
-              // validacion de numero interior
-              // if(!values.address.innerNumber) errors.innerNumber ='Ingresa el numero interior del paciente'
-              // else if(!/^[0-9]{1,5}$/.test(values.address.innerNumber)){
-              // errors.innerNumber='El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
-              // }
-              return errors
-            }}
-            onSubmit={(values) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
-                }, 400)
-            }}
-          >
-            {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
-
-            <form onSubmit={handleSubmit}>
-
-              {/*aqui comienza el formulario de informacion general */}
+              if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
+               else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
+               errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+             }
+             //validaciones de numero interior
+               if(!/^[0-9]{1,5}$/.test(values.address.innerNumber)   ){
+               errors.innerNumber='El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+            }
+            //validacion de medico familiar
+            //validacion de nombre 
+            if(!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.name)){
               {formulario == 'General Information' && (
               <div id='General Information'>
+=======
+            
+            {/*aqui comienza el formulario de informacion general*/}
+            {formulario =='General Information' && (
+              <div id='General Information' className='mt-10'>
+>>>>>>> f37921f7ced7c6ae481804f594f3df787ba7525c
                 <div className='flex flex-col'>
                   <TitleHeader
                   pageTitle='Información general'
@@ -379,24 +365,16 @@ errors.name = 'Por favor ingrese el nombre del paciente'
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                 />
+                   {getIn(touched,'address.streetNumber') && getIn(errors,'streetNumber') && <div className='text-plover-blue text-sm' >{errors.streetNumber}</div>} 
               </div>
-                  <div className='flex flex-col'>
-                <FormInput
-                  textName='address.innerNumber'
-                  textLabel='Número interior'
-                  textValue={values.address.innerNumber}
+                <FormInput 
+                  textName='address.innerNumber' 
+                  textLabel='Número interior (opcional)' 
+                  textValue={values.address.innerNumber} 
                   inputId='address.innerNumber'
                   handleChange={handleChange}
-                  handleBlur={handleBlur} />
-              </div>
-
-                </div>
-
-                <H3 textTitle='Médico familiar' textColor='plover-blue' />
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray">
-                  <FormInput
-                textName='familyPractitioner.name'
-                textLabel='Nombres'
+                  handleBlur={handleBlur}                />
+                  {getIn(touched,'address.innerNumber') && getIn(errors,'innerNumber') && <div className='text-plover-blue text-sm' >{errors.innerNumber}</div>} 
                 textValue={values.familyPractitioner.name}
                 inputId='familyPractitioner.name'
                 handleChange={handleChange}
@@ -433,6 +411,59 @@ errors.name = 'Por favor ingrese el nombre del paciente'
                 <H3 textTitle='Persona a cargo' textColor='plover-blue' />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray">
                   <FormInput
+=======
+                <H3 textTitle='Médico familiar (opcional)' textColor='plover-blue'/>
+                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+              <div className='flex flex-col'>
+                <FormInput
+                  textName='familyPractitioner.name'
+                  textLabel='Nombres' 
+                  textValue={values.familyPractitioner.name}  
+                  inputId='familyPractitioner.name'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}                />
+                  {getIn(touched,'familyPractitioner.name') && getIn(errors,'doctorName') && <div className='text-plover-blue text-sm' >{errors.doctorName}</div>} 
+                </div>
+                {/*validamos que el campo no venga vacio*/}
+                {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
+              <div>
+              <FormInput 
+                textName='familyPractitioner.lastName' 
+                textLabel='Apellidos' 
+                textValue={values.familyPractitioner.lastName}  
+                inputId='familyPractitioner.lastName'
+                handleChange={handleChange}
+                handleBlur={handleBlur}                />
+                {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
+                {getIn(touched,'familyPractitioner.lastName') && getIn(errors,'doctorLastName') && <div className='text-plover-blue text-sm' >{errors.doctorLastName}</div>} 
+              </div>
+              <div>
+                <FormInput 
+                  textName='familyPractitioner.email'
+                  textLabel='Email' 
+                  textValue={values.familyPractitioner.email}  
+                  inputId='familyPractitioner.email'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
+                {getIn(touched,'familyPractitioner.email') && getIn(errors,'doctorEmail') && <div className='text-plover-blue text-sm' >{errors.doctorEmail}</div>} 
+                </div>
+                <div>
+                  <FormInput 
+                    textName='familyPractitioner.phoneNumber' 
+                    textLabel='Número de teléfono' 
+                    textValue={values.familyPractitioner.phoneNumber}  
+                    inputId='familyPractitioner.phoneNumber'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+                {getIn(touched,'familyPractitioner.phoneNumber') && getIn(errors,'doctorPhoneNumber') && <div className='text-plover-blue text-sm' >{errors.doctorPhoneNumber}</div>} 
+                </div>
+                </div>
+                <H3 textTitle='Persona a cargo' textColor='plover-blue'/>
+                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+              <FormInput
+>>>>>>> f37921f7ced7c6ae481804f594f3df787ba7525c
                 textName='personInCharge.name'
                 textLabel='Nombres'
                 textValue={values.personInCharge.name}
@@ -468,27 +499,29 @@ errors.name = 'Por favor ingrese el nombre del paciente'
               />
                 </div>
               </div>)}
-              {/*aqui termina el formulario de informacion general */}
-
-              {/*aqui comineza el formulario de antecedentes famililares */}
-              {formulario == 'Family Background' && (
-                <div id='Family Background'>
+              {/*aqui termina el formulario de informacion general*/}
+            
+              {/*aqui comineza el formulario de antecedentes famililares*/}
+              {formulario=='Family Background' && (
+              <div id='Family Background' className='mt-10'>
                 <div className='flex flex-col'>
-                  <TitleHeader
-                  pageTitle='Antecedentes Familiares'
-                  secondaryText=''
-                />
-                  <H3 textTitle='Patologías' textColor='plover-blue' />
+                <TitleHeader
+                    pageTitle='Antecedentes Familiares'
+                    secondaryText=''
+                  />
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8">
-                  <div className='flex flex-col border-b border-lighter-gray'>
-                  <FormInput
-                      textName='familyBackground.father.pathologies'
-                      textLabel='Padre'
-                      textValue={values.familyBackground.father.pathologies}
-                      inputId='familyBackground.father.pathologies'
-                      handleChange={handleChange}
-                      handleBlur={handleBlur}
+                <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
+                <H3 textTitle='Patologías' textColor='plover-blue'/>
+                <p className='text-plover-blue pt-10'>Ingrese las enfermedades separadas por comas</p>
+
+                <div className='flex flex-col border-b border-lighter-gray'>
+                    <FormInput
+                        textName='familyBackground.father.pathologies'
+                        textLabel='Padre' 
+                        textValue={values.familyBackground.father.pathologies}  
+                        inputId='familyBackground.father.pathologies'
+                        handleChange={handleChange}
+                        handleBlur={handleBlur}
                     />
                   {/*validamos que el campo no venga vacio */}
                   {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
@@ -612,25 +645,25 @@ errors.name = 'Por favor ingrese el nombre del paciente'
                     />
                   {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                 </div>
-                </div>
-              </div>)}
-              {/*aqui termina el formulario de antecedentes familiares */}
+            </div>
+            </div>)}
+            {/*aqui termina el formulario de antecedentes familiares*/}
 
-              {/*aqui comienza el formulario de antecedentes patologicos */}
-              {formulario == 'Pathological Background' && (
-              <div id='Pathological Background'>
-              <TitleHeader
-              pageTitle='Antecedentes patológicos'
-              secondaryText=''
-            />
-              <div className="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray">
-              <FormInput
-                  textName='pathologicalBackground.currentDiseases'
-                  textLabel='Enfermedades actuales'
-                  textValue={values.pathologicalBackground.currentDiseases}
-                  inputId='pathologicalBackground.currentDiseases'
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
+            {/*aqui comienza el formulario de antecedentes patologicos*/}
+            {formulario=='Pathological Background' && (
+            <div id='Pathological Background' className='mt-10'>
+            <TitleHeader
+                    pageTitle='Antecedentes patológicos'
+                    secondaryText=''
+                />
+            <div className={'mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+                <FormInput 
+                    textName='pathologicalBackground.currentDiseases'
+                    textLabel='Enfermedades actuales' 
+                    textValue={values.pathologicalBackground.currentDiseases}  
+                    inputId='pathologicalBackground.currentDiseases'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
                 />
               <FormInput
                   textName='pathologicalBackground.previousDiseases'
@@ -697,28 +730,28 @@ errors.name = 'Por favor ingrese el nombre del paciente'
             </div>)}
               {/*aqui termina el formulario de antecedentes patologicos */}
 
-              {/*aqui comienza el formulario de antecedentes no patologicos */}
-              {formulario == 'NonPathological Background' && (
-              <div id='NonPathological Background'>
+            {/*aqui comienza el formulario de antecedentes no patologicos*/}
+            {formulario=='NonPathological Background' && (
+            <div id='NonPathological Background' className='mt-10'>
               <TitleHeader
-                pageTitle='Antecedentes no patológicos'
-                secondaryText=''
-              />
-              <div className="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray">
-                <RadioButtons
-                textLabel='¿Como considera su alimentacion?'
-                options={['buena', 'regular', 'mala']}
-                setFieldValue={setFieldValue}
-                textValue={values.nonPathologicalBackground.feeding}
-                textName='nonPathologicalBackground.feeding'
-              />
-                <FormInput
-                  textName='nonPathologicalBackground.toothBrushingFrequency'
-                  textLabel='¿Con qué frecuencia se cepilla los dientes?'
-                  textValue={values.nonPathologicalBackground.toothBrushingFrequency}
-                  inputId='nonPathologicalBackground.toothBrushingFrequency'
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
+                    pageTitle='Antecedentes no patológicos'
+                    secondaryText=''
+                />
+              <div className={'mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-5 border-b border-lighter-gray'}>
+              <RadioButtons 
+                    textLabel='¿Como considera su alimentacion?'
+                    options={['buena','regular','mala']}
+                    setFieldValue={setFieldValue}
+                    textValue={values.nonPathologicalBackground.feeding}
+                    textName='nonPathologicalBackground.feeding'
+                />
+                <FormInput 
+                    textName='nonPathologicalBackground.toothBrushingFrequency'
+                    textLabel='¿Con qué frecuencia se cepilla los dientes?' 
+                    textValue={values.nonPathologicalBackground.toothBrushingFrequency}  
+                    inputId='nonPathologicalBackground.toothBrushingFrequency'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
                 />
                 <FormInput
                   textName='nonPathologicalBackground.vaccines'
@@ -794,25 +827,17 @@ errors.name = 'Por favor ingrese el nombre del paciente'
               handleBlur={handleBlur}
             />
 
-                <Textarea
-              textName='nonPathologicalBackground.unusualHabits'
-              textLabel='Hábitos extraños'
-              textValue={values.nonPathologicalBackground.unusualHabits}
-              inputId='nonPathologicalBackground.unusualHabits'
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
+            <Textarea
+                    textName='nonPathologicalBackground.observations' 
+                    textLabel='Observaciónes' 
+                    textValue={values.nonPathologicalBackground.observations}  
+                    inputId='nonPathologicalBackground.observations'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+            </div>
+            <button type='submit' onClick={()=>SeeState(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
 
-                <Textarea
-              textName='nonPathologicalBackground.observations'
-              textLabel='Observaciónes'
-              textValue={values.nonPathologicalBackground.observations}
-              inputId='nonPathologicalBackground.observations'
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-              </div>
-              <button type='submit' onClick={() => SeeState(values)}>Enviar </button>
             </div>)}
               {/*aqui termina el formulario de antecedentes no patologiocos */}
 

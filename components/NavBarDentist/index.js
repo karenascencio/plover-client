@@ -13,14 +13,15 @@ import Image from 'next/image'
 
 
 
+
 export default function NavBarDentist(props) {
     const {isHome,idPatient,idDentist} = props
 
     const options = [{title:'Home',link:'/'},
-                {title:'Agregar cita',link:`/newappointment?dentistId=${idDentist}&patientId=${idPatient}`},
+                {title:'Agregar cita',link:`/newappointment?idDentist=${idDentist}&idPatient=${idPatient}`},
                 {title:'Consultar citas',link:`/patients/${idPatient}`},
-                {title:'Historial clínico',link:`/medicalrecord/${idPatient}`},
-                {title:'Historial de pagos',link:`/payments/${idPatient}?dentistId=${idDentist}`},
+                {title:'Historial clínico',link:`/medicalrecords/${idPatient}`},
+                {title:'Historial de pagos',link:`/payments/${idPatient}?idDentist=${idDentist}`},
                 {title:'Configuración',link:'/configuration '},               
             ]
 
@@ -51,7 +52,9 @@ const optionsHome = [{title:'Home',link:'/'},
                 <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
                     {
                         items.map((item,key)=>{
-                            return <li className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></li>
+                            return <motion.li 
+                                 whileHover={{ scale: 1.2 }}
+                                className='mb-5' key={key}><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>{item.title}</a></Link></motion.li>
                         })
                     }
                 </ul>

@@ -11,14 +11,14 @@ import deleteIcon from '../../public/deleteIcon.svg'
 import paymentHistory from '../../public/paymentHistory.svg'
 
 export default function PatientCard (props) {
-  const { patientName, patientImage, patientId , dentistId} = props
+  const { patientName, patientImage, idPatient , idDentist} = props
  
   return (
     <div className='h-20 w-full border-b border-lighter-gray flex items-center justify-between'>
       <PatientCardInfo
         patientName={patientName}
         patientImage={patientImage}
-        patientId={patientId}
+        idPatient={idPatient}
       />
       <PatientQuickActions
         addAppointment={addAppointment}
@@ -26,8 +26,8 @@ export default function PatientCard (props) {
         clinicalRecord={clinicBackground}
         payments={paymentHistory}
         deletePatient={deleteIcon}
-        patientId={patientId}
-        dentistId={dentistId}
+        idPatient={idPatient}
+        idDentist={idDentist}
         
       />
     </div>
