@@ -31,15 +31,19 @@ export default function NavBarPatient(props) {
                 <div className='flex flex-col items-start'>
                     <div className='mt-5'><H1 textTitle='Plover' textColor='white' /></div>
                 </div>
-                <ul className='mt-10 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 '>
+                <ul className='mb-10 mt-10 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 '>
                     {
                         forms.map((item,key)=>{
-                            return <li className='mb-10 ' key={key}><button onClick={(()=>handleOption(item.form))} className='text-white text-lg '>{item.title }</button></li>
+                            return <motion.li 
+                                 whileHover={{ scale: 1.2 }}
+                                className='mb-10 ' key={key}><button onClick={(()=>handleOption(item.form))} className='text-white text-lg '>{item.title }</button></motion.li>
                         })
                     }
                     
                 </ul>
-                <Link href='/'><a className='w-11/12 hidden sm:block max-w-10rem bg-white block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'>Home</a></Link>
+                <Link href='/'><motion.a 
+                    whileHover={{ scale: 1.2 }}
+                     className=' w-11/12 hidden sm:block max-w-10rem bg-white block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'>Home</motion.a></Link>
                 <HamburgerMenu className='sm:hidden mr-3'
                     isOpen={isOpen}
                     menuClicked={handleHamburgerMenu}

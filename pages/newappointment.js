@@ -84,7 +84,7 @@ export default function Newappointment() {
         <div className='flex flex-col sm:flex-row '>
         	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
                 {/*el w-full rompe el layout*/}
-        	  <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11 '>
+        	  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11 '>
               <div className='max-w-screen-lg w-full flex flex-col items-center '>
                         <Carrusel cards={cardsInfo}/>
                         <div className='w-full flex justify-between '> 

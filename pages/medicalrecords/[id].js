@@ -81,7 +81,7 @@ export default function Medicalrecord({patientFetched}) {
 
       <div className='flex flex-col sm:flex-row '>
       <NavBarPatient formulario={formulario} handleOption={handleOption} />
-      <main className= 'flex w-ful justify-center flex-grow sm:w-65vw mx-11'>        
+      <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11'>        
         <div className='w-full max-w-screen-lg flex flex-col'>      
             {/*aqui comienza el formulario de informacion general*/}
             {formulario =='General Information' && (
