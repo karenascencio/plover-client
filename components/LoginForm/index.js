@@ -6,7 +6,7 @@ import Image from 'next/image'
 import H1 from '../../components/H1'
 import LoginInput from '../../components/LoginInput'
 import LoginButtons from '../../components/LoginButtons'
-import PasswordInput from '../../components/PasswordInput'
+import PasswordLoginInput from '../../components/PasswordInput'
 // .: Images
 import emailImg from '../../public/email.svg'
 import lock from '../../public/lock.svg'
@@ -72,10 +72,16 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
             </div>
           </div>
           <LoginButtons title='Iniciar sesión' type='submit' buttonHandler={buttonHandler} />
-          <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?<a className='hover:text-plover-blue hover:font-bold ' href='#'> Registrate</a></p>
+          <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?
+            <Link href='/dentist-register'>
+              <a className='hover:text-plover-blue hover:font-bold '>
+                Registrate
+              </a>
+            </Link>
+          </p>
           <p className=' text-login-blue text-14px '>
-            <Link href="/recovery-password">
-              <a className='hover:text-plover-blue hover:font-bold ' href='#'>
+            <Link href='/recovery-password'>
+              <a className='hover:text-plover-blue hover:font-bold '>
               ¿Olvidaste la contraseña?
             </a>
             </Link>
