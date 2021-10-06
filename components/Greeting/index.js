@@ -7,7 +7,7 @@ export default function Greeting (props) {
       <h2 className='text-2xl text-white'>
         Hola,
       </h2>
-      <p className='text-2xl text-white font-semibold'>
+      <p className='text-2xl text-white font-semibold capitalize'>
         {userName}!
       </p>
     </div>
