@@ -20,7 +20,7 @@ const PasswordInput = ({ label, ...props }) => {
           {...field}
           {...props}
         />
-        <button onClick={() => setShowPassword(!showPassword)}><Image src={showPassword ? showpsw : hidepsw} heigth={45} width={45} /></button>
+        <a onClick={() => setShowPassword(!showPassword)}><Image src={showPassword ? showpsw : hidepsw} heigth={45} width={45} /></a>
 
       </div>
       {meta.touched && meta.error ? (

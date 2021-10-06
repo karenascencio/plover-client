@@ -1,7 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Image from 'next/image'
 import ReactDOM from 'react-dom';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
+import lock from '../public/lock.svg'
+import showpsw from '../public/showpsw.svg'
+import hidepsw from '../public/hidepsw.svg'
+//import PasswordInput from '../components/PasswordInput'
+
+
+const RegisterInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props)
+  return (
+    <div className=' my-5 flex flex-col flex-auto'>
+      <label
+        className='text-sm text-plover-blue mb-2.5'
+        htmlFor={props.id || props.name}
+      >
+        {label}
+      </label>
+      <input
+        className='h-30px pl-1 text-base rounded text-darker-gray border-b border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black'
+        {...field}
+        {...props}
+      />
+      {meta.touched && meta.error ? (
+        <div className='text-red-500 bg-red-200 text-center rounded'>{meta.error}</div>
+      ) : null}
+    </div>
+  )
+}
+
+
 
 const MyTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -19,24 +49,6 @@ const MyTextInput = ({ label, ...props }) => {
   );
 };
 
-const MyCheckbox = ({ children, ...props }) => {
-  // React treats radios and checkbox inputs differently other input types, select, and textarea.
-  // Formik does this too! When you specify `type` to useField(), it will
-  // return the correct bag of props for you -- a `checked` prop will be included
-  // in `field` alongside `name`, `value`, `onChange`, and `onBlur`
-  const [field, meta] = useField({ ...props, type: 'checkbox' });
-  return (
-    <div>
-      <label className="checkbox-input">
-        <input type="checkbox" {...field} {...props} />
-        {children}
-      </label>
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </div>
-  );
-};
 
 const MySelect = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -52,7 +64,7 @@ const MySelect = ({ label, ...props }) => {
 };
 
 // And now we can use these
-export default function SignupForm() {
+export default function SignupForm () {
   return (
     <>
       <h1>Subscribe!</h1>
@@ -62,10 +74,13 @@ export default function SignupForm() {
           lastName: '',
           email: '',
           acceptedTerms: false, // added for our checkbox
-          jobType: '', // added for our select
+          jobType: '', // added for our 
         }}
         validationSchema={Yup.object({
           firstName: Yup.string()
+            .max(15, 'Must be 15 characters or less')
+            .required('Required'),
+            name: Yup.string()
             .max(15, 'Must be 15 characters or less')
             .required('Required'),
           lastName: Yup.string()
@@ -74,9 +89,6 @@ export default function SignupForm() {
           email: Yup.string()
             .email('Invalid email address')
             .required('Required'),
-          acceptedTerms: Yup.boolean()
-            .required('Required')
-            .oneOf([true], 'You must accept the terms and conditions.'),
           jobType: Yup.string()
             .oneOf(
               ['designer', 'development', 'product', 'other'],
@@ -92,13 +104,19 @@ export default function SignupForm() {
         }}
       >
         <Form>
+          <div>
           <MyTextInput
             label="First Name"
             name="firstName"
             type="text"
             placeholder="Jane"
           />
-
+          <RegisterInput
+              label='Nombre'
+              name='name'
+              type='text'
+              placeholder='Pluvianus'
+            />
           <MyTextInput
             label="Last Name"
             name="lastName"
@@ -120,12 +138,8 @@ export default function SignupForm() {
             <option value="product">Product Manager</option>
             <option value="other">Other</option>
           </MySelect>
-
-          <MyCheckbox name="acceptedTerms">
-            I accept the terms and conditions
-          </MyCheckbox>
-
           <button type="submit">Submit</button>
+        </div>
         </Form>
       </Formik>
     </>
