@@ -36,7 +36,7 @@ export async function getStaticProps () {
 export default function Home ({ patientsInfo, appointmentsInfo }) {
   const [search, setSearch] = useState('')
   let cardsInfo = []
-  const dentistId = '61511d3cf6273ea718ebd5f4'
+  const idDentist = '61511d3cf6273ea718ebd5f4'
   appointmentsInfo.forEach(appointment => {
     const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -77,7 +77,7 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
           <AddNewPatientButton
             title='Nuevo'
             imagen={addIcon}
-            idDentist ={dentistId}
+            idDentist ={idDentist}
           />
    
       </div>
@@ -91,8 +91,8 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
                 patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
                 patientImage='https://api.multiavatar.com/car%20pls.png'
                 key={patient._id}
-                patientId={patient._id}
-                dentistId={dentistId}
+                idPatient={patient._id}
+                idDentist={idDentist}
               />
             )
           : patientsInfo.map(patient =>
@@ -100,8 +100,8 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
               patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
               patientImage='https://api.multiavatar.com/car%20pls.png'
               key={patient._id}
-              patientId={patient._id}
-              dentistId={dentistId}
+              idPatient={patient._id}
+              idDentist={idDentist}
             />
           )
         }

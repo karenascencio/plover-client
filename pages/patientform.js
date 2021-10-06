@@ -11,10 +11,16 @@ import H3 from '../components/H3'
 import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
+import { useRouter } from 'next/router'
 
 
 //single form
 export default function Giform() {
+  
+  const router = useRouter()
+  console.log(router.query)
+  const idDentist = router.query.idDentist
+  console.log(idDentist)
   const [formulario,setFormulario] = useState('General Information')
  
   function handleOption(value){
@@ -54,6 +60,7 @@ export default function Giform() {
       values.nonPathologicalBackground.services = stringToArray(values.nonPathologicalBackground.services)
       values.nonPathologicalBackground.alcoholConsumption = values.nonPathologicalBackground.alcoholConsumption.toLowerCase()
       values.nonPathologicalBackground.cigarConsumption = values.nonPathologicalBackground.cigarConsumption.toLowerCase()
+      values.idDentist=idDentist
       await api.postPatient(values)
     }
     return (
@@ -65,12 +72,12 @@ export default function Giform() {
             initialValues={{
               name:'',
               lastName:'',
-              gender:'',
+              gender:'masculino',
               age:'',
               height:'',
               weight:'',
-              bloodType:'',
-              maritalStatus:'',
+              bloodType:'A+',
+              maritalStatus:'soltero',
               address:{
                 state:'',
                 city:'',
@@ -123,19 +130,19 @@ export default function Giform() {
                   generalAllergies:"",
                   drugAllergies:"",
                   currentMedications:"",
-                  previousOperations:"",
-                  bloodDonation:"",
-                  birthControlPills:"",
+                  previousOperations:"si",
+                  bloodDonation:"si",
+                  birthControlPills:"si",
                   observations:""
                 },
                 nonPathologicalBackground:{
-                    feeding:'',
+                    feeding:'buena',
                     toothBrushingFrequency:'',
                     vaccines:'',
                     addictions:'',
-                    alcoholConsumption:'',
-                    cigarConsumption:'',
-                    recentTattos:'',
+                    alcoholConsumption:'Nunca he tomado',
+                    cigarConsumption:'Nunca he fumado',
+                    recentTattos:'si',
                     hygieneDescription:'',
                     services:'',
                     unusualHabits:'',
@@ -199,10 +206,55 @@ export default function Giform() {
                 errors.street='La caller no puede contener numeros ni caracteres especiales'
               }
               //validacion de numero exterior
-              //if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
-             //else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
-               // errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
-             //}
+              if(!values.address.streetNumber){errors.streetNumber ='Ingresa el numero exterior del paciente'}
+               else if(!/^[0-9]{1,5}$/.test(values.address.streetNumber)){
+               errors.streetNumber='El numero exterior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+             }
+             //validaciones de numero interior
+               if(!/^[0-9]{1,5}$/.test(values.address.innerNumber)   ){
+               errors.innerNumber='El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
+            }
+            //validacion de medico familiar
+            //validacion de nombre 
+            if(!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.name)){
+              errors.doctorName = 'El nombre no puede contener numeros ni caracteres especiales'
+            }
+            if(!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.lastName)){
+              errors.doctorLastName = 'Los apellidos no pueden contener numeros ni caracteres especiales'
+            }
+            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.familyPractitioner.email)){
+              errors.doctorEmail = 'Ingresa un email valido'
+            }
+            if(!/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{4})$/.test(values.familyPractitioner.phoneNumber)){
+              errors.doctorPhoneNumber = 'Ingrese un numero de telfono valido'
+            }
+            //validaciones de persona a cargo 
+            //validacion de nombre
+            if(!values.personInCharge.name){
+                errors.personInChargeName = 'Ingrese el nombre de la persona a cargo del paciente.'
+            }
+            else if(!/^[a-z ,.'-]+$/i.test(values.personInCharge.name)){
+              errors.personInChargeName = 'El nombre no puede contener numeros ni caracteres especiales'
+            }
+            if(!values.personInCharge.lastName){
+              errors.personInChargeLastName = 'Ingresa los apellidos de la persona a cargo del paciente'
+            }
+            else if(!/^[a-z ,.'-]+$/i.test(values.personInCharge.lastName)){
+              errors.personInChargeLastName = 'Los apellidos no pueden contener numeros ni caracteres especiales'
+            }
+            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.personInCharge.email)){
+              errors.personInChargeEmail = 'Ingresa un email valido'
+            }
+            if(!values.personInCharge.phoneNumber){
+              errors.personInChargePhoneNumber = 'ingresa el numero telefonico de la persona a cargo del paciente'
+            }
+            else if(!/^\(?(\d{3})\)?[-]?(\d{3})[-]?(\d{4})$/.test(values.personInCharge.phoneNumber)){
+              errors.personInChargePhoneNumber = 'Ingrese un numero de telfono valido'
+            }
+            //regex para validar palabras separadas por comas            
+
+
+
               
               //validacion de numero interior
               //if(!values.address.innerNumber) errors.innerNumber ='Ingresa el numero interior del paciente'
@@ -224,7 +276,7 @@ export default function Giform() {
             
             {/*aqui comienza el formulario de informacion general*/}
             {formulario =='General Information' && (
-              <div id='General Information'>
+              <div id='General Information' className='mt-10'>
                 <div className='flex flex-col'>
                 <TitleHeader
                     pageTitle='Información general'
@@ -378,30 +430,37 @@ export default function Giform() {
                   handleChange={handleChange}
                   handleBlur={handleBlur}
                 />
+                   {getIn(touched,'address.streetNumber') && getIn(errors,'streetNumber') && <div className='text-plover-blue text-sm' >{errors.streetNumber}</div>} 
               </div>
               <div className='flex flex-col'>
                 <FormInput 
                   textName='address.innerNumber' 
-                  textLabel='Número interior' 
+                  textLabel='Número interior (opcional)' 
                   textValue={values.address.innerNumber} 
                   inputId='address.innerNumber'
                   handleChange={handleChange}
                   handleBlur={handleBlur}                />
+                  {getIn(touched,'address.innerNumber') && getIn(errors,'innerNumber') && <div className='text-plover-blue text-sm' >{errors.innerNumber}</div>} 
               </div>
+              
 
                 </div>
 
-                <H3 textTitle='Médico familiar' textColor='plover-blue'/>
+                <H3 textTitle='Médico familiar (opcional)' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
-              <FormInput
-                textName='familyPractitioner.name'
-                textLabel='Nombres' 
-                textValue={values.familyPractitioner.name}  
-                inputId='familyPractitioner.name'
-                handleChange={handleChange}
-                handleBlur={handleBlur}                />
+              <div className='flex flex-col'>
+                <FormInput
+                  textName='familyPractitioner.name'
+                  textLabel='Nombres' 
+                  textValue={values.familyPractitioner.name}  
+                  inputId='familyPractitioner.name'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}                />
+                  {getIn(touched,'familyPractitioner.name') && getIn(errors,'doctorName') && <div className='text-plover-blue text-sm' >{errors.doctorName}</div>} 
+                </div>
                 {/*validamos que el campo no venga vacio*/}
                 {/*touched.nombres && errors.nombres && <div>{errors.nombres}</div>*/}
+              <div>
               <FormInput 
                 textName='familyPractitioner.lastName' 
                 textLabel='Apellidos' 
@@ -410,25 +469,31 @@ export default function Giform() {
                 handleChange={handleChange}
                 handleBlur={handleBlur}                />
                 {/*touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div>*/}
-
-              <FormInput 
-                textName='familyPractitioner.email'
-                textLabel='Email' 
-                textValue={values.familyPractitioner.email}  
-                inputId='familyPractitioner.email'
-                handleChange={handleChange}
-                handleBlur={handleBlur}
+                {getIn(touched,'familyPractitioner.lastName') && getIn(errors,'doctorLastName') && <div className='text-plover-blue text-sm' >{errors.doctorLastName}</div>} 
+              </div>
+              <div>
+                <FormInput 
+                  textName='familyPractitioner.email'
+                  textLabel='Email' 
+                  textValue={values.familyPractitioner.email}  
+                  inputId='familyPractitioner.email'
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
                 />
-              <FormInput 
-                textName='familyPractitioner.phoneNumber' 
-                textLabel='Número de teléfono' 
-                textValue={values.familyPractitioner.phoneNumber}  
-                inputId='familyPractitioner.phoneNumber'
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                />
+                {getIn(touched,'familyPractitioner.email') && getIn(errors,'doctorEmail') && <div className='text-plover-blue text-sm' >{errors.doctorEmail}</div>} 
                 </div>
-
+                <div>
+                  <FormInput 
+                    textName='familyPractitioner.phoneNumber' 
+                    textLabel='Número de teléfono' 
+                    textValue={values.familyPractitioner.phoneNumber}  
+                    inputId='familyPractitioner.phoneNumber'
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                />
+                {getIn(touched,'familyPractitioner.phoneNumber') && getIn(errors,'doctorPhoneNumber') && <div className='text-plover-blue text-sm' >{errors.doctorPhoneNumber}</div>} 
+                </div>
+                </div>
                 <H3 textTitle='Persona a cargo' textColor='plover-blue'/>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
               <FormInput
@@ -471,15 +536,17 @@ export default function Giform() {
             
               {/*aqui comineza el formulario de antecedentes famililares*/}
               {formulario=='Family Background' && (
-              <div id='Family Background'>
+              <div id='Family Background' className='mt-10'>
                 <div className='flex flex-col'>
                 <TitleHeader
                     pageTitle='Antecedentes Familiares'
                     secondaryText=''
                   />
-                  <H3 textTitle='Patologías' textColor='plover-blue'/>
                 </div>
                 <div className={'grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'}>
+                <H3 textTitle='Patologías' textColor='plover-blue'/>
+                <p className='text-plover-blue pt-10'>Ingrese las enfermedades separadas por comas</p>
+
                 <div className='flex flex-col border-b border-lighter-gray'>
                     <FormInput
                         textName='familyBackground.father.pathologies'
@@ -617,12 +684,12 @@ export default function Giform() {
 
             {/*aqui comienza el formulario de antecedentes patologicos*/}
             {formulario=='Pathological Background' && (
-            <div id='Pathological Background'>
+            <div id='Pathological Background' className='mt-10'>
             <TitleHeader
                     pageTitle='Antecedentes patológicos'
                     secondaryText=''
                 />
-            <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+            <div className={'mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
                 <FormInput 
                     textName='pathologicalBackground.currentDiseases'
                     textLabel='Enfermedades actuales' 
@@ -699,12 +766,12 @@ export default function Giform() {
 
             {/*aqui comienza el formulario de antecedentes no patologicos*/}
             {formulario=='NonPathological Background' && (
-            <div id='NonPathological Background'>
+            <div id='NonPathological Background' className='mt-10'>
               <TitleHeader
                     pageTitle='Antecedentes no patológicos'
                     secondaryText=''
                 />
-              <div className={'mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'}>
+              <div className={'mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-5 border-b border-lighter-gray'}>
               <RadioButtons 
                     textLabel='¿Como considera su alimentacion?'
                     options={['buena','regular','mala']}
@@ -810,7 +877,8 @@ export default function Giform() {
                     handleBlur={handleBlur}
                 />
             </div>
-            <button type='submit' onClick={()=>SeeState(values)}>Enviar </button>
+            <button type='submit' onClick={()=>SeeState(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
+
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}
                 
