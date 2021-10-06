@@ -51,10 +51,12 @@ export default function Newappointment() {
                                                 recommendations:'',
                                                 date:new Date()
                                             })
-
+        
     useEffect(()=>{
         setAppointment({...appointment,procedures})
     },[procedures])
+
+    console.log(`las lista de procedimientos tiente ${procedures.length} procedimientod`) 
 
     function handleProcedure(event){
         const {name,value} = event.target
@@ -77,7 +79,10 @@ export default function Newappointment() {
         e.preventDefault()
         console.log(`te quieres mover a /patients/${idPatient}`)
         router.push(`/patients/${idPatient}`)
-
+    }
+    function handleDelete(index){
+        const newProcedures = procedures.filter((item,key)=>key!==index )
+        setProcedures([...newProcedures])
     }
 
     return (
@@ -103,7 +108,7 @@ export default function Newappointment() {
                             </div>
                             <div className='flex'>
                             <div className='w-full grid grid-cols-7 gap-x-3'>
-								<div className='col-span-4'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
+								<div className='col-span-4 '><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
                                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
 								<div className='flex flex-col  mt-5'>
                                     <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
@@ -115,7 +120,7 @@ export default function Newappointment() {
 									procedures.map((procedure,key)=>{
 										return (
 											<React.Fragment key={key}>
-											<div className='col-span-4'><PlainText text={procedure.name}/></div>
+											<div className='col-span-4 relative'><PlainText text={procedure.name}/><button onClick={()=>handleDelete(key)} className='text-red-500 absolute top-0 right-2'>x</button></div>
 											<div className='col-span-2'><PlainText text={procedure.price}/></div>
                                             <div className='flex justify-end'>
                                                 <Toggle id={key}  handleToggle={handleToggle}/>
@@ -145,7 +150,7 @@ export default function Newappointment() {
 
                                 />
                             </div>
-                            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+                            <div><button disabled={!procedures.length} onClick={handleSubmit} className={`text-white text-sm pb-1 ${!procedures.length ?'bg-lighter-gray':'bg-plover-blue' } w-28 h-30px rounded my-1`}>Guardar</button> </div>
 						</div>
         </div>
 			</main>
