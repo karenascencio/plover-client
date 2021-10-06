@@ -12,6 +12,9 @@ import RegisterInput from '../components/dentistRegisterInput'
 import RegisterSelectInput from '../components/RegisterSelectInput'
 import PasswordInput from '../components/PasswordInput'
 import ChangePicture from '../components/ChangePicture'
+import PopModal from '../components/PopModal'
+// .: Images
+import close from '../public/close.svg'
 
 export default function DentistRegister () {
   const router = useRouter()
@@ -69,6 +72,7 @@ export default function DentistRegister () {
         }}
       >
         <Form>
+          <PopModal image={close} />
           <div className='flex justify-center mb-50px'>
             <div className='w-280px'>
               {/* Section 1 */}
