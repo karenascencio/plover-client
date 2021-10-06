@@ -18,11 +18,16 @@ export default function DentistRegister () {
   // .: hook for show password
   // .: Handdler
   const buttonHandler = async (values) => {
-    console.log(values)
-    if(values){
-
-    }
+    try {
+      console.log(values)
+      if(values){
+      const response = await api.signIn(values)
+      console.log(response)
+      router.push('/login')
+    } else throw new Error
   }
+  catch(error){ console.log( (error.message) ) }
+}
   return (
     <>
       <Formik
