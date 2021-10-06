@@ -11,8 +11,11 @@
     "fix": "standard --fix"
   },
   "dependencies": {
+    "aws-sdk": "^2.1001.0",
     "classnames": "^2.3.1",
+    "crypto": "^1.0.1",
     "dayjs": "^1.10.7",
+    "dotenv": "^10.0.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "11.1.2",

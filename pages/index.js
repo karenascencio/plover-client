@@ -54,11 +54,10 @@ export default function Home ({ patientsInfo, appointmentsInfo }) {
 
 <div className='flex flex-col sm:flex-row '>
   <NavBarDentist isHome={true}/>
-  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11'> 
+  <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
     <div className='max-w-screen-lg w-full flex flex-col items-center'>
       <TitleHeader
         pageTitle='Home'
-        secondaryText='Próximas citas'
       />
       <div className='flex justify-start w-full'>
         <p className='text-2xl text-darker-gray font-thin'>
