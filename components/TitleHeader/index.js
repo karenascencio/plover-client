@@ -5,7 +5,7 @@ export default function TitleHeader (props) {
   const { pageTitle, secondaryText, patientName, patientLastName, patientImage } = props
   return (
     pageTitle === 'Paciente'
-      ? <div className='md:h-20 w-full flex justify-between items-center'>
+      ? <div className='my-5 md:my-0 md:h-20 w-full flex justify-between items-center'>
         <H1
           textTitle={pageTitle}
           textColor='plover-blue'
@@ -18,7 +18,7 @@ export default function TitleHeader (props) {
           alt='patient-image'
         />
       </div>
-      : <div className='md:h-20 w-full flex justify-between items-center'>
+      : <div className='my-5 md:my-0 md:h-20 w-full flex justify-between items-center'>
         <H1
           textTitle={pageTitle}
           textColor='plover-blue'
