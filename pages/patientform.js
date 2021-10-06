@@ -35,7 +35,7 @@ export default function Giform() {
     return []
     }
 
-    async function SeeState(values){
+    async function formatPatient(values){
       console.log(values)
       values.idDetist='61511d3cf6273ea718ebd5f5'
       values.email = `user${Math.random()}@gmail.com`
@@ -264,14 +264,13 @@ export default function Giform() {
               return errors
             }}
             onSubmit={(values) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                }, 400);
+              formatPatient(values)
+              router.push(`/`)
             }}         
           >
           {({values,handleSubmit,handleChange,handleBlur,setFieldValue,errors,touched})=>(
             
-            <form className=' mt-16 sm:mt-0' onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit} className=' mt-16 sm:mt-0' onSubmit={handleSubmit} >
 
             
             {/*aqui comienza el formulario de informacion general*/}
@@ -877,7 +876,7 @@ export default function Giform() {
                     handleBlur={handleBlur}
                 />
             </div>
-            <button type='submit' onClick={()=>SeeState(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
+            <button type='submit'  className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> 
 
             </div>)}
             {/*aqui termina el formulario de antecedentes no patologiocos*/}

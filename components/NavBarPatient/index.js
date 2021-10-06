@@ -27,11 +27,11 @@ export default function NavBarPatient(props) {
     return (
         <div className='z-50 fixed sm:static '>
      
-        <div className='flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
+        <div className='border border-red-500  flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
                 <div className='flex flex-col items-start'>
                     <div className='mt-5'><H1 textTitle='Plover' textColor='white' /></div>
                 </div>
-                <ul className='mb-10 mt-20 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 '>
+                <ul className=' mb-10 mt-20 hidden sm:flex sm:flex-col sm:justify-around sm:items-center h-80 '>
                     {
                         forms.map((item,key)=>{
                             return <motion.li 
