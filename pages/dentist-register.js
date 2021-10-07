@@ -19,7 +19,6 @@ import close from '../public/close.svg'
 export default function DentistRegister () {
   const router = useRouter()
   // .: hooks
-  const [popModal, setPopModal] = useState(false)
 
   // .: Handdler
   const registerHandler = async (values) => {
@@ -29,12 +28,10 @@ export default function DentistRegister () {
         const response = await api.signIn(values)
         const success = response.success
         if (success) {
-          console.log('Se ha mandado un correo para verificar tu cuenta')
-          setPopModal(true)
-          // (router.push('/login')
+          alert('Se ha mandado un correo para verificar tu cuenta')
+          router.push('/login')
         } else {
-          console.log('El correo está registrado, utiliza otro por favor')
-          setPopModal(true)
+          alert('El correo ya está registrado, porfavor utiliza otro por favor')
         }
       } else throw new Error()
     } catch (error) { console.log((error.message)) }
@@ -72,9 +69,8 @@ export default function DentistRegister () {
         }}
       >
         <Form>
-          <PopModal image={close} />
           <div className='flex justify-center mb-50px'>
-            <div className='w-280px'>
+            <div className='w-280px md:w-408px lg:w-539px'>
               {/* Section 1 */}
               <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos Personales</h3>
