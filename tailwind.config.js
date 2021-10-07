@@ -78,12 +78,8 @@ module.exports = {
         '41px': '2.56rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
-<<<<<<< HEAD
         '676px': '42.188rem',
         '100%' : '100%'
-=======
-        '676px': '42.188rem'
->>>>>>> main
       },
       maxWidth: {
         '18rem': '18rem',
