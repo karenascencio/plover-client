@@ -66,7 +66,7 @@ export default function Configuration ({ dentistInfo }) {
               {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
             </h2>
           </div>
-          <div className='flex flex-col w-full border-b border-lighter-gray'>
+          <div className='flex flex-col w-full'>
             <div className='w-full md:w-2/4'>
               <H3
                 textTitle='Cambiar contraseña'
