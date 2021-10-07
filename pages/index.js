@@ -14,7 +14,7 @@ import AddNewPatientButton from '../components/AddNewPatientButton'
 // Api
 import api from '../lib/api'
 // JWT
-import getJwtId from '../lib/jwt'
+import getIdFromStorage from '../lib/jwt'
 // My images
 import addIcon from '../public/addIcon.svg'
 import PatientCard from '../components/PatientCard'
@@ -23,20 +23,23 @@ import NavBarPatient from '../components/NavBarPatient'
 import NavBarDentist from '../components/NavBarDentist'
 
 export async function getStaticProps () {
-  const patientsInfo = await api.getPatientsByDentistId('61511d3cf6273ea718ebd5f4')
-  const appointmentsInfo = await api.getAppointmentsByDentistId('61511d3cf6273ea718ebd5f4')
+  const id = getIdFromStorage()
+  const patientsInfo = await api.getPatientsByDentistId(id)
+  const appointmentsInfo = await api.getAppointmentsByDentistId(id)
   return {
     props: {
       patientsInfo,
-      appointmentsInfo
+      appointmentsInfo,
+      id
     }
   }
 }
 
-export default function Home ({ patientsInfo, appointmentsInfo }) {
+export default function Home ({ patientsInfo, appointmentsInfo, id }) {
   const [search, setSearch] = useState('')
   let cardsInfo = []
-  const idDentist = '61511d3cf6273ea718ebd5f4'
+  const idDentist = id
+  console.log('token',id)
   appointmentsInfo.forEach(appointment => {
     const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
