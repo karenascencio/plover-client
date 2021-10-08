@@ -19,12 +19,12 @@ export default function Login () {
     try {
       console.log('handler', userData)
       const response = await api.login(userData)
-      response.success ? setWebToken(response.data.token) : setWebToken('')
-      if (response.success) {
-        if (!localStorage.getItem('user-info')) {
-          localStorage.setItem('user-info', JSON.stringify(api.parseJwt(response.data.token)))
-        }
-        router.push('/')
+      console.log('response', response.data.token)
+      const tokent = response.data.token
+      const tokenjwt = api.parseJwt(tokent)
+      const {id} = tokenjwt
+       if(response.success){
+        router.push(`/dentists/${id}`)
       } else {
         console.log('no hay web token')
       }
