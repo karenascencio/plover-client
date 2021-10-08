@@ -21,7 +21,7 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
     event.preventDefault()
     Login(details)
   }
-
+ console.log('error',error)
   return (
     <>
       <form onSubmit={handlerSubmit}>
@@ -33,12 +33,10 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
             />
           </div>
           {
-           !webToken &&
-             <div className=' w-100 d-flex justify-content-center mt-8'>
-                <p className='text-danger'>
-                  Please enter valid credentials
-                </p>
-              </div>
+           error &&
+             <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+               <p>La contraseña o el correo que ingresaste son incorrectos.</p>
+             </div>
           }
           <div className='mb-50px  mt-70px w-200px'>
             <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-250px md:w-408px lg:w-539px'>
@@ -75,7 +73,7 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
           <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?
             <Link href='/dentist-register'>
               <a className='hover:text-plover-blue hover:font-bold '>
-                Registrate
+                 Registrate
               </a>
             </Link>
           </p>
