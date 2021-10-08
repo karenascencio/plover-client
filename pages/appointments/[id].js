@@ -1,8 +1,12 @@
 import React from 'react'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
 import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import Calendar from '../../components/Calendar'
 import H3 from '../../components/H3'
+import TitleHeader from '../../components/TitleHeader'
 import FormInput from '../../components/FormInput'
 import Textarea from '../../components/Textarea'
 import PlainText from '../../components/PlainText'
@@ -13,16 +17,11 @@ import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 
+dayjs.extend(utc)
+
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
 //corregimos el carrusel y los links y los erroes de vercel
-
-const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
-]
 
 export async function getStaticPaths(){
     const ids = await api.getAllAppointmentsIds()
@@ -41,22 +40,36 @@ export async function getStaticPaths(){
 export async function getStaticProps(context) {
     const id = context.params.id
     const appointment = await api.getAppointmentById(id)
-    return {  
+    const patientId = appointment.idPatient._id
+    const patientInfo = await api.getPatientsById(patientId)
+    const appointmentsInfo = await api.getAppointmentsByPatientId(patientId)
+    return {
       props: {
-          appointmentFetched:appointment
+            appointmentFetched:appointment,
+            patientInfo,
+            appointmentsInfo
         }
       }
     }
 
 
-export default function Appointment({appointmentFetched}) {
+export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo }) {
     const {idPatient,idDentist} = appointmentFetched
     console.log('el id de paciente es ', idPatient)
     console.log('el id de odontologo es ', idDentist)
-
+    const { name, lastName, userImage } = patientInfo
     const [procedures,setProcedures] = useState(appointmentFetched.procedures)
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })
     const [appointment,setAppointment] = useState(appointmentFetched)
+    const cardsInfo = []
+
+  appointmentsInfo.forEach(appointment => {
+    const now = dayjs.utc()
+    const appointmentDate = dayjs.utc(appointment.date)
+    appointment.procedures.forEach(procedure => {
+      appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    })
+  })
 
     useEffect(()=>{
         setAppointment({...appointment,procedures})
@@ -88,6 +101,12 @@ export default function Appointment({appointmentFetched}) {
                 {/*el w-full rompe el layout*/}
         	  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11 '>
               <div className='max-w-screen-lg w-full flex flex-col items-center '>
+                        <TitleHeader
+                            pageTitle='Paciente'
+                            patientName={name}
+                            patientLastName={lastName}
+                            patientImage={userImage}
+                        />
                         <Carrusel cards={cardsInfo}/>
                         <div className='w-full flex justify-between '> 
                             <H1 textTitle='Cita' textColor='plover-blue'/>

@@ -4,7 +4,7 @@ import DeleteButton from '../DeleteButton'
 import PaymentHistoryButton from '../PaymentHistoryButton'
 
 export default function PatientQuickActions (props) {
-  const { addAppointment, appointments, clinicalRecord, payments, deletePatient, idPatient,idDentist } = props
+  const { addAppointment, appointments, clinicalRecord, payments, deletePatient, deleteHandler, idPatient, idDentist } = props
   return (
     <div className='flex  mt-4 md:mb-0'>
       <CardButtonPatient
@@ -28,6 +28,8 @@ export default function PatientQuickActions (props) {
       />
       <DeleteButton
         image={deletePatient}
+        deleteHandler={deleteHandler}
+        idPatient={idPatient}
       />
     </div>
   )

@@ -1,8 +1,11 @@
 import React from 'react'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
 import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import AmountDisplay from '../../components/AmountDisplay'
-import H3 from '../../components/H3'
+import TitleHeader from '../../components/TitleHeader'
 import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
@@ -12,14 +15,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
 
-const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
-]
-
-
+dayjs.extend(utc)
 
 export async function getStaticPaths(){
     const ids = await api.getAllPatientsIds()
@@ -41,17 +37,19 @@ export async function getStaticProps(context) {
   console.log(`el id es: ${id}`)
   const payments = await api.getPaymentsByPatientId(id)
   const appointments = await api.getAppointmentsByPatientId(id)
+	const patientInfo = await api.getPatientsById(id)
   return {  
     props: {
 			payments,
 			appointments,
+			patientInfo
       }
     }
   }
 
 
 
-export default function Payments({payments,appointments}){
+export default function Payments({payments,appointments, patientInfo}){
     console.log(`los pagos son: ${payments}`)
     console.log(`los citas son: ${appointments}`)
     const router = useRouter()
@@ -60,8 +58,16 @@ export default function Payments({payments,appointments}){
     console.log(`el id de paciente es ${idPatient}`)
     const idDentist = router.query.dentistId
     console.log(`el id de odontologo  es ${idDentist}`)
-    
+    const { name, lastName, userImage } = patientInfo
+		const cardsInfo = []
 
+		appointments.forEach(appointment => {
+			const now = dayjs.utc()
+			const appointmentDate = dayjs.utc(appointment.date)
+			appointment.procedures.forEach(procedure => {
+				appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+			})
+		})
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)
 	const [payment,setPayment] = useState({total:'',date:'',file:'some file',idDentist,idPatient})
@@ -106,6 +112,12 @@ export default function Payments({payments,appointments}){
     <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
         <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='flex flex-col items-center max-w-screen-lg '>
+						<TitleHeader
+        		    pageTitle='Paciente'
+        		    patientName={name}
+        		    patientLastName={lastName}
+        		    patientImage={userImage}
+        		  />
             <Carrusel cards={cardsInfo}/>
 						<div className='w-full flex justify-between' >
 							<H1 textTitle='Pagos' textColor='plover-blue'/>
