@@ -189,7 +189,6 @@ export default function Configuration ({ dentistInfo }) {
           <div>
             <FileInput onChange={handleFileChange} />
             <button onClick={openFileDialog}>Upload file</button>
-            {profileImage && <img src={profileImage} />}
           </div>
         </div>
       </main>
