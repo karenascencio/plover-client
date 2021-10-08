@@ -40,7 +40,7 @@ export default function Configuration ({ dentistInfo }) {
   const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [dentistUpdate, setDentistUpdate] = useState({})
-  const { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
+  const { openFileDialog, uploadToS3 } = useS3Upload()
 
   const inputHandler = event => {
     const { name, value } = event.target
@@ -48,7 +48,6 @@ export default function Configuration ({ dentistInfo }) {
   }
 
   const buttonHandler = async () => {
-    console.log('clic activado')
     const response = await api.patchDentist(dentistUpdate, _id)
     console.log(response)
   }
@@ -56,6 +55,8 @@ export default function Configuration ({ dentistInfo }) {
   const handleFileChange = async file => {
     const { url } = await uploadToS3(file)
     setProfileImage(url)
+    console.log(url)
+    setDentistUpdate({ ...dentistUpdate, userImage: url })
   }
 
   return (
@@ -69,7 +70,8 @@ export default function Configuration ({ dentistInfo }) {
           <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
             <ChangePicture
               profilePicture={profileImage}
-              // uploadHandler={handleFileChange}
+              uploadHandler={handleFileChange}
+              buttonHandler={openFileDialog}
             />
             <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
               {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
@@ -185,10 +187,6 @@ export default function Configuration ({ dentistInfo }) {
                 </Link>
               </div>
             </div>
-          </div>
-          <div>
-            <FileInput onChange={handleFileChange} />
-            <button onClick={openFileDialog}>Upload file</button>
           </div>
         </div>
       </main>
