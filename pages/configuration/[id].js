@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useS3Upload } from 'next-s3-upload'
 import Link from 'next/link'
 // My components
 import TitleHeader from '../../components/TitleHeader'
@@ -39,6 +40,7 @@ export default function Configuration ({ dentistInfo }) {
   const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [dentistUpdate, setDentistUpdate] = useState({})
+  const { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
 
   const inputHandler = event => {
     const { name, value } = event.target
@@ -49,6 +51,11 @@ export default function Configuration ({ dentistInfo }) {
     console.log('clic activado')
     const response = await api.patchDentist(dentistUpdate, _id)
     console.log(response)
+  }
+
+  const handleFileChange = async file => {
+    const { url } = await uploadToS3(file)
+    setProfileImage(url)
   }
 
   return (
@@ -178,6 +185,10 @@ export default function Configuration ({ dentistInfo }) {
                 </Link>
               </div>
             </div>
+          </div>
+          <div>
+            <FileInput onChange={handleFileChange} />
+            <button onClick={openFileDialog}>Upload file</button>
           </div>
         </div>
       </main>

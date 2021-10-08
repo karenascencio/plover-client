@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function PatientCardInfo (props) {
   const { patientImage, patientName, idPatient } = props
   return (
-    <div className='min-w-200 md:min-w-0 flex justify-between md:justify-start items-center mb-3 md:mb-0'>
+    <div className='min-w-200 md:min-w-0 flex justify-between md:justify-start items-center'>
       <img
         src={patientImage}
         alt='dentist-profile'

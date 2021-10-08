@@ -12,7 +12,7 @@ import RegisterInput from '../components/dentistRegisterInput'
 import RegisterSelectInput from '../components/RegisterSelectInput'
 import PasswordInput from '../components/PasswordInput'
 import ChangePicture from '../components/ChangePicture'
-import PopModal from '../components/PopModal'
+
 // .: Images
 import close from '../public/close.svg'
 
@@ -60,7 +60,7 @@ export default function DentistRegister () {
         }}
         /* .: Validation Schema using Yup */
         validationSchema={dentistSchema}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { c }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)

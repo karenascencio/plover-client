@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { Formik, Form, useField } from 'formik'
+import * as Yup from 'yup'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import NavBarDentist from '../../components/NavBarDentist'
 import ChangePicture from '../../components/ChangePicture'
 import FormInput from '../../components/FormInput'
 import H3 from '../../components/H3'
+import PasswordInput from '../../components/PasswordInput'
+// Validation schema
+import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
 import api from '../../lib/api'
 
@@ -34,73 +40,95 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Configuration ({ dentistInfo }) {
-  const { _id, userImage, name, lastName, password } = dentistInfo
+  const { id, userImage, name, lastName, password } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
-  const [dentistUpdate, setDentistUpdate] = useState({})
 
-  const inputHandler = event => {
-    const { name, value } = event.target
-    value && setDentistUpdate({ ...dentistUpdate, [name]: value })
-  }
-
-  const buttonHandler = async () => {
-    console.log('clic activado')
-    const response = await api.patchDentist(dentistUpdate, _id)
-    console.log(response)
+  const buttonHandler = async (values) => {
+    try {
+      console.log('Cuack!!')
+      const dataUser = { ...values, id: dentistInfo._id }
+      //console.log('dataUser', dataUser)
+      const response = await api.changePassword(dataUser)
+      const success = response.success
+      if(success) {
+        alert('Tu contraseña ha sido actualizada')
+      } else {
+        alert('La contraseña actual que ingresaste no concuerda')
+      }
+    } catch (error) { console.log(error.message) }
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
-        <div className='max-w-screen-lg w-full flex flex-col items-center'>
-          <TitleHeader
-            pageTitle='Configuración'
-          />
-          <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
-            <ChangePicture
-              profilePicture={profileImage}
-              // uploadHandler={handleFileChange}
+    <Formik
+    // .: Form Model Formik
+      initialValues={{
+        password: '',
+        newPassword: '',
+        comparePassword: ''
+      }}
+      // Validation Schema using Yup
+      validationSchema={loggedPasswordSchema}
+      // Submission function
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2))
+          setSubmitting(false)
+          // Here we send our values to the handler
+          buttonHandler(values)
+        }, 400)
+      }}
+    >
+      <div className='flex flex-col sm:flex-row '>
+        <NavBarDentist isHome />
+        <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+          <div className='max-w-screen-lg w-full flex flex-col items-center'>
+            <TitleHeader
+              pageTitle='Configuración'
             />
-            <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
-              {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
-            </h2>
-          </div>
-          <div className='flex flex-col w-full'>
-            <div className='w-full md:w-2/4'>
-              <H3
-                textTitle='Cambiar contraseña'
-                textColor='plover-blue'
+            <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
+              <ChangePicture
+                profilePicture={profileImage}
               />
-              <FormInput
-                textLabel='Contraseña actual'
-                textName='currentPassword'// change if necessary
-                handleChange={inputHandler}
-              />
-              <FormInput
-                textLabel='Nueva contraseña'
-                textName='newPassword' // change if necessary
-                handleChange={inputHandler}
-              />
-              <FormInput
-                textLabel='Confirmación de contraseña'
-                textName='newPasswordConfirmation' // change if necessary
-                handleChange={inputHandler}
-              />
+              <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
+                {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
+              </h2>
             </div>
+            <Form className='flex flex-col w-full'>
+              <div className='flex flex-col w-full'>
+                <div className='w-full md:w-2/4'>
+                  <H3
+                    textTitle='Cambiar contraseña'
+                    textColor='plover-blue'
+                  />
+                  <PasswordInput
+                    label='Contraseña Actual'
+                    name='password'
+                    placeholder='Contraseña Actual'
+                  />
+                  <PasswordInput
+                    label='Nueva contraseña'
+                    name='newPassword'
+                  />
+                  <PasswordInput
+                    label='Reingresa la nueva contraseña'
+                    name='comparePassword'
+                  />
+                </div>
+              </div>
+              <div className='flex flex-col items-center w-full'>
+                <div className='w-2/4 lg:w-3/12'>
+                  <button
+                    type='submit'
+                    className='w-full my-5 py-1.5 text-white rounded bg-plover-blue hover:bg-login-blue'
+                  >
+                    Guardar nueva contraseña
+                  </button>
+                </div>
+              </div>
+            </Form>
           </div>
-          <div className='flex flex-col items-center w-full'>
-            <div className='w-2/4 lg:w-3/12'>
-              <button
-                className='w-full my-5 py-1.5 text-white rounded bg-plover-blue hover:bg-login-blue'
-                onClick={buttonHandler}
-              >
-                Guardar nueva contraseña
-              </button>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </Formik>
   )
 }
