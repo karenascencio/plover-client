@@ -44,11 +44,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo }) {
-  console.log(patientInfo)
-  const {_id:idPatient,idDentist} = patientInfo
-  console.log('el id de paciente es: ', idPatient)
-  console.log('el id de odontologo es: ',idDentist)
-  console.log(appointmentsInfo)
+  const { _id: idPatient, idDentist } = patientInfo
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
   const cardsInfo = []
@@ -70,7 +66,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
 
   <div className='flex flex-col sm:flex-row '>
     <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
-    <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11'>
+    <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
     <div className='w-full max-w-screen-lg flex flex-col items-center'>
       <TitleHeader
         pageTitle='Paciente'

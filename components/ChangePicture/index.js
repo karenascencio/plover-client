@@ -1,11 +1,11 @@
 import React from 'react'
 
 export default function ChangePicture (props) {
-  const { profilePicture } = props
+  const { profilePicture, uploadHandler } = props
   return (
     <div className='w-034 h-034 relative'>
       <img
-        className='w-full rounded-full'
+        className='w-full h-full rounded-full object-cover'
         src={profilePicture}
         alt='pfp'
       />
@@ -22,6 +22,7 @@ export default function ChangePicture (props) {
         className='hidden'
         type='file'
         id='profile-picture'
+        onChange={uploadHandler}
       />
     </div>
   )
