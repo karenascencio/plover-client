@@ -34,7 +34,7 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
           </div>
           {
            error &&
-             <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+             <div className='flex justify-center text-red-800 mt-4 bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
                <p>La contraseña o el correo que ingresaste son incorrectos.</p>
              </div>
           }

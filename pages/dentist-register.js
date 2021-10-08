@@ -19,7 +19,7 @@ import close from '../public/close.svg'
 export default function DentistRegister () {
   const router = useRouter()
   // .: hooks
-
+  const [falsePop, setFalsePop] = useState(false)
   // .: Handdler
   const registerHandler = async (values) => {
     try {
@@ -31,7 +31,7 @@ export default function DentistRegister () {
           alert('Se ha mandado un correo para verificar tu cuenta')
           router.push('/login')
         } else {
-          alert('El correo ya está registrado, porfavor utiliza otro por favor')
+          setFalsePop(true)
         }
       } else throw new Error()
     } catch (error) { console.log((error.message)) }
@@ -142,6 +142,13 @@ export default function DentistRegister () {
               <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos del Profesionales</h3>
               </div>
+              {
+                falsePop ?
+                <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                  <p>La contraseña actual no coincide con la registrada</p>
+                </div>
+                : null
+              }
               <RegisterInput
                 label='Licenciatura'
                 name='degree'
