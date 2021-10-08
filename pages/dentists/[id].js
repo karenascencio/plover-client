@@ -53,15 +53,21 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
     appointment.procedures.forEach(procedure => appointmentDate >= now && cardsInfo.push({ title: trimmedName, subtitle: procedure.name, thirdTitle: appointmentDate.locale('es').format('dddd D MMMM') }))
-  })
+  }) // this gives the desired structured to the objects array which carrousel receives
 
   const searchHandler = event => {
     const searchInput = event.target.value
     setSearch(searchInput)
   }
 
-  return (
+  const deleteHandler = async event => {
+    const idPatient = event.target.id
+    console.log(idPatient)
+    const response = await api.deletePatient(idPatient)
+    console.log(response)
+  }
 
+  return (
     <div className='flex flex-col sm:flex-row '>
       <NavBarDentist isHome />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
@@ -97,19 +103,21 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
             }).map(patient =>
               <PatientCard
                 patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-                patientImage='https://api.multiavatar.com/car%20pls.png'
+                patientImage={patient.userImage}
                 key={patient._id}
                 idPatient={patient._id}
                 idDentist={idDentist}
+                deleteHandler={deleteHandler}
               />
             )
           : patientsInfo.map(patient =>
             <PatientCard
               patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-              patientImage='https://api.multiavatar.com/car%20pls.png'
+              patientImage={patient.userImage}
               key={patient._id}
               idPatient={patient._id}
               idDentist={idDentist}
+              deleteHandler={deleteHandler}
             />
           )
         }
