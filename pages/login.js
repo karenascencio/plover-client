@@ -24,7 +24,7 @@ export default function Login () {
       const tokenjwt = api.parseJwt(tokent)
       const {id} = tokenjwt
        if(response.success){
-        router.push(`/`)
+        router.push(`/dentists/${id}`)
       } else {
         console.log('no hay web token')
       }

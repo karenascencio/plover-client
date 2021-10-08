@@ -12,8 +12,6 @@ import logo from '../../public/logo.svg'
 import Image from 'next/image'
 
 
-
-
 export default function NavBarDentist(props) {
     const {isHome,idPatient,idDentist} = props
 
@@ -39,9 +37,9 @@ const optionsHome = [{title:'Home',link:'/'},
         setIsOpen(!isOpen)
     }
     return (   
-        <div className='z-50'>
+        <div className='z-50 '>
         
-            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
+            <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem  bg-gradient-to-b from-plover-blue'>
                 <div className='flex  '>
                     <H1 textTitle='Plover' textColor='white' />
                 </div>
