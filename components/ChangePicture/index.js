@@ -5,7 +5,7 @@ export default function ChangePicture (props) {
   return (
     <div className='w-034 h-034 relative'>
       <img
-        className='w-full rounded-full'
+        className='w-full h-full rounded-full object-cover'
         src={profilePicture}
         alt='pfp'
       />
