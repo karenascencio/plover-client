@@ -138,7 +138,7 @@ export default function Payments({payments,appointments}){
 											<React.Fragment key={key}>
 											<div className='col-span-2'><PlainText text={item.total}/></div>
 											<div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
-											<div className='px-6'><button className='p-1 text-white bg-plover-blue w-30px h-30px rounded my-1'><Image src={bill} /></button></div>
+											<div className='px-6'><input className='p-1 text-white bg-plover-blue w-30px h-30px rounded my-1'/></div>
 											</React.Fragment>
 										)
 									})
