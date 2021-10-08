@@ -40,17 +40,20 @@ export async function getStaticPaths(){
 export async function getStaticProps(context) {
     const id = context.params.id
     const appointment = await api.getAppointmentById(id)
-    const patientInfo = await api.getPatientsById(id)
-    return {  
+    const patientId = appointment.idPatient._id
+    const patientInfo = await api.getPatientsById(patientId)
+    const appointmentsInfo = await api.getAppointmentsByPatientId(patientId)
+    return {
       props: {
-          appointmentFetched:appointment,
-          patientInfo
+            appointmentFetched:appointment,
+            patientInfo,
+            appointmentsInfo
         }
       }
     }
 
 
-export default function Appointment({appointmentFetched, patientInfo}) {
+export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo }) {
     const {idPatient,idDentist} = appointmentFetched
     console.log('el id de paciente es ', idPatient)
     console.log('el id de odontologo es ', idDentist)

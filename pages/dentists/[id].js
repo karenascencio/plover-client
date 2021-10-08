@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 // My dependencies
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
@@ -8,6 +9,7 @@ import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
+import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
 import api from '../../lib/api'
 // My images
@@ -45,7 +47,10 @@ export async function getStaticProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
+  const router = useRouter()
   const [search, setSearch] = useState('')
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
@@ -60,15 +65,29 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
     setSearch(searchInput)
   }
 
-  const deleteHandler = async event => {
+  const preDeleteHandler = async event => {
+    setDeleteModal(true)
     const idPatient = event.target.id
-    console.log(idPatient)
-    const response = await api.deletePatient(idPatient)
-    console.log(response)
+    setIdPatientToDelete(idPatient)
+  }
+
+  const deleteHandler = async () => {
+    const response = await api.deletePatient(idPatientToDelete)
+    setDeleteModal(false)
+    router.push(`/dentists/${idDentist}`)
+  }
+
+  const closeHandler = () => {
+    setDeleteModal(false)
   }
 
   return (
     <div className='flex flex-col sm:flex-row '>
+      {deleteModal &&
+        <ConfirmationModal
+          deleteHandler={deleteHandler}
+          closeHandler={closeHandler}
+        />}
       <NavBarDentist isHome />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
@@ -107,7 +126,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
                 key={patient._id}
                 idPatient={patient._id}
                 idDentist={idDentist}
-                deleteHandler={deleteHandler}
+                deleteHandler={preDeleteHandler}
               />
             )
           : patientsInfo.map(patient =>
@@ -117,7 +136,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
               key={patient._id}
               idPatient={patient._id}
               idDentist={idDentist}
-              deleteHandler={deleteHandler}
+              deleteHandler={preDeleteHandler}
             />
           )
         }
