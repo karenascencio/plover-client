@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { Formik, Form, useField } from 'formik'
+import { useS3Upload } from 'next-s3-upload'
+import { Formik, Form} from 'formik'
 import * as Yup from 'yup'
 
 import api from '../lib/api'
@@ -11,17 +11,21 @@ import { dentistSchema } from '../lib/DentistSchemaValidation'
 import RegisterInput from '../components/dentistRegisterInput'
 import RegisterSelectInput from '../components/RegisterSelectInput'
 import PasswordInput from '../components/PasswordInput'
-import ChangePicture from '../components/ChangePicture'
+import RegisterPicture from '../components/RegisterPicture'
 
 // .: Images
 import close from '../public/close.svg'
+const defaultPicture = 'https://plover-bucket.s3.us-east-2.amazonaws.com/next-s3-uploads/13c4f937-4c34-4f51-b0c4-bc633854b13f/12artboard_1.png'
 
 export default function DentistRegister () {
   const router = useRouter()
   // .: hooks
   const [falsePop, setFalsePop] = useState(false)
+  const [profileImage, setProfileImage] = useState(defaultPicture)
+  const { uploadToS3 } = useS3Upload()
+  console.log('cuack', profileImage)
   // .: Handdler
-  const registerHandler = async (values) => {
+  const registerHandler = async (values, file) => {
     try {
       console.log(values)
       if (values) {
@@ -36,6 +40,18 @@ export default function DentistRegister () {
       } else throw new Error()
     } catch (error) { console.log((error.message)) }
   }
+
+  const handleFileChange = async file => {
+    const { url } = await uploadToS3(file)
+    setProfileImage(url)
+    console.log('handler', profileImage)
+  }
+ 
+  // .: UseEffect
+  useEffect(() => {
+    
+  }, [profileImage])
+ 
   return (
     <>
       <Formik
@@ -56,15 +72,17 @@ export default function DentistRegister () {
           college: '',
           profesionalLicense: '',
           password: '',
-          comparePassword: ''
+          comparePassword: '',
+          userImage: ''
         }}
         /* .: Validation Schema using Yup */
         validationSchema={dentistSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            //alert(JSON.stringify(values, null, 2))
+            //alert(JSON.stringify(values, null, 2))     
             setSubmitting(false)
-            registerHandler(values)
+            const userData = {...values, userImage: profileImage}
+            registerHandler(userData)
           }, 400)
         }}
       >
@@ -75,7 +93,12 @@ export default function DentistRegister () {
               <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos Personales</h3>
               </div>
-              {/* <ChangePicture /> */}
+              <div className='flex justify-center'>
+                <RegisterPicture 
+                  profileImage={profileImage}
+                  uploadHandler={handleFileChange}
+                />
+              </div> 
               <RegisterInput
                 label='Nombre'
                 name='name'
