@@ -2,8 +2,8 @@ import React from 'react'
 import { useS3Upload } from 'next-s3-upload'
 
 export default function ChangePicture (props) {
-  const { FileInput } = useS3Upload()
-  const { profilePicture, uploadHandler, buttonHandler } = props
+  const { FileInput, openFileDialog } = useS3Upload()
+  const { profilePicture, uploadHandler } = props
   return (
     <div className='w-034 h-034 relative'>
       <img
@@ -15,8 +15,7 @@ export default function ChangePicture (props) {
         htmlFor='profile-picture'
       >
         <button
-          type='file'
-          onClick={buttonHandler}
+          onClick={openFileDialog}
           className='absolute bottom-0 right-0 bg-input-gray h-8-5 w-8-5 rounded-full cursor-pointer flex justify-center items-center'
         >
           <svg width='17' height='17' viewBox='0 0 19 19' fill='none' xmlns='http://www.w3.org/2000/svg'>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useS3Upload } from 'next-s3-upload'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import NavBarDentist from '../../components/NavBarDentist'
 import ChangePicture from '../../components/ChangePicture'
+import SuccessAlert from '../../components/SuccessAlert'
 import TextWithLabel from '../../components/TextWithLabel'
 import FormInput from '../../components/FormInput'
 import H3 from '../../components/H3'
@@ -40,7 +42,10 @@ export default function Configuration ({ dentistInfo }) {
   const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [dentistUpdate, setDentistUpdate] = useState({})
-  const { openFileDialog, uploadToS3 } = useS3Upload()
+  const [updatedAlert, setUpdatedAlert] = useState(false)
+  const [updatedStatus, setUpdatedStatus] = useState(false)
+  const { uploadToS3 } = useS3Upload()
+  const router = useRouter()
 
   const inputHandler = event => {
     const { name, value } = event.target
@@ -50,6 +55,13 @@ export default function Configuration ({ dentistInfo }) {
   const buttonHandler = async () => {
     const response = await api.patchDentist(dentistUpdate, _id)
     console.log(response)
+    router.push(`/configuration/${_id}`)
+    response.success ? setUpdatedStatus(true) : setUpdatedStatus(false)
+    setUpdatedAlert(true)
+  }
+
+  const closeHandler = () => {
+    setUpdatedAlert(false)
   }
 
   const handleFileChange = async file => {
@@ -67,11 +79,29 @@ export default function Configuration ({ dentistInfo }) {
           <TitleHeader
             pageTitle='Configuración'
           />
+          {
+            updatedAlert &&
+              //   updatedStatus
+              // ? 
+              <SuccessAlert
+                textAlert='Tu información fue actualizada correctamente.'
+                status='¡Éxito!'
+                mainColor='plover-blue'
+                bgColor='light-blue'
+                closeHandler={closeHandler}
+              />
+              // : <SuccessAlert
+              //     textAlert='Tu información no fue actualizada correctamente, intenta de nuevo.'
+              //     status='¡Error!'
+              //     mainColor='red-700'
+              //     bgColor='red-100'
+              //     closeHandler={closeHandler}
+              //   />
+          }
           <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
             <ChangePicture
               profilePicture={profileImage}
               uploadHandler={handleFileChange}
-              buttonHandler={openFileDialog}
             />
             <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
               {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
