@@ -13,6 +13,7 @@ import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
+import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
 
@@ -137,16 +138,18 @@ export default function Payments ({ payments, appointments }) {
     // console.log('el documento que quieres subir es: ',url)
 	  }
 
-  async function updatePayment (event) {
+  function updatePayment (event) {
     const { id } = event.target
     console.log(event.target.id)
     console.log(file)
     setIndexPaymentToUpdate(id)
   }
 
-  function handleSeeFile (event) {
-    setCurrentPayment(event.target.id)
+  function handleSeeFile (receipt) {
+    setCurrentPayment(receipt)
+    console.log(`el documento que quieres mostrar es: ${receipt}`)
     setVisible(true)
+    
   }
 
   useEffect(async () => {
@@ -209,7 +212,11 @@ export default function Payments ({ payments, appointments }) {
   <React.Fragment key={key}>
     <div className='col-span-2'><PlainText text={item.total} /></div>
     <div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
-    {item.receipt == '' ? (
+    <VoucherButton
+      payment={item}
+      handleSeeFile={handleSeeFile}
+    />
+   {/* {item.receipt == '' ? (
       <div className='lg:px-6'>
         <FileInput onChange={handleFileChange} />
         <button
@@ -224,7 +231,7 @@ export default function Payments ({ payments, appointments }) {
           className='p-1 text-white bg-plover-blue  rounded my-1'
           onClick={handleSeeFile}
         >mostrar comprobante
-      </button>}
+      </button>} */}
   </React.Fragment>
 								  )
                 })}
@@ -233,7 +240,8 @@ export default function Payments ({ payments, appointments }) {
           </div>
         </main>
       </div>
-      {visible && (
+    {/*aqui va la logica para mostrar el documento*/}
+   {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
