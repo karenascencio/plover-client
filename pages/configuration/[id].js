@@ -82,7 +82,7 @@ export default function Configuration ({ dentistInfo }) {
           {
             updatedAlert &&
               //   updatedStatus
-              // ? 
+              // ?
               <SuccessAlert
                 textAlert='Tu información fue actualizada correctamente.'
                 status='¡Éxito!'

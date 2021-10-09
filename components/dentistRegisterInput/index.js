@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Formik, Form, useField} from 'formik'
+import { Formik, Form, useField } from 'formik'
 import * as Yup from 'yup'
 
 const RegisterInput = ({ label, ...props }) => {
@@ -18,9 +18,9 @@ const RegisterInput = ({ label, ...props }) => {
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? (
+      {(meta.touched && meta.error) && (
         <div className='text-red-500 bg-red-200 text-center rounded'>{meta.error}</div>
-      ) : null}
+      )}
     </div>
   )
 }
