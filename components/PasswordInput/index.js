@@ -12,17 +12,19 @@ const PasswordInput = ({ label, ...props }) => {
   const [showPassword, setShowPassword] = useState(false)
   return (
     <>
-      <div className='my-10'>
-        <label
-          className=' text-sm text-plover-blue mb-10px'
-          htmlFor={props.id || props.name}
-        >
-          {label}
-        </label>
-        <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-280px md:w-408px lg:w-539px border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black rounded'>
-          <Image src={lock} heigth={40} width={40} />
+      <div className='my-10 w-auto'>
+        <div className='flex content-center w-auto mb-10px'>
+          <Image className='' src={lock} heigth={40} width={40} />
+          <label
+            className=' text-sm text-plover-blue  w-280px'
+            htmlFor={props.id || props.name}
+          >
+            {label}
+          </label>
+        </div>
+        <div className='flex justify-center justify-items-start border-b-2 mb-1 border-black w-280px md:w-408px lg:w-539px border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray focus:text-black rounded'>
           <input
-            className='w-full py-1 pl-1 border-0 focus:outline-none border-lighter-gray bg-light-blue focus:outline-none focus:bg-lighter-gray'
+            className='w-full py-1 pl-1 border-0 border-lighter-gray bg-light-blue focus:outline-none focus:bg-input-hover'
             type={showPassword ? 'text' : 'password'}
             {...field}
             {...props}
@@ -30,9 +32,7 @@ const PasswordInput = ({ label, ...props }) => {
           <a className='flex' onClick={() => setShowPassword(!showPassword)}><Image src={showPassword ? showpsw : hidepsw} heigth={45} width={45} /></a>
 
         </div>
-        {meta.touched && meta.error ? (
-          <div className='text-red-500 bg-red-200 text-center rounded'>{meta.error}</div>
-        ) : null}
+        {meta.touched && meta.error ? <div className='flex justify-center text-red-500  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>{meta.error}</div> : null}
       </div>
     </>
   )

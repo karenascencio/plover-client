@@ -11,6 +11,10 @@ import { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
+import { useS3Upload } from 'next-s3-upload'
+import DocViewer,{ DocViewerRenderers } from "react-doc-viewer";
+
+
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
@@ -52,28 +56,36 @@ export async function getStaticProps(context) {
 
 
 export default function Payments({payments,appointments}){
-    console.log(`los pagos son: ${payments}`)
-    console.log(`los citas son: ${appointments}`)
+    //console.log(`los pagos son: ${payments}`)
+    //console.log(`los citas son: ${appointments}`)
     const router = useRouter()
-    console.log(router.query)
+    //console.log(router.query)
     const idPatient = router.query.id
-    console.log(`el id de paciente es ${idPatient}`)
+    //console.log(`el id de paciente es ${idPatient}`)
     const idDentist = router.query.idDentist
     console.log(`el id de odontologo  es ${idDentist}`)
     
+	//hook para subir archivos a s3
+	const { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
+
 
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)
-	const [payment,setPayment] = useState({total:'',date:'',file:'some file',idDentist,idPatient})
-	console.log(dynamicPayments)
+	const [payment,setPayment] = useState({total:'',date:'',receipt:'',idDentist:idDentist,idPatient})
+	//console.log(dynamicPayments)
 	const [fullPrice,setFullPrice] = useState(getFullPrice(appointments))
 	const [remaningPrice,setRemaningPrice] = useState(fullPrice-getPaidOut(dynamicPayments))
 	const [initial,setInitial] = useState(false)
 	const [error,setError] = useState(true)
 	const [errorDate,setErrorDate] = useState(true)
 
-	console.log(`el total a pagar es ${fullPrice}`)
-	console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
+	const [file,setFile] = useState('')
+	const [indexPayment,setIndexPayment] = useState(null)
+	const [visible,setVisible] = useState(false)
+	const [currentFile,setCurrentFile] = useState(null)
+
+	//console.log(`el total a pagar es ${fullPrice}`)
+	//console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
 	function getPaidOut(dynamicPayments){
 		return dynamicPayments.reduce((acum,payment)=>{
 			return acum+payment.total
@@ -107,9 +119,6 @@ export default function Payments({payments,appointments}){
 		else if(name=='date' && value !=' '){
 			setErrorDate(false)
 		}
-	
-
-
 		setPayment({...payment,[name]:value})
 	}
 	async function handlePayment(){
@@ -119,11 +128,40 @@ export default function Payments({payments,appointments}){
 			await api.postPayment(payment)
 			setDynamicPayments([...dynamicPayments,payment])
 	}
+		
+	//agregamos el manejador de la subida del archivo
+	const handleFileChange = async file => {
+		const { url } = await uploadToS3(file)
+		console.log(url)
+        setFile(url)
+		//payments[indexPaymentToUpdate].receipt = url
+		//console.log(payments[indexPaymentToUpdate])
+
+		//console.log('el id del pago que quires actualizar es: ', idPaymentPatched)
+		//console.log('el documento que quieres subir es: ',url)
+	  }
+
+	async function handleClick(payment){
+		console.log(payment._id)
+		setIndexPayment(payment._id)
+
+	}
+
+	function handleSeeFile(event){
+		setCurrentFile(event.target.id)
+		setVisible(true)
+	}
+
+	useEffect(async () => {
+		await api.patchPayment(indexPayment,{receipt:file})
+	}, [file])
+
 
 	useEffect(()=>{
 		setRemaningPrice(fullPrice-getPaidOut(dynamicPayments))
 	},[dynamicPayments])
     return (
+<>		
 <div className='flex flex-col sm:flex-row '>
     <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
         <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
@@ -164,7 +202,17 @@ export default function Payments({payments,appointments}){
 											<React.Fragment key={key}>
 											<div className='col-span-2'><PlainText text={item.total}/></div>
 											<div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
-											<div className='lg:px-6'><button className='p-1 text-white bg-plover-blue w-30px h-30px rounded my-1'><Image src={bill} /></button></div>
+											{ item.receipt==''?(
+												<div className='lg:px-6' >
+													<FileInput onChange={handleFileChange} className='bg-red-500' />
+													<button  onClick={()=>{openFileDialog();handleClick(item) }} className='p-1 text-white bg-plover-blue  rounded my-1' >Agregar comprobabte</button>
+												</div>):
+											<button id={item.receipt} className='p-1 text-white bg-plover-blue  rounded my-1' onClick={handleSeeFile} >mostrar comprobante</button>
+
+            
+											
+											}
+
 											</React.Fragment>
 										)
 									})
@@ -174,5 +222,22 @@ export default function Payments({payments,appointments}){
                 </div>
             </main>
         </div>
+		{
+				visible && (
+					<>
+					<div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
+					<DocViewer 
+						className='bg-no-repeat'
+						style={{width: '100vw', height: '100vh'}}
+                    	pluginRenderers={DocViewerRenderers} 
+						documents = {[{uri:currentFile}]}
+						/>
+					    <button className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0' onClick={()=>setVisible(false)}>cerrar</button>
+
+					</div>
+					</>
+				)
+			}
+	</>
     )
 }

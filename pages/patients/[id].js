@@ -44,6 +44,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo }) {
+  console.log(patientInfo)
   const { _id: idPatient, idDentist } = patientInfo
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')

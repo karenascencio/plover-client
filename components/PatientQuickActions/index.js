@@ -6,7 +6,7 @@ import PaymentHistoryButton from '../PaymentHistoryButton'
 export default function PatientQuickActions (props) {
   const { addAppointment, appointments, clinicalRecord, payments, deletePatient, idPatient,idDentist } = props
   return (
-    <div className='flex'>
+    <div className='flex  mt-4 md:mb-0'>
       <CardButtonPatient
         title='Agregar cita'
         image={addAppointment}
@@ -24,7 +24,7 @@ export default function PatientQuickActions (props) {
       />
       <PaymentHistoryButton
         image={payments}
-        reference={`/payments/${idPatient}?dentistId=${idDentist}`}
+        reference={`/payments/${idPatient}?idDentist=${idDentist}`}
       />
       <DeleteButton
         image={deletePatient}
