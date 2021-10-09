@@ -15,6 +15,7 @@ export default function ChangePicture (props) {
         htmlFor='profile-picture'
       >
         <button
+          type='file'
           onClick={buttonHandler}
           className='absolute bottom-0 right-0 bg-input-gray h-8-5 w-8-5 rounded-full cursor-pointer flex justify-center items-center'
         >
