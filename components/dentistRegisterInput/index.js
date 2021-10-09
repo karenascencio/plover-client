@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Formik, Form, useField} from 'formik'
+import { Formik, Form, useField } from 'formik'
 import * as Yup from 'yup'
 
 const RegisterInput = ({ label, ...props }) => {

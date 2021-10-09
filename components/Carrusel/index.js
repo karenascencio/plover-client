@@ -7,7 +7,7 @@ import '../../node_modules/slick-carousel/slick/slick-theme.css'
 export default function Carrusel (props) {
   const { cards } = props
   const settings = {
-    arrows:false,
+    arrows: false,
     dots: true,
     infinite: true,
     speed: 500,
@@ -49,7 +49,7 @@ export default function Carrusel (props) {
   }
   return (
     <div className=' w-90vw sm:w-60vw my-10 '>
-      <Slider {...settings} >
+      <Slider {...settings}>
         {cards.map((item, key) => <CarruselCard key={key} title={item.title} subtitle={item.subtitle} thirdTitle={item.thirdTitle} />)}
       </Slider>
     </div>

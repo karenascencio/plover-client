@@ -35,10 +35,10 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
           {
            !webToken &&
              <div className=' w-100 d-flex justify-content-center mt-8'>
-                <p className='text-danger'>
-                  Please enter valid credentials
-                </p>
-              </div>
+               <p className='text-danger'>
+                 Please enter valid credentials
+               </p>
+             </div>
           }
           <div className='mb-50px  mt-70px w-200px'>
             <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-250px md:w-408px lg:w-539px'>
@@ -82,8 +82,8 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
           <p className=' text-login-blue text-14px '>
             <Link href='/recovery-password'>
               <a className='hover:text-plover-blue hover:font-bold '>
-              ¿Olvidaste la contraseña?
-            </a>
+                ¿Olvidaste la contraseña?
+              </a>
             </Link>
           </p>
         </div>

@@ -1,7 +1,7 @@
 
 import Image from 'next/image'
 import Link from 'next/dist/client/link'
-export default function AddNewPatientButton ({ title, imagen,idDentist}) {
+export default function AddNewPatientButton ({ title, imagen, idDentist }) {
   return (
     <>
       <div className=' h-30px w-30px lg:w-180px xl:w-180px flex justify-center justify-items-center items-center rounded hover:bg-login-blue bg-plover-blue'>

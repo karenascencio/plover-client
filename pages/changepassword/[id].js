@@ -47,10 +47,10 @@ export default function Configuration ({ dentistInfo }) {
     try {
       console.log('Cuack!!')
       const dataUser = { ...values, id: dentistInfo._id }
-      //console.log('dataUser', dataUser)
+      // console.log('dataUser', dataUser)
       const response = await api.changePassword(dataUser)
       const success = response.success
-      if(success) {
+      if (success) {
         alert('Tu contraseña ha sido actualizada')
       } else {
         alert('La contraseña actual que ingresaste no concuerda')
