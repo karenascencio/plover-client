@@ -14,7 +14,7 @@ import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 import DocViewer,{ DocViewerRenderers } from "react-doc-viewer";
 
-
+//trabajando en payments
 
 const cardsInfo = [
   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
