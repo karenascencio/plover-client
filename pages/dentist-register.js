@@ -19,7 +19,7 @@ import close from '../public/close.svg'
 export default function DentistRegister () {
   const router = useRouter()
   // .: hooks
-
+  const [falsePop, setFalsePop] = useState(false)
   // .: Handdler
   const registerHandler = async (values) => {
     try {
@@ -31,7 +31,7 @@ export default function DentistRegister () {
           alert('Se ha mandado un correo para verificar tu cuenta')
           router.push('/login')
         } else {
-          alert('El correo ya está registrado, porfavor utiliza otro por favor')
+          setFalsePop(true)
         }
       } else throw new Error()
     } catch (error) { console.log((error.message)) }
@@ -60,9 +60,9 @@ export default function DentistRegister () {
         }}
         /* .: Validation Schema using Yup */
         validationSchema={dentistSchema}
-        onSubmit={(values, { c }) => {
+        onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
+            //alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
             registerHandler(values)
           }, 400)
@@ -163,6 +163,13 @@ export default function DentistRegister () {
               <div className='mt-90px mb-50px border-b-2 border-black'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos de la cuenta</h3>
               </div>
+              {
+                falsePop ?
+                <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                  <p>El correo que intentas usar ya esta registrado intenta con uno nuevo o recupera tu cuenta</p>
+                </div>
+                : null
+              }
               <RegisterInput
                 label='Correo para registrar tu cuenta'
                 name='email'
