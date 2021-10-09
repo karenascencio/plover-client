@@ -108,18 +108,18 @@ export default function Configuration ({ dentistInfo }) {
                     textColor='plover-blue'
                   />
                   {
-                    falsePop ?
-                      <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                    falsePop
+                      ? <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
                         <p>La contraseña actual no coincide con la registrada</p>
-                      </div>
-                    : null
+                        </div>
+                      : null
                   }
                   {
-                    successPop    ?
-                      <div className='flex justify-center text-green-800  bg-green-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                    successPop
+                      ? <div className='flex justify-center text-green-800  bg-green-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
                         <p>La contraseña ha sido actualizada</p>
                       </div>
-                    : null
+                      : null
                   }
                   <PasswordInput
                     label='Contraseña Actual'

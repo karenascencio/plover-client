@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 
 export default function Toggle (props) {
-  const {id,handleToggle, disabled,status} = props
-  const [state, setState] = useState(disabled?status:true)
+  const { id, handleToggle, disabled, status } = props
+  const [state, setState] = useState(disabled ? status : true)
 
-  function handleChange(){
+  function handleChange () {
     setState(!state)
     handleToggle(id)
   }
   return (
-    <React.Fragment>
+    <>
       {/* switch */}
       <label
         htmlFor={`toggle-${id}`}
@@ -34,6 +34,6 @@ export default function Toggle (props) {
           ? <span className='hidden lg:block text-sm text-white pb-1 pt-0.5'>hecho</span>
           : <span className='hidden lg:block  text-sm text-white pb-1 pt-0.5'>pendiente</span>}
       </label>
-    </React.Fragment>
+    </>
   )
 }

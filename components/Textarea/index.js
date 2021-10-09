@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Textarea (props) {
-  const { textName,textLabel,textValue, inputId,handleChange,handleBlur } = props
+  const { textName, textLabel, textValue, inputId, handleChange, handleBlur } = props
   return (
     <div className='my-5 flex flex-col flex-auto'>
       <label

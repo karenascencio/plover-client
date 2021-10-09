@@ -21,7 +21,7 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
     event.preventDefault()
     Login(details)
   }
- console.log('error',error)
+  console.log('error', error)
   return (
     <>
       <form onSubmit={handlerSubmit}>
@@ -73,15 +73,15 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
           <p className=' text-login-blue text-14px mb-4 mt-4 '>¿No tienes una cuenta?
             <Link href='/dentist-register'>
               <a className='hover:text-plover-blue hover:font-bold '>
-                 Registrate
+                Registrate
               </a>
             </Link>
           </p>
           <p className=' text-login-blue text-14px '>
             <Link href='/recovery-password'>
               <a className='hover:text-plover-blue hover:font-bold '>
-              ¿Olvidaste la contraseña?
-            </a>
+                ¿Olvidaste la contraseña?
+              </a>
             </Link>
           </p>
         </div>

@@ -25,13 +25,12 @@ export default function RecoverPassword () {
       console.log('handler', emailData)
       const response = await api.recovery(emailData)
       console.log(response)
-    }
-    catch (error) { console.log(error.message) }
+    } catch (error) { console.log(error.message) }
   }
 
   return (
     <>
-      <form onSubmit={handlerSubmit} > 
+      <form onSubmit={handlerSubmit}>
         <div className='flex  justify-center flex-col justify-center items-center mt-166px'>
           <div className='text-center flex mb-70px'>
             <H1
@@ -54,7 +53,6 @@ export default function RecoverPassword () {
           </div>
           <div className='mb-70px w-200px'>
 
-
             <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-250px md:w-408px lg:w-539px'>
               <Image src={emailImg} heigth={40} width={40} />
               <input
@@ -66,7 +64,7 @@ export default function RecoverPassword () {
                 required
               />
             </div>
-            
+
           </div>
           <LoginButtons title='Cambiar contraseña' buttonHandler={buttonHandler} />
           <div className='mt-4' />
