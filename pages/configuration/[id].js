@@ -40,7 +40,7 @@ export default function Configuration ({ dentistInfo }) {
   const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [dentistUpdate, setDentistUpdate] = useState({})
-  const { openFileDialog, uploadToS3 } = useS3Upload()
+  const { uploadToS3 } = useS3Upload()
 
   const inputHandler = event => {
     const { name, value } = event.target
@@ -71,7 +71,6 @@ export default function Configuration ({ dentistInfo }) {
             <ChangePicture
               profilePicture={profileImage}
               uploadHandler={handleFileChange}
-              buttonHandler={openFileDialog}
             />
             <h2 className='text-lighter-gray font-thin text-3xl capitalize'>
               {name.split(' ', 1).join() + ' ' + lastName.split(' ', 1).join()}
