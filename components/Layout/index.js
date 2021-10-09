@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import NavBar from '../NavBarPatient'
 
-export const FormularioContext = React.createContext();
+export const FormularioContext = React.createContext()
 export default function Layout ({ children }) {
-  const [formulario,setFormulario] = useState('General Information')
-  function handleForm(valor){
+  const [formulario, setFormulario] = useState('General Information')
+  function handleForm (valor) {
     setFormulario(valor)
   }
   return (
