@@ -116,30 +116,30 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
-        search
-          ? patientsInfo.filter(patient => {
-              return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
-            }).map(patient =>
-              <PatientCard
-                patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-                patientImage={patient.userImage}
-                key={patient._id}
-                idPatient={patient._id}
-                idDentist={idDentist}
-                deleteHandler={preDeleteHandler}
-              />
-            )
-          : patientsInfo.map(patient =>
-            <PatientCard
-              patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-              patientImage={patient.userImage}
-              key={patient._id}
-              idPatient={patient._id}
-              idDentist={idDentist}
-              deleteHandler={preDeleteHandler}
-            />
-          )
-        }
+              search
+                ? patientsInfo.filter(patient => {
+                    return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
+                  }).map(patient =>
+                    <PatientCard
+                    patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                    patientImage={patient.userImage}
+                    key={patient._id}
+                    idPatient={patient._id}
+                    idDentist={idDentist}
+                    deleteHandler={preDeleteHandler}
+                  />
+                  )
+                : patientsInfo.map(patient =>
+                  <PatientCard
+                    patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                    patientImage={patient.userImage}
+                    key={patient._id}
+                    idPatient={patient._id}
+                    idDentist={idDentist}
+                    deleteHandler={preDeleteHandler}
+                  />
+                )
+            }
           </div>
         </div>
       </main>
