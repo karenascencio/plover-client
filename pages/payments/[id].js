@@ -7,7 +7,7 @@ import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
 import { useState,useEffect } from 'react'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
@@ -59,19 +59,23 @@ export default function Payments({payments,appointments}){
     //console.log(`los pagos son: ${payments}`)
     //console.log(`los citas son: ${appointments}`)
     const router = useRouter()
-    //console.log(router.query)
-    const idPatient = router.query.id
+   //console.log(router.query)
+    //const idPatient = router.query.id
     //console.log(`el id de paciente es ${idPatient}`)
-    const idDentist = router.query.idDentist
-    console.log(`el id de odontologo  es ${idDentist}`)
-    
+    //const idDentist = router.query.idDentist
+    //console.log(`el id de odontologo es ${idDentist}`)
+
+		const firstPayment = payments[0]
+		const {idPatient,idDentist} = firstPayment
+
+		console.log(firstPayment)
 	//hook para subir archivos a s3
 	const { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
 
 
 
 	const [dynamicPayments,setDynamicPayments] = useState(payments)
-	const [payment,setPayment] = useState({total:'',date:'',receipt:'',idDentist:idDentist,idPatient})
+	const [payment,setPayment] = useState({total:'',date:'',receipt:'',idPatient,idDentist})
 	//console.log(dynamicPayments)
 	const [fullPrice,setFullPrice] = useState(getFullPrice(appointments))
 	const [remaningPrice,setRemaningPrice] = useState(fullPrice-getPaidOut(dynamicPayments))
@@ -80,9 +84,10 @@ export default function Payments({payments,appointments}){
 	const [errorDate,setErrorDate] = useState(true)
 
 	const [file,setFile] = useState('')
-	const [indexPayment,setIndexPayment] = useState(null)
+	const [indexPaymentToUpdate,setIndexPaymentToUpdate] = useState(null)
+
+	const [currentPayment,setCurrentPayment] = useState(null)
 	const [visible,setVisible] = useState(false)
-	const [currentFile,setCurrentFile] = useState(null)
 
 	//console.log(`el total a pagar es ${fullPrice}`)
 	//console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
@@ -126,8 +131,10 @@ export default function Payments({payments,appointments}){
 			payment.total = Number(payment.total)
 			payment.date = new Date(payment.date)
 			await api.postPayment(payment)
-			setDynamicPayments([...dynamicPayments,payment])
-	}
+			const newPayments = await api.getPaymentsByPatientId(idPatient)
+			console.log(newPayments)
+			setDynamicPayments(newPayments)
+		}
 		
 	//agregamos el manejador de la subida del archivo
 	const handleFileChange = async file => {
@@ -141,103 +148,114 @@ export default function Payments({payments,appointments}){
 		//console.log('el documento que quieres subir es: ',url)
 	  }
 
-	async function handleClick(payment){
-		console.log(payment._id)
-		setIndexPayment(payment._id)
-
+	async function updatePayment(event){
+		const {id} = event.target
+		console.log(event.target.id)
+		console.log(file)
+		setIndexPaymentToUpdate(id)
 	}
 
 	function handleSeeFile(event){
-		setCurrentFile(event.target.id)
+		setCurrentPayment(event.target.id)
 		setVisible(true)
 	}
 
 	useEffect(async () => {
-		await api.patchPayment(indexPayment,{receipt:file})
+		await api.patchPayment(indexPaymentToUpdate,{receipt:file})
 	}, [file])
-
 
 	useEffect(()=>{
 		setRemaningPrice(fullPrice-getPaidOut(dynamicPayments))
 	},[dynamicPayments])
+
     return (
-<>		
-<div className='flex flex-col sm:flex-row '>
-    <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
+		<>		
+			<div className='flex flex-col sm:flex-row '>
+    		<NavBarDentist 
+					isHome={false} 
+					idPatient={idPatient} 
+					idDentist={idDentist}/>
         <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
-        <div className='flex flex-col items-center max-w-screen-lg '>
+        	<div className='flex flex-col items-center max-w-screen-lg '>
             <Carrusel cards={cardsInfo}/>
-						<div className='w-full flex justify-between' >
+							<div className='w-full flex justify-between' >
 							<H1 textTitle='Pagos' textColor='plover-blue'/>
-							<div className='mr-4'><AmountDisplay  totalAmount={fullPrice} remaining={remaningPrice}/></div>
+							<div className='mr-4'>
+								<AmountDisplay  
+									totalAmount={fullPrice} 
+									remaining={remaningPrice}/>
+							</div>
 						</div>
 						<div className='w-full flex flex-col'>
 							<div className='self-start'>
-								<button disabled={errorDate} onClick={handlePayment} className={`text-white ${error?'bg-lighter-gray':'bg-plover-blue'} w-28 h-30px rounded my-1 `}>Agregar pago</button>
-								<div> </div>
+								<button disabled={errorDate} 
+									onClick={handlePayment} 
+									className={`text-white ${error?'bg-lighter-gray':'bg-plover-blue'} w-28 h-30px rounded my-1 `}
+								>Agregar pago</button>
 							</div>
 							<div className='grid grid-cols-5 gap-x-5 place-items-stretch'>
-								<div className='col-span-2 flex flex-col'>
-									<FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} />
+							<div className='col-span-2 flex flex-col'>
+								<FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={()=>console.log('blur')} />
 									{initial && error && <div className='text-sm text-plover-blue -mt-5'>Ingresa el costo </div>}
 								</div>
 								<div className='col-span-2  flex flex-col justify-end items-center pb-4'>
 									<label className='text-plover-blue text-sm pb-2 self-start' htmlFor='calendar'>
-          								Fecha:
-       				 				</label>
-        							<input
-          								className='text-plover-blue text-sm border rounded ml-1 py-1.5 px-1 w-full'
-          								type='date'
-          								id='calendar'
+         							Fecha:
+    				 			</label>
+       						<input
+         						className='text-plover-blue text-sm border rounded ml-1 py-1.5 px-1 w-full'
+         						type='date'
+         						id='calendar'
 										name='date'
 										value={payment.date}
 										onChange={handleChange}
-        							/>
+      						/>
 								</div>
-								
-
-								{
-									dynamicPayments.map((item,key)=>{
-										return (
-											<React.Fragment key={key}>
+								{dynamicPayments.map((item,key)=>{
+									return (
+										<React.Fragment key={key}>
 											<div className='col-span-2'><PlainText text={item.total}/></div>
 											<div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()}/></div>
-											{ item.receipt==''?(
-												<div className='lg:px-6' >
-													<FileInput onChange={handleFileChange} className='bg-red-500' />
-													<button  onClick={()=>{openFileDialog();handleClick(item) }} className='p-1 text-white bg-plover-blue  rounded my-1' >Agregar comprobabte</button>
-												</div>):
-											<button id={item.receipt} className='p-1 text-white bg-plover-blue  rounded my-1' onClick={handleSeeFile} >mostrar comprobante</button>
-
-            
-											
-											}
-
-											</React.Fragment>
-										)
-									})
-								}
+										{item.receipt==''?(
+											<div className='lg:px-6' >
+												<FileInput onChange={handleFileChange} />
+												<button 
+													id={item._id}
+													onClick={(event)=>{ openFileDialog();updatePayment(event) }} 
+													className='p-1 text-white bg-plover-blue  rounded my-1'
+												>Agregar comprobabte</button>
+											</div>):
+											<button
+												id={item.receipt} 
+												className='p-1 text-white bg-plover-blue  rounded my-1' 
+												onClick={handleSeeFile} >mostrar comprobante</button>
+										}
+										</React.Fragment>
+									)
+								})
+									}
 							</div>
 						</div>
-                </div>
-            </main>
+          </div>
+      	</main>
         </div>
-		{
-				visible && (
+				{visible && (
 					<>
-					<div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
-					<DocViewer 
-						className='bg-no-repeat'
-						style={{width: '100vw', height: '100vh'}}
-                    	pluginRenderers={DocViewerRenderers} 
-						documents = {[{uri:currentFile}]}
-						/>
-					    <button className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0' onClick={()=>setVisible(false)}>cerrar</button>
-
+						<div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
+							<DocViewer 
+								className='bg-no-repeat'
+								style={{width: '100vw', height: '100vh'}}
+                pluginRenderers={DocViewerRenderers} 
+								documents = {[{uri:currentPayment}]}
+							/>
+					  <button 
+							className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0' 
+							onClick={()=>setVisible(false)}
+						>cerrar</button>
 					</div>
-					</>
-				)
-			}
+				</>
+			)
+		}
 	</>
-    )
+  )
 }
