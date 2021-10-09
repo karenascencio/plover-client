@@ -13,19 +13,17 @@ import { useState,useEffect } from 'react'
 import {useRouter} from 'next/router' 
 import addIcon from '../public/addIcon.svg'
 import Image from 'next/image'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 //nota hay un bugsito en el manejo de estado de los toggles
 //corregimos los errores de vercer, corregimos el pull request
 
-const cardsInfo = [
-  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
-]
-
 export async function getStaticProps() {
-  return {  
+  return {
+            
     props: {
         
       }
@@ -36,11 +34,21 @@ export async function getStaticProps() {
 
 export default function Newappointment() {
     const router = useRouter()
-		console.log(router.query)
     const {idPatient:idPatient,idDentist:idDentist} = router.query
-
-		console.log('el id de paciente es: ',idPatient)
-		console.log('el id de dentista es: ',idDentist)
+    const [patientData, setPatientData] = useState(null)
+    const [appointmentsData, setappointmentsData] = useState(null)
+    console.log(idPatient + 'this id')
+    useEffect(async () => {
+        const patientInfo = await api.getPatientsById(idPatient)
+        setPatientData(patientInfo)
+        console.log(patientData)
+        const appointmentsInfo = await api.getAppointmentsByPatientId(idPatient)
+        setappointmentsData(appointmentsInfo)
+        console.log(appointmentsInfo)
+    },[])
+    console.log(patientData)
+    const cardsInfo = []
+    // const { name, lastName, userImage } = patientData
     const [procedures,setProcedures] = useState([])
     const [procedure,setProcedure] = useState({name:'',price:0,status:false })
     const [appointment,setAppointment] = useState({
@@ -55,6 +63,14 @@ export default function Newappointment() {
     useEffect(()=>{
         setAppointment({...appointment,procedures})
     },[procedures])
+
+    // appointmentsData.forEach(appointment => {
+    //     const now = dayjs.utc()
+    //     const appointmentDate = dayjs.utc(appointment.date)
+    //     appointment.procedures.forEach(procedure => {
+    //       appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    //     })
+    //   })
 
     function handleProcedure(event){
         const {name,value} = event.target
@@ -86,7 +102,13 @@ export default function Newappointment() {
                 {/*el w-full rompe el layout*/}
         	  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11 '>
               <div className='max-w-screen-lg w-full flex flex-col items-center '>
-                        <Carrusel cards={cardsInfo}/>
+                        {/* <TitleHeader
+                            pageTitle='Paciente'
+                            patientName={name}
+                            patientLastName={lastName}
+                            patientImage={userImage}
+                        />
+                        <Carrusel cards={cardsInfo}/> */}
                         <div className='w-full flex justify-between '> 
                             <H1 textTitle='Cita' textColor='plover-blue'/>
 						    <div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
