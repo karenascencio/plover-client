@@ -10,7 +10,7 @@ module.exports = {
         'lighter-gray': '#C4C4C4',
         'darker-gray': '#919390',
         'input-gray': '#FBFBFB',
-        'input-hover': '#DDECFF',
+        'input-hover': '#DDECFF'
       },
       spacing: {
         '060': '3.75rem',
@@ -53,7 +53,7 @@ module.exports = {
         '70px': '4.37rem',
         '90px': '5.62rem',
         '133px': '8.313rem',
-        '166px': '10.375rem',
+        '166px': '10.375rem'
       },
       width: {
         '15px': '0.938rem',
@@ -79,32 +79,32 @@ module.exports = {
         '70px': '4.37rem',
         '90px': '5.62rem',
         '676px': '42.188rem',
-        '100%' : '100%'
+        '100%': '100%'
       },
       maxWidth: {
         '18rem': '18rem',
         '26rem': '26rem',
         '10rem': '10rem'
       },
-      minWidth:{
+      minWidth: {
         '25%': '25%',
         '30%': '30%',
-        '100px':'100px'
+        '100px': '100px'
       }
     },
     minWidth: {
-      '0': '0',
+      0: '0',
       '1/4': '25%',
       '1/2': '50%',
-      'full': '100%',
-      '200': '200px'
+      full: '100%',
+      200: '200px'
     }
   },
   variants: {
     extend: {
       fontWeight: ['hover'],
-      backgroundColor: ['active'],
-    },
+      backgroundColor: ['active']
+    }
   },
   plugins: [
     require('@tailwindcss/custom-forms')
