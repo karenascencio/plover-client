@@ -1,111 +1,112 @@
-import React, { useState, useEffect } from 'react'
-import api from '../lib/api'
-import Carrusel from '../components/Carrusel'
-import AmountDisplay from '../components/AmountDisplay'
-import H3 from '../components/H3'
-import FormInput from '../components/FormInput'
-import PlainText from '../components/PlainText'
+// ToDO delete
+// import React, { useState, useEffect } from 'react'
+// import api from '../lib/api'
+// import Carrusel from '../components/Carrusel'
+// import AmountDisplay from '../components/AmountDisplay'
+// import H3 from '../components/H3'
+// import FormInput from '../components/FormInput'
+// import PlainText from '../components/PlainText'
 
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
-const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
-]
+// const cardsInfo = [
+//   { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+//   { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+//   { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+//   { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+// ]
 
-export async function getStaticProps () {
-  const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
-  const appointments = await api.getAppointmentsByPatientId('61511de2f6273ea718ebd5f7')
-  return {
-    props: {
-      payments,
-      appointments
-    }
-  }
-}
+// export async function getStaticProps () {
+//   const payments = await api.getPaymentsByPatientId('61511de2f6273ea718ebd5f7')
+//   const appointments = await api.getAppointmentsByPatientId('61511de2f6273ea718ebd5f7')
+//   return {
+//     props: {
+//       payments,
+//       appointments
+//     }
+//   }
+// }
 
-export default function Payments ({ payments, appointments }) {
-  const idPatient = '6154aa9a44729179b2c5d74f'
-  const idDentist = '61511d3cf6273ea718ebd5f4'
+// export default function Payments ({ payments, appointments }) {
+//   const idPatient = '6154aa9a44729179b2c5d74f'
+//   const idDentist = '61511d3cf6273ea718ebd5f4'
 
-  const [dynamicPayments, setDynamicPayments] = useState(payments)
-  const [payment, setPayment] = useState({ total: '', date: '', file: 'some file', idDentist, idPatient })
-  console.log(dynamicPayments)
-  const [fullPrice, setFullPrice] = useState(getFullPrice(appointments))
-  const [remaningPrice, setRemaningPrice] = useState(fullPrice - getPaidOut(dynamicPayments))
+//   const [dynamicPayments, setDynamicPayments] = useState(payments)
+//   const [payment, setPayment] = useState({ total: '', date: '', file: 'some file', idDentist, idPatient })
+//   console.log(dynamicPayments)
+//   const [fullPrice, setFullPrice] = useState(getFullPrice(appointments))
+//   const [remaningPrice, setRemaningPrice] = useState(fullPrice - getPaidOut(dynamicPayments))
 
-  console.log(`el total a pagar es ${fullPrice}`)
-  console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
-  function getPaidOut (dynamicPayments) {
-    return dynamicPayments.reduce((acum, payment) => {
-      return acum + payment.total
-    }, 0)
-  }
+//   console.log(`el total a pagar es ${fullPrice}`)
+//   console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
+//   function getPaidOut (dynamicPayments) {
+//     return dynamicPayments.reduce((acum, payment) => {
+//       return acum + payment.total
+//     }, 0)
+//   }
 
-  function getFullPrice (appointments) {
-    return appointments.reduce((acum, appointment) => {
-		  return acum + appointment.procedures.reduce((acum, procedure) => {
-        return acum + procedure.price
-		  }, 0)
-    }, 0)
-	  }
+//   function getFullPrice (appointments) {
+//     return appointments.reduce((acum, appointment) => {
+// 		  return acum + appointment.procedures.reduce((acum, procedure) => {
+//         return acum + procedure.price
+// 		  }, 0)
+//     }, 0)
+// 	  }
 
-  function handleChange (event) {
-    console.log(payment)
-    const { name, value } = event.target
-    setPayment({ ...payment, [name]: value })
-  }
-  async function handlePayment () {
-    payment.total = Number(payment.total)
-    payment.date = new Date(payment.date)
-    await api.postPayment(payment)
-    setDynamicPayments([...dynamicPayments, payment])
-  }
+//   function handleChange (event) {
+//     console.log(payment)
+//     const { name, value } = event.target
+//     setPayment({ ...payment, [name]: value })
+//   }
+//   async function handlePayment () {
+//     payment.total = Number(payment.total)
+//     payment.date = new Date(payment.date)
+//     await api.postPayment(payment)
+//     setDynamicPayments([...dynamicPayments, payment])
+//   }
 
-  useEffect(() => {
-    setRemaningPrice(fullPrice - getPaidOut(dynamicPayments))
-  }, [dynamicPayments])
-  return (
-    <div className='flex flex-col items-center border border-red-800 max-w-screen-lg'>
-      <Carrusel cards={cardsInfo} />
-      <div className='self-end border border-red-800'><AmountDisplay totalAmount={fullPrice} remaining={remaningPrice} /></div>
-      <div className='w-full flex flex-col border border-green-900'>
-        <div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue' /></div>
-        <div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
-          <div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={() => console.log('blur')} /></div>
-          <div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
-            <label className='text-plover-blue text-base font-thin' htmlFor='calendar'>
-              Selecciona una fecha:
-            </label>
-            <input
-              className='text-plover-blue text-base border rounded font-thin ml-1 px-1'
-              type='date'
-              id='calendar'
-              name='date'
-              value={payment.date}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='flex flex-col border w-28 border-yellow-400 justify-around items-start pb-5 text-plover-blue '>
-            <button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
-            <span className=''>Comprobante</span>
-          </div>
+//   useEffect(() => {
+//     setRemaningPrice(fullPrice - getPaidOut(dynamicPayments))
+//   }, [dynamicPayments])
+//   return (
+//     <div className='flex flex-col items-center border border-red-800 max-w-screen-lg'>
+//       <Carrusel cards={cardsInfo} />
+//       <div className='self-end border border-red-800'><AmountDisplay totalAmount={fullPrice} remaining={remaningPrice} /></div>
+//       <div className='w-full flex flex-col border border-green-900'>
+//         <div className='self-start'><H3 textTitle='Pagos' textColor='plover-blue' /></div>
+//         <div className='border border-red-500 grid grid-cols-3 gl:grid-cols-5 gap-x-20'>
+//           <div className='gl:col-span-2'><FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={() => console.log('blur')} /></div>
+//           <div className='gl:col-span-2  flex flex-col justify-end items-center pb-4 lg:flex-row lg:justify-start lg:items-end lg:pb-7'>
+//             <label className='text-plover-blue text-base font-thin' htmlFor='calendar'>
+//               Selecciona una fecha:
+//             </label>
+//             <input
+//               className='text-plover-blue text-base border rounded font-thin ml-1 px-1'
+//               type='date'
+//               id='calendar'
+//               name='date'
+//               value={payment.date}
+//               onChange={handleChange}
+//             />
+//           </div>
+//           <div className='flex flex-col border w-28 border-yellow-400 justify-around items-start pb-5 text-plover-blue '>
+//             <button onClick={handlePayment} className='text-white bg-plover-blue w-28 h-30px rounded my-1'>Agregar pago</button>
+//             <span className=''>Comprobante</span>
+//           </div>
 
-          {
-									dynamicPayments.map((item, key) => {
-									  return (
-  <React.Fragment key={key}>
-    <div className='gl:col-span-2'><PlainText text={item.total} /></div>
-    <div className='gl:col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
-    <button className='text-white bg-plover-blue w-28 h-30px rounded my-1'>agregar</button>
-  </React.Fragment>
-									  )
-									})
-								}
-        </div>
-      </div>
-    </div>
-  )
-}
+//           {
+// 									dynamicPayments.map((item, key) => {
+// 									  return (
+//   <React.Fragment key={key}>
+//     <div className='gl:col-span-2'><PlainText text={item.total} /></div>
+//     <div className='gl:col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
+//     <button className='text-white bg-plover-blue w-28 h-30px rounded my-1'>agregar</button>
+//   </React.Fragment>
+// 									  )
+// 									})
+// 								}
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }

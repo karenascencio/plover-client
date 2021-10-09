@@ -20,7 +20,6 @@ export default function Login () {
       console.log('handler', userData)
       const response = await api.login(userData)
       const success = response.success
-      // console.log('response', response.data.token)
       if (success) {
         const tokent = response.data.token
         const tokenjwt = api.parseJwt(tokent)

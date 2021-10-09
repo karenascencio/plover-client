@@ -14,7 +14,7 @@ import Image from 'next/image'
 export default function NavBarDentist (props) {
   const { isHome, idPatient, idDentist } = props
 
-  const options = [{ title: 'Home', link: '/' },
+  const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
@@ -22,7 +22,7 @@ export default function NavBarDentist (props) {
     { title: 'Configuración', link: '/configuration ' }
   ]
 
-  const optionsHome = [{ title: 'Home', link: '/' },
+  const optionsHome = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Configuración ', link: `/configuration/${idDentist}` }
   ]
 
@@ -34,9 +34,9 @@ export default function NavBarDentist (props) {
     setIsOpen(!isOpen)
   }
   return (
-    <div className='z-40'>
+    <div className='z-40 '>
 
-      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
+      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
         <div className='flex  '>
           <H1 textTitle='Plover' textColor='white' />
         </div>

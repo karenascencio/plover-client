@@ -76,6 +76,10 @@ export default function Newappointment () {
     console.log(`te quieres mover a /patients/${idPatient}`)
     router.push(`/patients/${idPatient}`)
   }
+  function handleDelete (index) {
+    const newProcedures = procedures.filter((item, key) => key !== index)
+    setProcedures([...newProcedures])
+  }
 
   return (
     <div className='flex flex-col sm:flex-row '>
@@ -90,35 +94,42 @@ export default function Newappointment () {
           </div>
           <div className='w-full flex flex-col w-1/2 '>
             <div className='flex justify-between items-center'>
-              <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
+              <div className='self-start '><H3 textTitle='Lista de procedimientos' textColor='plover-blue' /></div>
 
               <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>
+              </button>
               </div>
             </div>
             <div className='flex'>
-              <div className='w-full grid grid-cols-6 gap-x-5'>
-                <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+              <div className='w-full grid grid-cols-7 gap-x-3'>
+                <div className='col-span-4 '><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='flex flex-col items-end mt-5 '>
+                <div className='flex flex-col  mt-5'>
                   <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                  <Toggle handleToggle={handleToggle} disabled />
+                  <div className='flex justify-end'>
+                    <Toggle handleToggle={handleToggle} disabled />
+                  </div>
                 </div>
                 {
-									procedures.map((procedure, key) => {
-									  return (
+									procedures.map((procedure, key) => (
   <React.Fragment key={key}>
-    <div className='col-span-3'><PlainText text={procedure.name} /></div>
-    <div className='col-span-2'><PlainText text={procedure.price} /></div>
+    <div className='col-span-4 relative'>
+      <PlainText text={procedure.name} />
+      <button onClick={() => handleDelete(key)} className='text-red-500 absolute top-0 right-2'>
+        x
+      </button>
+    </div>
+    <div className='col-span-2'>
+      <PlainText text={procedure.price} />
+    </div>
     <div className='flex justify-end'>
       <Toggle id={key} handleToggle={handleToggle} />
     </div>
   </React.Fragment>
-									  )
-									})
-							    }
+									  ))
+}
               </div>
             </div>
             <div className=' grid md:grid-cols-2 gap-x-5'>
@@ -139,7 +150,7 @@ export default function Newappointment () {
                 handleBlur={() => console.log('blur')}
               />
             </div>
-            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            <div><button disabled={!procedures.length} onClick={handleSubmit} className={`text-white text-sm pb-1 ${!procedures.length ? 'bg-lighter-gray' : 'bg-plover-blue'} w-28 h-30px rounded my-1`}>Guardar</button> </div>
           </div>
         </div>
       </main>

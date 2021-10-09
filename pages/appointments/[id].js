@@ -117,7 +117,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
               <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>
+              </button>
               </div>
             </div>
             <div className='flex'>
@@ -129,18 +129,19 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
                   <Toggle handleToggle={handleToggle} disabled />
                 </div>
                 {
-									procedures.map((procedure, key) => {
-									  return (
+									procedures.map((procedure, key) => (
   <React.Fragment key={key}>
-    <div className='col-span-3'><PlainText text={procedure.name} /></div>
-    <div className='col-span-2'><PlainText text={procedure.price} /></div>
+    <div className='col-span-3'>
+      <PlainText text={procedure.name} />
+    </div>
+    <div className='col-span-2'>
+      <PlainText text={procedure.price} />
+    </div>
     <div className='flex justify-end'>
       <Toggle id={key} handleToggle={handleToggle} status={procedure.status} />
     </div>
-  </React.Fragment>
-									  )
-									})
-							    }
+  </React.Fragment>))
+}
               </div>
             </div>
             <div className=' grid md:grid-cols-2 gap-x-5'>
