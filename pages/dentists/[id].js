@@ -1,59 +1,83 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 // My dependencies
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
+// My custom hooks
+import { useAuth } from '../../lib/Hooks'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ConfirmationModal from '../../components/ConfirmationModal'
-// Api
-import api from '../../lib/api'
+// My functions
+import { getDentists, getAppointmentsByDentistId, getPatientsByDentistId, deletePatient } from '../../lib/api'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
+
 dayjs.extend(utc)
 
-export async function getStaticPaths () {
-  const response = await api.getDentists()
-  const paths = response.map(dentist => {
-    return {
-      params: {
-        id: dentist._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export async function getStaticPaths () {
+//   const response = await getDentists()
+//   const paths = response.map(dentist => {
+//     return {
+//       params: {
+//         id: dentist._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
-  const id = context.params.id
-  const patientsInfo = await api.getPatientsByDentistId(id)
-  const appointmentsInfo = await api.getAppointmentsByDentistId(id)
-  return {
-    props: {
-      patientsInfo,
-      appointmentsInfo,
-      idDentist: id
-    }
-  }
-}
+// export async function getStaticProps (context) {
+//   const id = context.params.id
+//   const patientsInfo = await api.getPatientsByDentistId(id)
+//   const appointmentsInfo = await api.getAppointmentsByDentistId(id)
+//   return {
+//     props: {
+//       patientsInfo,
+//       appointmentsInfo,
+//       idDentist: id
+//     }
+//   }
+// }
 
-export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
+export default function Home () {
+  const idDentist = useAuth()
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [deleteModal, setDeleteModal] = useState(false)
   const [idPatientToDelete, setIdPatientToDelete] = useState('')
+  const [appointmentsInfo, setAppointmentsInfo] = useState([])
+  const [patientsInfo, setPatientsInfo] = useState([])
+
+  useEffect(() => {
+    const dentistId = router.query.id
+    if (!dentistId) {
+      console.log('me rompí alv')
+      return
+    }
+    console.log(dentistId)
+    ;(async () => {
+      const appointmentData = await getAppointmentsByDentistId(dentistId)
+      const patientsData = await getPatientsByDentistId(dentistId)
+      setAppointmentsInfo(appointmentData)
+      console.log('appointment', appointmentsInfo)
+      setPatientsInfo(patientsData)
+      console.log('patient', patientsInfo)
+    })()
+  }, [router.query.id])
+
   const cardsInfo = []
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
-    // const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
@@ -65,16 +89,17 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
     setSearch(searchInput)
   }
 
-  const preDeleteHandler = async event => {
+  const preDeleteHandler = event => {
     setDeleteModal(true)
     const idPatient = event.target.id
     setIdPatientToDelete(idPatient)
   }
 
   const deleteHandler = async () => {
-    const response = await api.deletePatient(idPatientToDelete)
+    await deletePatient(idPatientToDelete)
+    const newPatientsArray = patientsInfo.filter(patient => patient._id !== idPatientToDelete)
+    setPatientsInfo(newPatientsArray)
     setDeleteModal(false)
-    router.push(`/dentists/${idDentist}`)
   }
 
   const closeHandler = () => {

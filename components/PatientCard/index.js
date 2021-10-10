@@ -4,7 +4,6 @@ import PatientCardInfo from '../PatientCardInfo'
 import PatientQuickActions from '../PatientQuickActions'
 // My images
 import addAppointment from '../../public/addAppointment.svg'
-import addIcon from '../../public/addIcon.svg'
 import readAppointment from '../../public/readAppointment.svg'
 import clinicBackground from '../../public/clinicBackground.svg'
 import deleteIcon from '../../public/deleteIcon.svg'
