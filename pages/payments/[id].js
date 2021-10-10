@@ -195,8 +195,7 @@ export default function Payments ({payments,appointments,patient}) {
 //   else{
      return ( 
         <>
-        <h1></h1>
-         {/* <div className='flex flex-col sm:flex-row '>
+         <div className='flex flex-col sm:flex-row '>
            <NavBarDentist
              isHome={false}
              idPatient={idPatient}
@@ -275,7 +274,7 @@ export default function Payments ({payments,appointments,patient}) {
              </div>
            </>
          )}
-     </> */}
+     </>
        
     )
   }
