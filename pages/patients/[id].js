@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+// My Hooks
+import { useAuth } from '../../lib/Hooks'
+// My dependencies
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-
 // Api
-import api from '../../lib/api'
+import { getPatientById, getAppointmentsByPatientId } from '../../lib/api'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
@@ -16,39 +19,61 @@ import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
-export const getStaticPaths = async () => {
-  const response = await api.getPatients()
-  const paths = response.map(patient => {
-    return {
-      params: {
-        id: patient._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export const getStaticPaths = async () => {
+//   const response = await api.getPatients()
+//   const paths = response.map(patient => {
+//     return {
+//       params: {
+//         id: patient._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export const getStaticProps = async (context) => {
-  const id = context.params.id
-  const patientInfo = await api.getPatientsById(id)
-  const appointmentsInfo = await api.getAppointmentsByPatientId(id)
-  return {
-    props: {
-      patientInfo,
-      appointmentsInfo
-    }
-  }
-}
+// export const getStaticProps = async (context) => {
+//   const id = context.params.id
+//   const patientInfo = await api.getPatientsById(id)
+//   const appointmentsInfo = await api.getAppointmentsByPatientId(id)
+//   return {
+//     props: {
+//       patientInfo,
+//       appointmentsInfo
+//     }
+//   }
+// }
 
-export default function Patient ({ patientInfo, appointmentsInfo }) {
-  const { idPatient, idDentist, userImage } = patientInfo
-  const { name, lastName } = patientInfo
+export default function Patient () {
+  const idDentist = useAuth()
+  const router = useRouter()
   const [search, setSearch] = useState('')
-  const cardsInfo = []
+  const [patientInfo, setPatientInfo] = useState({})
+  const [appointmentsInfo, setAppointmentsInfo] = useState([])
 
+  useEffect(() => {
+    const idPatient = router.query.id
+    console.log(idPatient)
+    // if (!idPatient) {
+    //   console.log('me rompí alv')
+    //   return
+    // }
+    console.log(idPatient)
+    ;(async () => {
+      const patientData = await getPatientById(idPatient)
+      setPatientInfo(patientData)
+      console.log(patientInfo)
+      const appointmentsData = await getAppointmentsByPatientId(idPatient)
+      setAppointmentsInfo(appointmentsData)
+      console.log(appointmentsData)
+    })()
+  }, [router.query.id])
+
+  const { idPatient, userImage, name, lastName } = patientInfo
+  const cardsInfo = []
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
@@ -65,7 +90,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      {/* <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader
@@ -126,7 +151,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
         }
           </div>
         </div>
-      </main>
+      </main> */}
     </div>
   )
 }

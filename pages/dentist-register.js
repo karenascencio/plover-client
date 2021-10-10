@@ -21,12 +21,9 @@ export default function DentistRegister () {
   const router = useRouter()
   // .: hooks
   const [falsePop, setFalsePop] = useState(false)
-  const [profileImage, setProfileImage] = useState(defaultPicture)
   const { uploadToS3 } = useS3Upload()
   console.log('cuack', profileImage)
   // .: Handdler
-  const registerHandler = async (values, file) => {
-    try {
       console.log(values)
       if (values) {
         const response = await api.signIn(values)

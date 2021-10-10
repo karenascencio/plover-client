@@ -2,61 +2,84 @@ import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import AmountDisplay from '../../components/AmountDisplay'
 import TitleHeader from '../../components/TitleHeader'
 import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
-
-import { useRouter } from 'next/router'
-import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
-import Image from 'next/image'
+
+// export async function getStaticPaths () {
+//   const ids = await api.getAllPatientsIds()
+//   const paths = ids.map(item => {
+//     return {
+//       params: { id: item }
+//     }
+//   })
+
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
+
 
 dayjs.extend(utc)
+// export async function getStaticProps (context) {
+//   const id = context.params.id
+//   console.log(`el id es: ${id}`)
+//   const payments = await api.getPaymentsByPatientId(id)
+//   const appointments = await api.getAppointmentsByPatientId(id)
+//   const patientInfo = await api.getPatientsById(id)
+//   return {
+//     props: {
+//       payments,
+//       appointments,
+//       patientInfo
+//     }
+//   }
+// }
 
-export async function getStaticPaths () {
-  const ids = await api.getAllPatientsIds()
-  const paths = ids.map(item => {
-    return {
-      params: { id: item }
-    }
-  })
-
-  return {
-    paths,
-    fallback: false
-  }
-}
-
-export async function getStaticProps (context) {
-  const id = context.params.id
-  console.log(`el id es: ${id}`)
-  const payments = await api.getPaymentsByPatientId(id)
-  const appointments = await api.getAppointmentsByPatientId(id)
-  const patientInfo = await api.getPatientsById(id)
-  return {
-    props: {
-      payments,
-      appointments,
-      patientInfo
-    }
-  }
-}
-
-export default function Payments ({ payments, appointments, patientInfo }) {
-  console.log(`los pagos son: ${payments}`)
-  console.log(`los citas son: ${appointments}`)
+export default function Payments () {
+  // console.log(`los pagos son: ${payments}`)
+  // console.log(`los citas son: ${appointments}`)
   const router = useRouter()
   console.log(router.query)
-  const idPatient = router.query.id
-  console.log(`el id de paciente es ${idPatient}`)
-  const idDentist = router.query.dentistId
-  console.log(`el id de odontologo  es ${idDentist}`)
-  const { name, lastName, userImage } = patientInfo
-  const cardsInfo = []
+ 
+  
+  //const idDentist = router.query.dentistId
+  //console.log(`el id de odontologo  es ${idDentist}`)
+
+  const [payments, setPayments] = useState([])
+  const [appointments, setAppointments] = useState([])
+  const [patientInfo, setPatientInfo] = useState({})
+
+  useEffect(() => {
+    if (!router.isReady) {
+      console.log('ya bailo bertha')
+      return
+    }
+    const idPatient = router.query.id
+    (async () => {
+        const paymentsFetched = await getPaymentsByPatientId(idPatient)
+        console.log('payfetch', paymentsFetched)
+        setPayments(paymentsFetched)
+        const appointmentsFetched = await getAppointmentsByPatientId(idPatient)
+        console.log(appointmentsFetched)
+        setAppointments(appointmentsFetched)
+        const patientInfoFetched = await getPatientById(idPatient)
+        console.log(patientInfoFetched)
+        setPatientInfo(patientInfoFetched)
+      })()
+  }, [router.isReady, router.query])
+
+
+  
+    const { name, lastName, userImage, _id, idDentist } = patientInfo
+    const cardsInfo = []
+    const idPatient = _id
+  
 
   appointments.forEach(appointment => {
     const now = dayjs.utc()
@@ -67,7 +90,7 @@ export default function Payments ({ payments, appointments, patientInfo }) {
   })
 
   const [dynamicPayments, setDynamicPayments] = useState(payments)
-  const [payment, setPayment] = useState({ total: '', date: '', file: 'some file', idDentist, idPatient })
+  const [payment, setPayment] = useState({ total: '', date: '', file: '', idDentist, idPatient })
   console.log(dynamicPayments)
   const [fullPrice, setFullPrice] = useState(getFullPrice(appointments))
   const [remaningPrice, setRemaningPrice] = useState(fullPrice - getPaidOut(dynamicPayments))
@@ -79,6 +102,7 @@ export default function Payments ({ payments, appointments, patientInfo }) {
       return acum + payment.total
     }, 0)
   }
+}
 
   function getFullPrice (appointments) {
     return appointments.reduce((acum, appointment) => {
