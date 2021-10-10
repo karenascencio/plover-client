@@ -48,7 +48,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
   const cardsInfo = []
-
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
