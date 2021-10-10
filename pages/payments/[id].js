@@ -104,14 +104,12 @@ export default function Payments ({payments,appointments,patient}) {
    const [dynamicPayments, setDynamicPayments] = useState(payments)
    const [payment, setPayment] = useState({ total: '', date: '', receipt: '', idPatient, idDentist })
   // console.log(dynamicPayments)
-   const [fullPrice, setFullPrice] = useState(getFullPrice(appointments))
+   const fullPrice = getFullPrice(appointments)
    const [remaningPrice, setRemaningPrice] = useState(fullPrice - getPaidOut(dynamicPayments))
+   
    const [initial, setInitial] = useState(false)
    const [error, setError] = useState(true)
    const [errorDate, setErrorDate] = useState(true)
-
-   const [file, setFile] = useState('')
-   const [indexPaymentToUpdate, setIndexPaymentToUpdate] = useState(null)
 
    const [currentPayment, setCurrentPayment] = useState(null)
    const [visible, setVisible] = useState(false)
