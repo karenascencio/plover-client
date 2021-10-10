@@ -15,6 +15,16 @@ export default function Login () {
 
   const buttonHandler = async () => {
     try {
+      console.log('userdata', userData)
+      const response = await login(userData)
+      const success = response.success
+      if (success) {
+        const userToken = response.data.token
+        window.localStorage.setItem('userToken', userToken)
+        // if (token.length <= 0) throw new Error('Token not found')
+        const tokenData = atob(userToken.split('.')[1])
+        const tokenJson = JSON.parse(tokenData)
+        // const tokenjwt = api.parseJwt(tokent)
         const id = tokenJson.id
         router.push(`/dentists/${id}`)
       } else {
@@ -26,4 +36,5 @@ export default function Login () {
     <>
       <LoginForm Login={Login} error={error} buttonHandler={buttonHandler} webtoken={webToken} />
     </>
+  )
 }
