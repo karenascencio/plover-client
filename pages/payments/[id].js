@@ -15,7 +15,14 @@ import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
-//import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
+
+import dynamic from 'next/dynamic'
+
+const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+
+const DocViewerRenderers = dynamic(() =>
+  import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+
 import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
@@ -62,6 +69,8 @@ export async function getStaticProps (context) {
 }
 
 export default function Payments ({payments,appointments,patient,dentistInfo}) {
+
+
 
   // const [payments,setPayments] = useState(null)
   // const [appointments,setAppointmens] = useState(null)
@@ -129,6 +138,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
 
    const [toMuchPayment,setToMuchPayment] = useState(false)
 
+
   //logica para crear el arreglo de cards del carrusel
   const cardsInfo = []
   appointments.forEach(appointment => {
@@ -139,6 +149,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
     })
   })
 
+    console.log(dynamicPayments)
 
 
 
@@ -290,7 +301,8 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                   />
                 </div>
                 <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
-                {dynamicPayments.map((item, key) => {
+                {!!dynamicPayments.lenght && (<div>aun no tienes pagos</div>)}
+                {!dynamicPayments.lenght && dynamicPayments.map((item, key) => {
 								  return (
   <React.Fragment key={key}>
     <div className='col-span-2'><PlainText text={item.total} /></div>
@@ -313,8 +325,8 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
               style={{ width: '100vw', height: '100vh' }}
-              pluginRenderers={DocViewerRenderers}
               documents={[{ uri: currentPayment }]}
+              pluginRenderers={DocViewerRenderers}
             />
             <button
               className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0'

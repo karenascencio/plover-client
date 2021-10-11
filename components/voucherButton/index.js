@@ -1,6 +1,6 @@
 import React from 'react'
 import { useS3Upload } from 'next-s3-upload'
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
+//import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
 import { useEffect,useState} from 'react'
 import {patchPayment} from '../../lib/api'
 
