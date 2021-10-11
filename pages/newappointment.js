@@ -13,6 +13,10 @@ import NavBarDentist from '../components/NavBarDentist'
 import { useRouter } from 'next/router'
 import addIcon from '../public/addIcon.svg'
 import Image from 'next/image'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
