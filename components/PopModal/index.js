@@ -9,7 +9,7 @@ export default function PopModal ({ image, closeModal }) {
           <h3 className='flex text-white text-center'>Alerta</h3>
           <button onClick={() => closeModal(false)} type='button' className='flex'><Image src={image} height={25} width={35} /></button>
         </div>
-          
+
         <div className='flex  justify-center' />
       </div>
     </div>
