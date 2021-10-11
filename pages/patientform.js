@@ -18,7 +18,7 @@ import { postPatient } from '../lib/api'
 export default function Giform () {
   const router = useRouter()
   console.log(router.query)
-  const idDentist = router.query.idDentist
+  if(router.isReady) var idDentist = router.query.idDentist
   console.log(idDentist)
   const [formulario, setFormulario] = useState('General Information')
 

@@ -4,7 +4,11 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 
 // Api
-import api from '../../lib/api'
+import {getPatients,
+  getPatientById,
+  getAppointmentsByPatientId,
+  getDentistById
+} from '../../lib/api'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
@@ -16,11 +20,7 @@ import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
-import {getPatients,
-      getPatientById,
-      getAppointmentsByPatientId,
-      getDentistById
-    } from '../../lib/api'
+
 
 export const getStaticPaths = async () => {
   const response = await getPatients()
@@ -69,7 +69,7 @@ export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) 
   
   const [search, setSearch] = useState('')
   const cardsInfo = []
-
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)

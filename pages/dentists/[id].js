@@ -11,17 +11,19 @@ import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
-import api from '../../lib/api'
+import { 
+    getDentists, 
+    getPatientsByDentistId, 
+    getAppointmentsByDentistId, 
+    deletePatient,
+    getDentistById
+  } from '../../lib/api'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
-import { getDentists,
-        getPatientsByDentistId,
-        getAppointmentsByDentistId,
-        getDentistById } from '../../lib/api'
 
 export async function getStaticPaths () {
   const response = await getDentists()
@@ -53,12 +55,12 @@ export async function getStaticProps (context) {
   }
 }
 
-export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentistInfo }) {
+export default function Home ({ patientsInfo, appointmentsInfo,dentistInfo }) {
   const {userImage, name} = dentistInfo
   const router = useRouter()
   //nos traemos los datos necesarios para pintar el nombre 
   //y la imagen del odontologo 
-  const {name:dentistName, userImage:imageDentist } = dentistInfo
+  const {name:dentistName, userImage:imageDentist,_id:idDentist } = dentistInfo
   console.log(dentistName,imageDentist)
   //necesito el id del dentista y del paciente para la navegacio
   const {_id:idPatient} = patientsInfo
@@ -90,7 +92,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentis
   }
 
   const deleteHandler = async () => {
-    const response = await api.deletePatient(idPatientToDelete)
+    await deletePatient(idPatientToDelete)
     setDeleteModal(false)
     router.push(`/dentists/${idDentist}`)
   }

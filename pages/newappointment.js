@@ -14,12 +14,11 @@ import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
 import addIcon from '../public/addIcon.svg'
 import Image from 'next/image'
-
-
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
+
 
 import { getDentistById,
           getPatientById,
