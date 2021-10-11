@@ -21,11 +21,6 @@ dayjs.extend(utc)
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
-<<<<<<< HEAD
-export async function getStaticProps() {
-  return {
-            
-=======
 const cardsInfo = [
   { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
   { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
@@ -35,7 +30,6 @@ const cardsInfo = [
 
 export async function getStaticProps () {
   return {
->>>>>>> 333729c80a149b1b3bc6d3ae906a5e911b446d5d
     props: {
 
     }
@@ -60,69 +54,6 @@ export default function Newappointment () {
     date: new Date()
   })
 
-<<<<<<< HEAD
-export default function Newappointment() {
-    const router = useRouter()
-    const {idPatient:idPatient,idDentist:idDentist} = router.query
-    const [patientData, setPatientData] = useState(null)
-    const [appointmentsData, setappointmentsData] = useState(null)
-    console.log(idPatient + 'this id')
-    useEffect(async () => {
-        const patientInfo = await api.getPatientsById(idPatient)
-        setPatientData(patientInfo)
-        console.log(patientData)
-        const appointmentsInfo = await api.getAppointmentsByPatientId(idPatient)
-        setappointmentsData(appointmentsInfo)
-        console.log(appointmentsInfo)
-    },[])
-    console.log(patientData)
-    const cardsInfo = []
-    // const { name, lastName, userImage } = patientData
-    const [procedures,setProcedures] = useState([])
-    const [procedure,setProcedure] = useState({name:'',price:0,status:false })
-    const [appointment,setAppointment] = useState({
-                                                idPatient,
-                                                idDentist,
-                                                procedures,
-                                                annotations:'',
-                                                recommendations:'',
-                                                date:new Date()
-                                            })
-
-    useEffect(()=>{
-        setAppointment({...appointment,procedures})
-    },[procedures])
-
-    // appointmentsData.forEach(appointment => {
-    //     const now = dayjs.utc()
-    //     const appointmentDate = dayjs.utc(appointment.date)
-    //     appointment.procedures.forEach(procedure => {
-    //       appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
-    //     })
-    //   })
-
-    function handleProcedure(event){
-        const {name,value} = event.target
-        setProcedure({...procedure,[name]:value})
-    }
-    function handleAddProcedure(){
-        setProcedures([...procedures,procedure])
-        setProcedure({name:'',price:0,status:false })
-    }
-    function handleToggle(index){
-        procedures[index].status= !procedures[index].status 
-        setProcedures([...procedures])
-    }
-    function handleChange(event){
-        const {name,value} = event.target
-        setAppointment({...appointment,[name]:value})
-    }
-    async function handleSubmit(e){
-        await api.postAppointment(appointment)
-        e.preventDefault()
-        console.log(`te quieres mover a /patients/${idPatient}`)
-        router.push(`/patients/${idPatient}`)
-=======
   useEffect(() => {
     setAppointment({ ...appointment, procedures })
   }, [procedures])
@@ -149,7 +80,6 @@ export default function Newappointment() {
     console.log(`te quieres mover a /patients/${idPatient}`)
     router.push(`/patients/${idPatient}`)
   }
->>>>>>> 333729c80a149b1b3bc6d3ae906a5e911b446d5d
 
   return (
     <div className='flex flex-col sm:flex-row '>
@@ -166,54 +96,6 @@ export default function Newappointment() {
             <div className='flex justify-between items-center'>
               <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
 
-<<<<<<< HEAD
-    return (
-        <div className='flex flex-col sm:flex-row '>
-        	<NavBarDentist isHome={false} idPatient ={idPatient} idDentist={idDentist}/>
-                {/*el w-full rompe el layout*/}
-        	  <main className= 'flex  justify-center flex-grow sm:w-65vw mx-11 '>
-              <div className='max-w-screen-lg w-full flex flex-col items-center '>
-                        {/* <TitleHeader
-                            pageTitle='Paciente'
-                            patientName={name}
-                            patientLastName={lastName}
-                            patientImage={userImage}
-                        />
-                        <Carrusel cards={cardsInfo}/> */}
-                        <div className='w-full flex justify-between '> 
-                            <H1 textTitle='Cita' textColor='plover-blue'/>
-						    <div className='self-end '><Calendar value={appointment.date} name={'date'} handleChange={handleChange}/></div>
-						</div>
-                        <div className='w-full flex flex-col w-1/2 '>
-                            <div className='flex justify-between items-center'>
-							    <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue'/></div>
-                               
-                                <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
-                                    <div className='pt-1'><Image src={addIcon} height={15} width={15}/></div>
-                                    <span className='hidden sm:inline-block pl-3 text-sm pt-0.5' >Agregar</span>
-                                    </button> 
-                                </div>
-                            </div>
-                            <div className='flex'>
-                            <div className='w-full grid grid-cols-6 gap-x-5'>
-								<div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-                                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={()=>console.log('blur')} /></div>
-								<div className='flex flex-col items-end mt-5 '>
-                                    <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                                    <Toggle handleToggle={handleToggle} disabled={true}/>
-								</div>
-								{
-									procedures.map((procedure,key)=>{
-										return (
-											<React.Fragment key={key}>
-											<div className='col-span-3'><PlainText text={procedure.name}/></div>
-											<div className='col-span-2'><PlainText text={procedure.price}/></div>
-                                            <div className='flex justify-end'>
-                                                <Toggle id={key}  handleToggle={handleToggle}/>
-                                            </div>
-											</React.Fragment>
-										)
-=======
               <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
@@ -239,7 +121,6 @@ export default function Newappointment() {
     </div>
   </React.Fragment>
 									  )
->>>>>>> 333729c80a149b1b3bc6d3ae906a5e911b446d5d
 									})
 							    }
               </div>

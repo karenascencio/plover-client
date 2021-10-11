@@ -1,4 +1,5 @@
 import React from 'react'
+import SuccessAlert from '../components/SuccessAlert'
 
 export default function index () {
   return (
