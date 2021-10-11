@@ -73,7 +73,7 @@ export default function Configuration ({ dentistInfo }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome />
+      <NavBarDentist isHome={true} idDentist={_id}  name={name} image={userImage} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader

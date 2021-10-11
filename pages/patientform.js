@@ -13,10 +13,6 @@ import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 // single form
 export default function Giform () {
   const router = useRouter()
@@ -35,7 +31,6 @@ export default function Giform () {
     }
     return []
   }
-<<<<<<< HEAD
   async function formatPatient (values) {
     console.log(values)
     values.idDetist = idDentist
@@ -45,18 +40,6 @@ export default function Giform () {
     values.height = Number(values.height)
     values.weight = Number(values.weight)
 
-=======
-
-  async function SeeState (values) {
-    console.log(values)
-    values.idDetist = '61511d3cf6273ea718ebd5f5'
-    values.email = `user${Math.random()}@gmail.com`
-    values.password = `password${Math.random()}@gmail.com`
-    values.age = Number(values.age)
-    values.height = Number(values.height)
-    values.weight = Number(values.weight)
-
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
     values.familyBackground.father.pathologies = stringToArray(values.familyBackground.father.pathologies)
     values.familyBackground.mother.pathologies = stringToArray(values.familyBackground.mother.pathologies)
     values.familyBackground.grandFather.pathologies = stringToArray(values.familyBackground.grandFather.pathologies)
@@ -78,7 +61,10 @@ export default function Giform () {
   }
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarPatient formulario={formulario} handleOption={handleOption} />
+      <NavBarPatient 
+        formulario={formulario} 
+        handleOption={handleOption}
+        idDentist={idDentist} />
       <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik

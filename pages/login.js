@@ -19,20 +19,12 @@ export default function Login () {
     try {
       console.log('handler', userData)
       const response = await api.login(userData)
-<<<<<<< HEAD
-      console.log('response', response.data.token)
-      const tokent = response.data.token
-      const tokenjwt = api.parseJwt(tokent)
-      const { id } = tokenjwt
-      if (response.success) {
-=======
       const success = response.success
       // console.log('response', response.data.token)
       if (success) {
         const tokent = response.data.token
         const tokenjwt = api.parseJwt(tokent)
         const { id } = tokenjwt
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
         router.push(`/dentists/${id}`)
       } else {
         setError(true)

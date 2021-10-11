@@ -3,11 +3,7 @@ export default function RadioButtons (props) {
   return (
     <div className=' my-5 flex flex-col flex-auto '>
       <p className='text-sm text-plover-blue mb-2.5'>{textLabel}</p>
-<<<<<<< HEAD
       <div className='grid grid-cols-3 gap-x-20 w-1/2'>
-=======
-      <div className='grid grid-cols-3 gap-x-10 w-1/2'>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
         {options.map((item, key) => (
           <label key={key} className='inline-flex items-center'>
             <input

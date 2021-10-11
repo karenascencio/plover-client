@@ -35,22 +35,29 @@ export const getStaticProps = async (context) => {
   const id = context.params.id
   const patientInfo = await api.getPatientsById(id)
   const appointmentsInfo = await api.getAppointmentsByPatientId(id)
+  const idDentist = patientInfo.idDentist
+  const dentistInfo = await api.getDentistById(idDentist)
   return {
     props: {
       patientInfo,
-      appointmentsInfo
+      appointmentsInfo,
+      dentistInfo
     }
   }
 }
 
-export default function Patient ({ patientInfo, appointmentsInfo }) {
-<<<<<<< HEAD
-  console.log(patientInfo)
-  const { _id: idPatient, idDentist } = patientInfo
-=======
-  const { idPatient, idDentist, userImage } = patientInfo
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
+export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) {
+  const { _id:idPatient, idDentist, userImage } = patientInfo
+  console.log(idPatient,idDentist)
   const { name, lastName } = patientInfo
+
+  //nos traemos los datos necesarios para pintar el nombre 
+  //y la imagen del odontologo 
+  console.log(dentistInfo)
+  const {name:dentistName, userImage:imageDentist } = dentistInfo
+  console.log(dentistName,imageDentist)
+
+  
   const [search, setSearch] = useState('')
   const cardsInfo = []
 
@@ -70,18 +77,14 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={dentistName} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader
             pageTitle='Paciente'
             patientName={name}
             patientLastName={lastName}
-<<<<<<< HEAD
-            patientImage='https://api.multiavatar.com/car%20pls.png'
-=======
             patientImage={userImage}
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
           />
           <div className='flex justify-start w-full'>
             <p className='text-2xl text-darker-gray font-thin'>

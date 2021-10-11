@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
-<<<<<<< HEAD
-=======
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import AmountDisplay from '../../components/AmountDisplay'
@@ -13,11 +10,7 @@ import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
 
-<<<<<<< HEAD
 import router, { useRouter } from 'next/router'
-=======
-import { useRouter } from 'next/router'
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
@@ -27,16 +20,7 @@ import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
 
-<<<<<<< HEAD
-const cardsInfo = [
-  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
-]
-=======
 dayjs.extend(utc)
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 
 export async function getStaticPaths () {
   const ids = await api.getAllPatientsIds()
@@ -57,16 +41,20 @@ export async function getStaticProps (context) {
   const payments = await api.getPaymentsByPatientId(id)
   const appointments = await api.getAppointmentsByPatientId(id)
   const patient = await api.getPatientsById(id)
+  console.log(patient)
+  const idDentist = patient.idDentist
+  const dentistInfo = await api.getDentistById(idDentist)
   return {
     props: {
       payments,
       appointments,
-      patient
+      patient,
+      dentistInfo
     }
   }
 }
 
-export default function Payments ({payments,appointments,patient}) {
+export default function Payments ({payments,appointments,patient,dentistInfo}) {
 
   // const [payments,setPayments] = useState(null)
   // const [appointments,setAppointmens] = useState(null)
@@ -107,9 +95,13 @@ export default function Payments ({payments,appointments,patient}) {
   //console.log('pagos: ', payments)
   //console.log('citas: ', appointments)
   //console.log('paciente: ', patient)
-  const {_id:idPatient,idDentist} = patient
-
+  const {_id:idPatient,idDentist,name:pacientName,lastName:pacientLastName,userImage:pacientImage} = patient
   console.log(idPatient,idDentist)
+  //informacion del dentista 
+  const {name,userImage} = dentistInfo
+  console.log(name,userImage) 
+
+
   
 
   //hook para subir archivos a s3
@@ -129,6 +121,19 @@ export default function Payments ({payments,appointments,patient}) {
    const [visible, setVisible] = useState(false)
 
    const [toMuchPayment,setToMuchPayment] = useState(false)
+
+  //logica para crear el arreglo de cards del carrusel
+  const cardsInfo = []
+  appointments.forEach(appointment => {
+    const now = dayjs.utc()
+    const appointmentDate = dayjs.utc(appointment.date)
+    appointment.procedures.forEach(procedure => {
+      appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    })
+  })
+
+
+
 
   // console.log(`el total a pagar es ${fullPrice}`)
   // console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
@@ -226,9 +231,19 @@ export default function Payments ({payments,appointments,patient}) {
           isHome={false}
           idPatient={idPatient}
           idDentist={idDentist}
+          name={name}
+          image={userImage}
+        
+
         />
         <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
           <div className='flex flex-col items-center max-w-screen-lg '>
+            <TitleHeader
+              pageTitle='Paciente'
+              patientName={pacientName}
+              patientLastName={pacientLastName}
+              patientImage={pacientImage}
+            />
              <Carrusel cards={cardsInfo} /> 
             <div className='w-full flex justify-between'>
               <H1 textTitle='Pagos' textColor='plover-blue' />

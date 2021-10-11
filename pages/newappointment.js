@@ -9,33 +9,61 @@ import Textarea from '../components/Textarea'
 import PlainText from '../components/PlainText'
 import Toggle from '../components/Toggle'
 import NavBarDentist from '../components/NavBarDentist'
+import TitleHeader from '../components/TitleHeader'
 
 import { useRouter } from 'next/router'
 import addIcon from '../public/addIcon.svg'
 import Image from 'next/image'
 
+
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
+
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
-const cardsInfo = [
-  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
-]
-
-export async function getStaticProps () {
-  return {
-    props: {
-
-    }
-  }
-}
 
 export default function Newappointment () {
   const router = useRouter()
   console.log(router.query)
   const { idPatient, idDentist } = router.query
+
+  const [dentistInfo,setDentistIfo] = useState(null)
+  const [patientInfo,setPatientInfo] = useState(null)
+  const [appointmentsInfo,setAppointmentsInfo] = useState([])
+  useEffect(()=>{
+    async function getInfo(){
+      const dentistsInfo = await api.getDentistById(idDentist)
+      const patientInfo = await api.getPatientsById(idPatient)
+      const appointmentsInfo = await api.getAppointmentsByPatientId(idPatient)
+      setDentistIfo(dentistsInfo)
+      setPatientInfo(patientInfo)
+      setAppointmentsInfo(appointmentsInfo)
+    }
+    if(router.isReady) getInfo()
+  },[router.isReady])
+
+  console.log(dentistInfo)
+  if(dentistInfo){
+    var {name,userImage} = dentistInfo
+  }
+  if(patientInfo){
+    var {name:patientName,lastName:patientLastName,userImage:patientImage} = patientInfo
+  }
+
+
+  const cardsInfo = []
+  appointmentsInfo.forEach(appointment => {
+    const now = dayjs.utc()
+    const appointmentDate = dayjs.utc(appointment.date)
+    appointment.procedures.forEach(procedure => {
+      appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    })
+  })
+
+
 
   console.log('el id de paciente es: ', idPatient)
   console.log('el id de dentista es: ', idDentist)
@@ -85,11 +113,17 @@ export default function Newappointment () {
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} name={name} image={userImage}/>
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>
-          <Carrusel cards={cardsInfo} />
+          <TitleHeader
+              pageTitle='Paciente'
+              patientName={patientName?patientName:''}
+              patientLastName={patientLastName?patientLastName:''}
+              patientImage={patientImage?patientImage:''}
+            />
+          <Carrusel cards={cardsInfo} /> 
           <div className='w-full flex justify-between '>
             <H1 textTitle='Cita' textColor='plover-blue' />
             <div className='self-end '><Calendar value={appointment.date} name='date' handleChange={handleChange} /></div>
