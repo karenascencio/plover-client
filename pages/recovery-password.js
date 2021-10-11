@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import api from '../lib/api'
+import { recoverEmail } from '../lib/api'
+import { useRouter } from 'next/router'
 import H1 from '../components/H1'
 import LoginInput from '../components/LoginInput'
 import LoginButtons from '../components/LoginButtons'
@@ -9,7 +10,9 @@ import Image from 'next/image'
 
 export default function RecoverPassword () {
   const [emailData, setEmailData] = useState({ email: '' })
-
+  const [successPop, setSuccessPop] = useState(false)
+  const [falsePop, setFalsePop] = useState(false)
+  const router = useRouter()
   const Email = async emailInfo => {
     console.log('email INFO', emailInfo)
     setEmailData(emailInfo)
@@ -23,8 +26,18 @@ export default function RecoverPassword () {
   const buttonHandler = async () => {
     try {
       console.log('handler', emailData)
-      const response = await api.recovery(emailData)
-      console.log(response)
+      const response = await recoverEmail(emailData)
+      if (response.success) {
+        setSuccessPop(true)
+        setTimeout(() => {
+          setSuccessPop(false)
+          router.push('/login')
+        }, 5000)
+      } else {
+        setFalsePop(true)
+        setTimeout(() => {
+        }, 5000)
+      }
     } catch (error) { console.log(error.message) }
   }
 
@@ -38,6 +51,18 @@ export default function RecoverPassword () {
               textColor='plover-blue'
             />
           </div>
+          {
+            falsePop &&
+              <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                <p>El correo que ingresaste no existe.</p>
+              </div>
+                  }
+          {
+            successPop &&
+              <div className='flex justify-center text-green-800  bg-green-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                <p>Se ha mandado un correo con el enlace.</p>
+              </div>
+          }
           <div className='flex justify-center justify-items-center mb-70px'>
             <div className='invisible sm:visible ml-2'>
               <Image src={teeth} height={65} width={65} />
