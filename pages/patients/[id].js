@@ -55,12 +55,12 @@ export default function Patient () {
 
   useEffect(() => {
     const idPatient = router.query.id
-    console.log(idPatient)
-    // if (!idPatient) {
-    //   console.log('me rompí alv')
-    //   return
-    // }
-    console.log(idPatient)
+    console.log('id uno', idPatient)
+    if (!idPatient) {
+      console.log('me rompí alv')
+      return
+    }
+    console.log('id dos', idPatient)
     ;(async () => {
       const patientData = await getPatientById(idPatient)
       setPatientInfo(patientData)
