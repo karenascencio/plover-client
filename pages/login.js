@@ -18,7 +18,7 @@ export default function Login () {
     try {
       const response = await login(userData)
       const success = response.success
-      if (success) {
+      if (success) {git 
         const userToken = response.data.token
         window.localStorage.setItem('userToken', userToken)
         const tokenData = atob(userToken.split('.')[1])
