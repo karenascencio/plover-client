@@ -17,14 +17,25 @@ import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 
+import {getAllAppointmentsIds,
+        getAppointmentById,
+        getAppointmentsByPatientId
+        getDentistById} from '../../lib/api'
+
 dayjs.extend(utc)
 
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 // corregimos el carrusel y los links y los erroes de vercel
 
+import {  getAllAppointmentsIds
+          getAppointmentById,
+          getPatientsById,
+          getAppointmentsByPatientId,
+          getDentistById} from '../../lib/api'   
+
 export async function getStaticPaths () {
-  const ids = await api.getAllAppointmentsIds()
+  const ids = await getAllAppointmentsIds()
   const paths = ids.map(item => {
     return {
       params: { id: item }
@@ -39,13 +50,13 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const appointment = await api.getAppointmentById(id)
+  const appointment = await getAppointmentById(id)
   //aqui obtenemos los id del dentista y el paciente
   const patientId = appointment.idPatient._id
   const dentistId = appointment.idDentist
-  const patientInfo = await api.getPatientsById(patientId)
-  const appointmentsInfo = await api.getAppointmentsByPatientId(patientId)
-  const dentistInfo = await api.getDentistById(dentistId)
+  const patientInfo = await getPatientsById(patientId)
+  const appointmentsInfo = await getAppointmentsByPatientId(patientId)
+  const dentistInfo = await getDentistById(dentistId)
 
   return {
     props: {

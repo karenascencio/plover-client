@@ -19,11 +19,16 @@ import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
 import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
-
+import {getAllPatientsIds,
+        getPaymentsByPatientId,
+        getAppointmentsByPatientId,
+        getPatientById,
+        getDentistById
+      } from '../../lib/api'
 dayjs.extend(utc)
 
 export async function getStaticPaths () {
-  const ids = await api.getAllPatientsIds()
+  const ids = await getAllPatientsIds()
   const paths = ids.map(item => {
     return {
       params: { id: item }
@@ -38,12 +43,12 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const payments = await api.getPaymentsByPatientId(id)
-  const appointments = await api.getAppointmentsByPatientId(id)
-  const patient = await api.getPatientsById(id)
+  const payments = await getPaymentsByPatientId(id)
+  const appointments = await getAppointmentsByPatientId(id)
+  const patient = await getPatientById(id)
   console.log(patient)
   const idDentist = patient.idDentist
-  const dentistInfo = await api.getDentistById(idDentist)
+  const dentistInfo = await getDentistById(idDentist)
   return {
     props: {
       payments,

@@ -51,6 +51,9 @@ export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) 
   console.log(idPatient,idDentist)
   const { name, lastName } = patientInfo
 
+
+
+
   //nos traemos los datos necesarios para pintar el nombre 
   //y la imagen del odontologo 
   console.log(dentistInfo)

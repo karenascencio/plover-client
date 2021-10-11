@@ -2,7 +2,7 @@ import React from 'react'
 import { useS3Upload } from 'next-s3-upload'
 import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
 import { useEffect,useState} from 'react'
-import api from '../../lib/api'
+import {patchPayment} from '../../lib/api'
 
 export default function VoucherButton(props) {
 		const {payment,handleSeeFile} = props
@@ -16,9 +16,11 @@ export default function VoucherButton(props) {
 		const [hasVoucher,setVoucher] = useState(!!payment.receipt)
 
 		//una vez que tengas la url de la imagen hacemos la peticion de patch
-		useEffect(async () => {
-			await api.patchPayment(payment._id, { receipt: file })
-			
+		useEffect(() => {
+			async function uploadPicture(){
+				await patchPayment(payment._id, { receipt: file })
+			}
+			uploadPicture()
 		}, [file])
 
 		const handleFileChange = async file => {

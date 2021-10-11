@@ -31,8 +31,12 @@ import tattoo from '../../public/tattoo-machine.png'
 import higiene from '../../public/hygienic.png'
 import oddHabits from '../../public/broken-tooth.png'
 
+import { getAllPatientsIds,
+          getPatientById} from '../../lib/api'     
+
+
 export async function getStaticPaths () {
-  const ids = await api.getAllPatientsIds()
+  const ids = await getAllPatientsIds()
   const paths = ids.map(item => {
     return {
       params: { id: item }
@@ -47,7 +51,7 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const patient = await api.getPatientsById(id)
+  const patient = await getPatientById(id)
   return {
     props: {
       patientFetched: patient

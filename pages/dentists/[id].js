@@ -18,8 +18,10 @@ import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
+import { getDentists,getPatientsByDentistId,getAppointmentsByDentistId,getDentistById } from '../../lib/api'
+
 export async function getStaticPaths () {
-  const response = await api.getDentists()
+  const response = await getDentists()
   const paths = response.map(dentist => {
     return {
       params: {
@@ -35,9 +37,9 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const patientsInfo = await api.getPatientsByDentistId(id)
-  const appointmentsInfo = await api.getAppointmentsByDentistId(id)
-  const dentistInfo = await api.getDentistById(id)
+  const patientsInfo = await getPatientsByDentistId(id)
+  const appointmentsInfo = await getAppointmentsByDentistId(id)
+  const dentistInfo = await getDentistById(id)
   return {
     props: {
       patientsInfo,
