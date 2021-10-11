@@ -11,7 +11,7 @@ import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
-import api from '../../lib/api'
+import { getDentists, getPatientsByDentistId, getAppointmentsByDentistId, deletePatient } from '../../lib/api'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import PatientCard from '../../components/PatientCard'
@@ -19,7 +19,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
 export async function getStaticPaths () {
-  const response = await api.getDentists()
+  const response = await getDentists()
   const paths = response.map(dentist => {
     return {
       params: {
@@ -35,8 +35,8 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const patientsInfo = await api.getPatientsByDentistId(id)
-  const appointmentsInfo = await api.getAppointmentsByDentistId(id)
+  const patientsInfo = await getPatientsByDentistId(id)
+  const appointmentsInfo = await getAppointmentsByDentistId(id)
   return {
     props: {
       patientsInfo,
@@ -72,7 +72,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
   }
 
   const deleteHandler = async () => {
-    await api.deletePatient(idPatientToDelete)
+    await deletePatient(idPatientToDelete)
     setDeleteModal(false)
     router.push(`/dentists/${idDentist}`)
   }

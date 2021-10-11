@@ -4,7 +4,7 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 
 // Api
-import api from '../../lib/api'
+import { getPatients, getPatientById, getAppointmentsByPatientId } from '../../lib/api'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
@@ -17,7 +17,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
 export const getStaticPaths = async () => {
-  const response = await api.getPatients()
+  const response = await getPatients()
   const paths = response.map(patient => {
     return {
       params: {
@@ -33,8 +33,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id
-  const patientInfo = await api.getPatientsById(id)
-  const appointmentsInfo = await api.getAppointmentsByPatientId(id)
+  const patientInfo = await getPatientById(id)
+  const appointmentsInfo = await getAppointmentsByPatientId(id)
   return {
     props: {
       patientInfo,

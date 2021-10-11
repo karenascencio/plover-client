@@ -11,10 +11,10 @@ import TextWithLabel from '../../components/TextWithLabel'
 import FormInput from '../../components/FormInput'
 import H3 from '../../components/H3'
 // Api
-import api from '../../lib/api'
+import { getDentists, getDentistById, patchDentist } from '../../lib/api'
 
 export const getStaticPaths = async () => {
-  const response = await api.getDentists()
+  const response = await getDentists()
   const paths = response.map(dentist => {
     return {
       params: {
@@ -30,7 +30,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id
-  const dentistInfo = await api.getDentistById(id)
+  const dentistInfo = await getDentistById(id)
   return {
     props: {
       dentistInfo
@@ -53,7 +53,7 @@ export default function Configuration ({ dentistInfo }) {
   }
 
   const buttonHandler = async () => {
-    const response = await api.patchDentist(dentistUpdate, _id)
+    const response = await patchDentist(dentistUpdate, _id)
     router.push(`/configuration/${_id}`)
     response.success ? setUpdatedStatus(true) : setUpdatedStatus(false)
     setUpdatedAlert(true)
