@@ -72,7 +72,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
   }
 
   const deleteHandler = async () => {
-    const response = await api.deletePatient(idPatientToDelete)
+    await api.deletePatient(idPatientToDelete)
     setDeleteModal(false)
     router.push(`/dentists/${idDentist}`)
   }
