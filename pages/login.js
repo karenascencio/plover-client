@@ -8,7 +8,7 @@ import LoginForm from '../components/LoginForm'
 export default function Login () {
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
   const router = useRouter()
   const Login = async details => {
     console.log('login INFO', userData)
@@ -19,14 +19,15 @@ export default function Login () {
     try {
       console.log('handler', userData)
       const response = await api.login(userData)
-      console.log('response', response.data.token)
-      const tokent = response.data.token
-      const tokenjwt = api.parseJwt(tokent)
-      const {id} = tokenjwt
-       if(response.success){
+      const success = response.success
+      // console.log('response', response.data.token)
+      if (success) {
+        const tokent = response.data.token
+        const tokenjwt = api.parseJwt(tokent)
+        const { id } = tokenjwt
         router.push(`/dentists/${id}`)
       } else {
-        console.log('no hay web token')
+        setError(true)
       }
     } catch (error) { console.log(error.message) }
   }

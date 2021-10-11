@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-dayjs.extend(utc)
 
 // Api
 import api from '../../lib/api'
@@ -15,6 +14,7 @@ import ProcedureCard from '../../components/ProcedureCard'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
+dayjs.extend(utc)
 
 export const getStaticPaths = async () => {
   const response = await api.getPatients()
@@ -44,11 +44,11 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo }) {
-  const { _id: idPatient, idDentist } = patientInfo
+  const { idPatient, idDentist, userImage } = patientInfo
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
   const cardsInfo = []
-
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
@@ -64,37 +64,37 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
 
   return (
 
-  <div className='flex flex-col sm:flex-row '>
-    <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist}/>
-    <main className= 'flex justify-center flex-grow sm:w-65vw mx-11'>
-    <div className='w-full max-w-screen-lg flex flex-col items-center'>
-      <TitleHeader
-        pageTitle='Paciente'
-        patientName={name}
-        patientLastName={lastName}
-        patientImage='https://api.multiavatar.com/car%20pls.png'
-      />
-      <div className='flex justify-start w-full'>
-        <p className='text-2xl text-darker-gray font-thin'>
-          Próximas citas
-        </p>
-      </div>
-      <Carrusel
-        cards={cardsInfo}
-      />
-      <div className='w-full flex justify-between items-center mb-5'>
-        <SearchInput
-          textPlaceholder='Buscar procedimiento...'
-          searchHandler={searchHandler}
-          searchValue={search}
-        />
-        <AddNewPatientButton
-          title='Nuevo'
-          imagen={addIcon}
-        />
-      </div>
-      <div className='w-full border-t border-lighter-gray'>
-        {
+    <div className='flex flex-col sm:flex-row '>
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+        <div className='w-full max-w-screen-lg flex flex-col items-center'>
+          <TitleHeader
+            pageTitle='Paciente'
+            patientName={name}
+            patientLastName={lastName}
+            patientImage={userImage}
+          />
+          <div className='flex justify-start w-full'>
+            <p className='text-2xl text-darker-gray font-thin'>
+              Próximas citas
+            </p>
+          </div>
+          <Carrusel
+            cards={cardsInfo}
+          />
+          <div className='w-full flex justify-between items-center mb-5'>
+            <SearchInput
+              textPlaceholder='Buscar procedimiento...'
+              searchHandler={searchHandler}
+              searchValue={search}
+            />
+            <AddNewPatientButton
+              title='Nuevo'
+              imagen={addIcon}
+            />
+          </div>
+          <div className='w-full border-t border-lighter-gray'>
+            {
           search
             ? appointmentsInfo.map(appointment => {
                 const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
@@ -124,9 +124,9 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
               )
             })
         }
-      </div>
+          </div>
+        </div>
+      </main>
     </div>
-  </main>
-</div>
   )
 }

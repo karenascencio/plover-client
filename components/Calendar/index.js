@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Calendar (props) {
-  const {value,handleChange,name} = props
+  const { value, handleChange, name } = props
   const dateInitializer = () => {
     const initialDate = new Date()
     return initialDate.toDateString()
@@ -28,7 +28,7 @@ export default function Calendar (props) {
           className='text-plover-blue text-base border rounded font-thin ml-1 px-1'
           type='date'
           name={name}
-          onChange={(event)=>{appointmentDate(event);handleChange(event)}}
+          onChange={(event) => { appointmentDate(event); handleChange(event) }}
           value={value}
           id='calendar'
         />
