@@ -12,9 +12,15 @@ import logo from '../../public/logo.svg'
 import Image from 'next/image'
 
 export default function NavBarDentist (props) {
+<<<<<<< HEAD
   const { isHome, idPatient, idDentist , imageDentist, name} = props
 
   const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
+=======
+  const { isHome, idPatient, idDentist } = props
+
+  const options = [{ title: 'Home', link: '/' },
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
@@ -22,7 +28,11 @@ export default function NavBarDentist (props) {
     { title: 'Configuración', link: '/configuration ' }
   ]
 
+<<<<<<< HEAD
   const optionsHome = [{ title: 'Home', link: `/dentists/${idDentist}` },
+=======
+  const optionsHome = [{ title: 'Home', link: '/' },
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
     { title: 'Configuración ', link: `/configuration/${idDentist}` }
   ]
 
@@ -34,6 +44,7 @@ export default function NavBarDentist (props) {
     setIsOpen(!isOpen)
   }
   return (
+<<<<<<< HEAD
     <div className='z-40 '>
 
       <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
@@ -42,6 +53,16 @@ export default function NavBarDentist (props) {
         </div>
         <ProfilePicture profilePicture={imageDentist} />
         <div className='hidden sm:block'><Greeting userName={name.split(' ')[0]} /></div>
+=======
+    <div className='z-40'>
+
+      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
+        <div className='flex  '>
+          <H1 textTitle='Plover' textColor='white' />
+        </div>
+        <ProfilePicture profilePicture='https://api.multiavatar.com/jorge%20castuera.png' />
+        <div className='hidden sm:block'><Greeting userName='mariana' /></div>
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 
         <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
           {

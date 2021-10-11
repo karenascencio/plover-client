@@ -18,9 +18,9 @@ const RegisterInput = ({ label, ...props }) => {
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? (
+      {(meta.touched && meta.error) && (
         <div className='text-red-500 bg-red-200 text-center rounded'>{meta.error}</div>
-      ) : null}
+      )}
     </div>
   )
 }

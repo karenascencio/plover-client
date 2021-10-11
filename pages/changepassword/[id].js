@@ -42,7 +42,8 @@ export const getStaticProps = async (context) => {
 export default function Configuration ({ dentistInfo }) {
   const { id, userImage, name, lastName, password } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
-
+  const [successPop, setSuccessPop] = useState(false)
+  const [falsePop, setFalsePop] = useState(false)
   const buttonHandler = async (values) => {
     try {
       console.log('Cuack!!')
@@ -51,9 +52,15 @@ export default function Configuration ({ dentistInfo }) {
       const response = await api.changePassword(dataUser)
       const success = response.success
       if (success) {
-        alert('Tu contraseña ha sido actualizada')
+        setSuccessPop(true)
+        setTimeout(() => {
+          setSuccessPop(false)
+        }, 5000)
       } else {
-        alert('La contraseña actual que ingresaste no concuerda')
+        setFalsePop(true)
+        setTimeout(() => {
+          setFalsePop(false)
+        }, 5000)
       }
     } catch (error) { console.log(error.message) }
   }
@@ -71,7 +78,7 @@ export default function Configuration ({ dentistInfo }) {
       // Submission function
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
+          console.log(JSON.stringify(values, null, 2))
           setSubmitting(false)
           // Here we send our values to the handler
           buttonHandler(values)
@@ -100,6 +107,20 @@ export default function Configuration ({ dentistInfo }) {
                     textTitle='Cambiar contraseña'
                     textColor='plover-blue'
                   />
+                  {
+                    falsePop
+                      ? <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                        <p>La contraseña actual no coincide con la registrada</p>
+                        </div>
+                      : null
+                  }
+                  {
+                    successPop
+                      ? <div className='flex justify-center text-green-800  bg-green-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                        <p>La contraseña ha sido actualizada</p>
+                      </div>
+                      : null
+                  }
                   <PasswordInput
                     label='Contraseña Actual'
                     name='password'

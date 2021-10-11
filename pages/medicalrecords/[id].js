@@ -58,7 +58,10 @@ export async function getStaticProps (context) {
 export default function Medicalrecord ({ patientFetched }) {
   console.log(patientFetched)
   const [formulario, setFormulario] = useState('General Information')
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
   function handleOption (value) {
     setFormulario(value)
   }
@@ -74,11 +77,19 @@ export default function Medicalrecord ({ patientFetched }) {
 
     <div className='flex flex-col sm:flex-row '>
       <NavBarPatient formulario={formulario} handleOption={handleOption} />
+<<<<<<< HEAD
       <main className='flex mt-16 sm:mt-1 justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           {/* aqui comienza el formulario de informacion general */}
           {formulario == 'General Information' && (
             <div id='General Information' className='pt-14 md:pt-10'>
+=======
+      <main className='flex  justify-center flex-grow sm:w-65vw mx-11'>
+        <div className='w-full max-w-screen-lg flex flex-col'>
+          {/* aqui comienza el formulario de informacion general */}
+          {formulario == 'General Information' && (
+            <div id='General Information' className='pt-10'>
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
               <div className='flex flex-col'>
                 <TitleHeader
                   pageTitle='Información general'
@@ -215,7 +226,11 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comineza el formulario de antecedentes famililares */}
           {formulario == 'Family Background' && (
+<<<<<<< HEAD
             <div id='Family Background' className='pt-14 md:pt-10'>
+=======
+            <div id='Family Background' className='pt-10'>
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
               <div className='flex flex-col'>
                 <TitleHeader
                   pageTitle='Antecedentes Familiares'
@@ -309,7 +324,11 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comienza el formulario de antecedentes patologicos */}
           {formulario == 'Pathological Background' && (
+<<<<<<< HEAD
             <div id='Pathological Background' className='pt-14 md:pt-10'>
+=======
+            <div id='Pathological Background' className='pt-10'>
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
               <TitleHeader
                 pageTitle='Antecedentes patológicos'
                 secondaryText=''
@@ -373,7 +392,11 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comienza el formulario de antecedentes no patologicos */}
           {formulario == 'NonPathological Background' && (
+<<<<<<< HEAD
             <div id='NonPathological Background' className='pt-14 md:pt-10'>
+=======
+            <div id='NonPathological Background' className='pt-10'>
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
               <TitleHeader
                 pageTitle='Antecedentes no patológicos'
                 secondaryText=''

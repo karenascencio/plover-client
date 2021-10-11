@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 // My dependencies
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
@@ -8,6 +9,7 @@ import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
+import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
 import api from '../../lib/api'
 // My images
@@ -46,9 +48,16 @@ export async function getStaticProps (context) {
   }
 }
 
+<<<<<<< HEAD
 export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentistInfo }) {
   const {userImage, name} = dentistInfo
+=======
+export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
+  const router = useRouter()
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
   const [search, setSearch] = useState('')
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
   console.log(dentistInfo)
   appointmentsInfo.forEach(appointment => {
@@ -57,17 +66,41 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentis
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
     appointment.procedures.forEach(procedure => appointmentDate >= now && cardsInfo.push({ title: trimmedName, subtitle: procedure.name, thirdTitle: appointmentDate.locale('es').format('dddd D MMMM') }))
-  })
+  }) // this gives the desired structured to the objects array which carrousel receives
 
   const searchHandler = event => {
     const searchInput = event.target.value
     setSearch(searchInput)
   }
 
-  return (
+  const preDeleteHandler = async event => {
+    setDeleteModal(true)
+    const idPatient = event.target.id
+    setIdPatientToDelete(idPatient)
+  }
 
+  const deleteHandler = async () => {
+    const response = await api.deletePatient(idPatientToDelete)
+    setDeleteModal(false)
+    router.push(`/dentists/${idDentist}`)
+  }
+
+  const closeHandler = () => {
+    setDeleteModal(false)
+  }
+
+  return (
     <div className='flex flex-col sm:flex-row '>
+<<<<<<< HEAD
       <NavBarDentist isHome={true}  imageDentist={userImage} name={name}/>
+=======
+      {deleteModal &&
+        <ConfirmationModal
+          deleteHandler={deleteHandler}
+          closeHandler={closeHandler}
+        />}
+      <NavBarDentist isHome />
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
@@ -101,19 +134,21 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentis
             }).map(patient =>
               <PatientCard
                 patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-                patientImage='https://api.multiavatar.com/car%20pls.png'
+                patientImage={patient.userImage}
                 key={patient._id}
                 idPatient={patient._id}
                 idDentist={idDentist}
+                deleteHandler={preDeleteHandler}
               />
             )
           : patientsInfo.map(patient =>
             <PatientCard
               patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-              patientImage='https://api.multiavatar.com/car%20pls.png'
+              patientImage={patient.userImage}
               key={patient._id}
               idPatient={patient._id}
               idDentist={idDentist}
+              deleteHandler={preDeleteHandler}
             />
           )
         }

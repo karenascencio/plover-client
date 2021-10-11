@@ -44,8 +44,12 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo }) {
+<<<<<<< HEAD
   console.log(patientInfo)
   const { _id: idPatient, idDentist } = patientInfo
+=======
+  const { idPatient, idDentist, userImage } = patientInfo
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
   const { name, lastName } = patientInfo
   const [search, setSearch] = useState('')
   const cardsInfo = []
@@ -73,7 +77,11 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
             pageTitle='Paciente'
             patientName={name}
             patientLastName={lastName}
+<<<<<<< HEAD
             patientImage='https://api.multiavatar.com/car%20pls.png'
+=======
+            patientImage={userImage}
+>>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
           />
           <div className='flex justify-start w-full'>
             <p className='text-2xl text-darker-gray font-thin'>
