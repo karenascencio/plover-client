@@ -42,6 +42,8 @@ export async function getStaticPaths () {
 export async function getStaticProps (context) {
   const id = context.params.id
   const appointment = await api.getAppointmentById(id)
+  const dentistInfo = await api.getDentistById(id)
+  
   return {
     props: {
       appointmentFetched: appointment
@@ -49,8 +51,9 @@ export async function getStaticProps (context) {
   }
 }
 
-export default function Appointment ({ appointmentFetched }) {
+export default function Appointment ({ appointmentFetched ,dentistInfo}) {
   const { idPatient, idDentist } = appointmentFetched
+  const {imageDentist,name} = dentistInfo
   console.log('el id de paciente es ', idPatient)
   console.log('el id de odontologo es ', idDentist)
 
@@ -83,7 +86,7 @@ export default function Appointment ({ appointmentFetched }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} imageDentist={imageDentist} name={name}/>
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>

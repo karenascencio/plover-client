@@ -12,7 +12,7 @@ import logo from '../../public/logo.svg'
 import Image from 'next/image'
 
 export default function NavBarDentist (props) {
-  const { isHome, idPatient, idDentist } = props
+  const { isHome, idPatient, idDentist , imageDentist, name} = props
 
   const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
@@ -37,11 +37,11 @@ export default function NavBarDentist (props) {
     <div className='z-40 '>
 
       <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
-        <div className='flex  '>
+        <div className='flex'>
           <H1 textTitle='Plover' textColor='white' />
         </div>
-        <ProfilePicture profilePicture='https://api.multiavatar.com/jorge%20castuera.png' />
-        <div className='hidden sm:block'><Greeting userName='mariana' /></div>
+        <ProfilePicture profilePicture={imageDentist} />
+        <div className='hidden sm:block'><Greeting userName={name.split(' ')[0]} /></div>
 
         <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
           {

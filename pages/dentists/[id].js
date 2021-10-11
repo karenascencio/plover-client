@@ -35,18 +35,22 @@ export async function getStaticProps (context) {
   const id = context.params.id
   const patientsInfo = await api.getPatientsByDentistId(id)
   const appointmentsInfo = await api.getAppointmentsByDentistId(id)
+  const dentistInfo = await api.getDentistById(id)
   return {
     props: {
       patientsInfo,
       appointmentsInfo,
-      idDentist: id
+      idDentist: id,
+      dentistInfo
     }
   }
 }
 
-export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
+export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentistInfo }) {
+  const {userImage, name} = dentistInfo
   const [search, setSearch] = useState('')
   const cardsInfo = []
+  console.log(dentistInfo)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -63,7 +67,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome />
+      <NavBarDentist isHome={true}  imageDentist={userImage} name={name}/>
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
