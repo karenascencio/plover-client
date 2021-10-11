@@ -17,11 +17,6 @@ import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 
-import {getAllAppointmentsIds,
-        getAppointmentById,
-        getAppointmentsByPatientId
-        getDentistById} from '../../lib/api'
-
 dayjs.extend(utc)
 
 // nota hay un bugsito en el manejo de estado de los toggles

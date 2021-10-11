@@ -57,7 +57,6 @@ export default function Newappointment () {
     var {name:patientName,lastName:patientLastName,userImage:patientImage} = patientInfo
   }
 
-
   const cardsInfo = []
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
