@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import router, { useRouter } from 'next/router'
-import Link from 'next/link'
-import api from '../lib/api'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { login } from '../lib/api'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
@@ -11,20 +10,22 @@ export default function Login () {
   const [error, setError] = useState(false)
   const router = useRouter()
   const Login = async details => {
-    console.log('login INFO', userData)
     setUserData(details)
   }
 
   const buttonHandler = async () => {
     try {
-      console.log('handler', userData)
-      const response = await api.login(userData)
+      console.log('userdata', userData)
+      const response = await login(userData)
       const success = response.success
-      // console.log('response', response.data.token)
       if (success) {
-        const tokent = response.data.token
-        const tokenjwt = api.parseJwt(tokent)
-        const { id } = tokenjwt
+        const userToken = response.data.token
+        window.localStorage.setItem('userToken', userToken)
+        // if (token.length <= 0) throw new Error('Token not found')
+        const tokenData = atob(userToken.split('.')[1])
+        const tokenJson = JSON.parse(tokenData)
+        // const tokenjwt = api.parseJwt(tokent)
+        const id = tokenJson.id
         router.push(`/dentists/${id}`)
       } else {
         setError(true)
