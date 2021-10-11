@@ -115,7 +115,6 @@ export default function Giform () {
                 father: {
                   pathologies: '',
                   description: ''
-<<<<<<< HEAD
                 },
                 mother: {
                   pathologies: '',
@@ -133,25 +132,6 @@ export default function Giform () {
                   pathologies: '',
                   description: ''
                 },
-=======
-                },
-                mother: {
-                  pathologies: '',
-                  description: ''
-                },
-                grandFather: {
-                  pathologies: '',
-                  description: ''
-                },
-                grandMother: {
-                  pathologies: '',
-                  description: ''
-                },
-                partner: {
-                  pathologies: '',
-                  description: ''
-                },
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                 brothers: {
                   pathologies: '',
                   description: ''
@@ -163,15 +143,9 @@ export default function Giform () {
                 generalAllergies: '',
                 drugAllergies: '',
                 currentMedications: '',
-<<<<<<< HEAD
                 previousOperations: 'no',
                 bloodDonation: 'no',
                 birthControlPills: 'no',
-=======
-                previousOperations: 'si',
-                bloodDonation: 'si',
-                birthControlPills: 'si',
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                 observations: ''
               },
               nonPathologicalBackground: {
@@ -250,7 +224,6 @@ export default function Giform () {
               // validaciones de numero interior
               if (!/^[0-9]{1,5}$/.test(values.address.innerNumber)) {
                 errors.innerNumber = 'El numero interior debe ser un numero positivo con no mas de 5 caracteres y no debe contener caracteres especiales'
-<<<<<<< HEAD
               }
               // validacion de medico familiar
               // validacion de nombre
@@ -260,17 +233,6 @@ export default function Giform () {
               if (!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.lastName)) {
                 errors.doctorLastName = 'Los apellidos no pueden contener numeros ni caracteres especiales'
               }
-=======
-              }
-              // validacion de medico familiar
-              // validacion de nombre
-              if (!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.name)) {
-                errors.doctorName = 'El nombre no puede contener numeros ni caracteres especiales'
-              }
-              if (!/^[a-z ,.'-]+$/i.test(values.familyPractitioner.lastName)) {
-                errors.doctorLastName = 'Los apellidos no pueden contener numeros ni caracteres especiales'
-              }
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
               if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.familyPractitioner.email)) {
                 errors.doctorEmail = 'Ingresa un email valido'
               }
@@ -307,29 +269,17 @@ export default function Giform () {
               return errors
             }}
             onSubmit={(values) => {
-<<<<<<< HEAD
               console.log(values)
           }}
           >
             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
 
               <form onSubmit={handleSubmit} className=' mt-16 sm:mt-0'>
-=======
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
-              }, 400)
-            }}
-          >
-            {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
-
-              <form onSubmit={handleSubmit}>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 
                 {/* aqui comienza el formulario de informacion general */}
                 {formulario == 'General Information' && (
                   <div id='General Information' className='mt-10'>
                     <div className='flex flex-col'>
-<<<<<<< HEAD
                         <TitleHeader
                           pageTitle='Información general'
                           secondaryText=''
@@ -339,17 +289,6 @@ export default function Giform () {
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                      <TitleHeader
-                        pageTitle='Información general'
-                        secondaryText=''
-                      />
-                      <H3 textTitle='Paciente' textColor='plover-blue' />
-                    </div>
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='name'
                           textLabel='Nombres'
                           textValue={values.name}
@@ -357,19 +296,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {touched.name && errors.name && <div className='text-plover-blue text-sm'>{errors.name}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {touched.name && errors.name && <div className='text-plover-blue text-sm'>{errors.name}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='lastName'
                           textLabel='Apellidos'
                           textValue={values.lastName}
@@ -377,17 +308,10 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {touched.lastName && errors.lastName && <div className='text-plover-blue text-sm'>{errors.lastName}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <Select
-=======
-                        {touched.lastName && errors.lastName && <div className='text-plover-blue text-sm'>{errors.lastName}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <Select
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           selectID='gender'
                           textName='gender'
                           textValue={values.gender}
@@ -396,15 +320,9 @@ export default function Giform () {
                           selectQuestion='Género'
                           outputOptions={['masculino', 'femenino', 'otro']}
                         />
-<<<<<<< HEAD
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='age'
                           textLabel='Edad'
                           textValue={values.age}
@@ -412,17 +330,10 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {touched.age && errors.age && <div className='text-plover-blue text-sm'>{errors.age}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {touched.age && errors.age && <div className='text-plover-blue text-sm'>{errors.age}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='height'
                           textLabel='Altura'
                           textValue={values.height}
@@ -430,17 +341,10 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {touched.height && errors.height && <div className='text-plover-blue text-sm'>{errors.height}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {touched.height && errors.height && <div className='text-plover-blue text-sm'>{errors.height}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='weight'
                           textLabel='Peso'
                           textValue={values.weight}
@@ -448,7 +352,6 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {touched.weight && errors.weight && <div className='text-plover-blue text-sm'>{errors.weight}</div>}
                         </div>
 
@@ -477,36 +380,6 @@ export default function Giform () {
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {touched.weight && errors.weight && <div className='text-plover-blue text-sm'>{errors.weight}</div>}
-                      </div>
-
-                      <Select
-                        selectID='bloodType'
-                        textName='bloodType'
-                        textValue={values.bloodType}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        selectQuestion='Tipo de sangre'
-                        outputOptions={['A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-']}
-                      />
-
-                      <Select
-                        selectID='maritalStatus'
-                        textName='maritalStatus'
-                        textValue={values.maritalStatus}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        selectQuestion='Estado civil'
-                        outputOptions={['soltero', 'casado', 'divorciado', 'separación en proceso judicial', 'viudo', 'concubinato']}
-                      />
-                    </div>
-
-                    <H3 textTitle='Dirección' textColor='plover-blue' />
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.state'
                           textLabel='Estado'
                           textValue={values.address.state}
@@ -514,21 +387,12 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {getIn(touched, 'address.state') && getIn(errors, 'state') && <div className='text-plover-blue text-sm'>{errors.state}</div>}
 
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {getIn(touched, 'address.state') && getIn(errors, 'state') && <div className='text-plover-blue text-sm'>{errors.state}</div>}
-
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.city'
                           textLabel='Ciudad'
                           textValue={values.address.city}
@@ -536,19 +400,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                           {getIn(touched, 'address.city') && getIn(errors, 'city') && <div className='text-plover-blue text-sm'>{errors.city}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                        {getIn(touched, 'address.city') && getIn(errors, 'city') && <div className='text-plover-blue text-sm'>{errors.city}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.neighborhood'
                           textLabel='Colonia'
                           textValue={values.address.neighborhood}
@@ -556,19 +412,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'address.neighborhood') && getIn(errors, 'neighborhood') && <div className='text-plover-blue text-sm'>{errors.neighborhood}</div>}
 
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {getIn(touched, 'address.neighborhood') && getIn(errors, 'neighborhood') && <div className='text-plover-blue text-sm'>{errors.neighborhood}</div>}
-
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.street'
                           textLabel='Calle'
                           textValue={values.address.street}
@@ -576,19 +424,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'address.street') && getIn(errors, 'street') && <div className='text-plover-blue text-sm'>{errors.street}</div>}
 
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {getIn(touched, 'address.street') && getIn(errors, 'street') && <div className='text-plover-blue text-sm'>{errors.street}</div>}
-
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.streetNumber'
                           textLabel='Número exterior'
                           textValue={values.address.streetNumber}
@@ -596,17 +436,10 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'address.streetNumber') && getIn(errors, 'streetNumber') && <div className='text-plover-blue text-sm'>{errors.streetNumber}</div>}
                         </div>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {getIn(touched, 'address.streetNumber') && getIn(errors, 'streetNumber') && <div className='text-plover-blue text-sm'>{errors.streetNumber}</div>}
-                      </div>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='address.innerNumber'
                           textLabel='Número interior (opcional)'
                           textValue={values.address.innerNumber}
@@ -614,7 +447,6 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'address.innerNumber') && getIn(errors, 'innerNumber') && <div className='text-plover-blue text-sm'>{errors.innerNumber}</div>}
                         </div>
 
@@ -624,17 +456,6 @@ export default function Giform () {
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
                         <div className='flex flex-col'>
                           <FormInput
-=======
-                        {getIn(touched, 'address.innerNumber') && getIn(errors, 'innerNumber') && <div className='text-plover-blue text-sm'>{errors.innerNumber}</div>}
-                      </div>
-
-                    </div>
-
-                    <H3 textTitle='Médico familiar (opcional)' textColor='plover-blue' />
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                      <div className='flex flex-col'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyPractitioner.name'
                           textLabel='Nombres'
                           textValue={values.familyPractitioner.name}
@@ -642,21 +463,12 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'familyPractitioner.name') && getIn(errors, 'doctorName') && <div className='text-plover-blue text-sm'>{errors.doctorName}</div>}
                         </div>
                         {/* validamos que el campo no venga vacio */}
                         {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                         <div>
                           <FormInput
-=======
-                        {getIn(touched, 'familyPractitioner.name') && getIn(errors, 'doctorName') && <div className='text-plover-blue text-sm'>{errors.doctorName}</div>}
-                      </div>
-                      {/* validamos que el campo no venga vacio */}
-                      {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                      <div>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyPractitioner.lastName'
                           textLabel='Apellidos'
                           textValue={values.familyPractitioner.lastName}
@@ -664,19 +476,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                           {getIn(touched, 'familyPractitioner.lastName') && getIn(errors, 'doctorLastName') && <div className='text-plover-blue text-sm'>{errors.doctorLastName}</div>}
                         </div>
                         <div>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                        {getIn(touched, 'familyPractitioner.lastName') && getIn(errors, 'doctorLastName') && <div className='text-plover-blue text-sm'>{errors.doctorLastName}</div>}
-                      </div>
-                      <div>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyPractitioner.email'
                           textLabel='Email'
                           textValue={values.familyPractitioner.email}
@@ -684,17 +488,10 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'familyPractitioner.email') && getIn(errors, 'doctorEmail') && <div className='text-plover-blue text-sm'>{errors.doctorEmail}</div>}
                         </div>
                         <div>
                           <FormInput
-=======
-                        {getIn(touched, 'familyPractitioner.email') && getIn(errors, 'doctorEmail') && <div className='text-plover-blue text-sm'>{errors.doctorEmail}</div>}
-                      </div>
-                      <div>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyPractitioner.phoneNumber'
                           textLabel='Número de teléfono'
                           textValue={values.familyPractitioner.phoneNumber}
@@ -702,7 +499,6 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {getIn(touched, 'familyPractitioner.phoneNumber') && getIn(errors, 'doctorPhoneNumber') && <div className='text-plover-blue text-sm'>{errors.doctorPhoneNumber}</div>}
                         </div>
                       </div>
@@ -745,50 +541,6 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
                       </div>
-=======
-                        {getIn(touched, 'familyPractitioner.phoneNumber') && getIn(errors, 'doctorPhoneNumber') && <div className='text-plover-blue text-sm'>{errors.doctorPhoneNumber}</div>}
-                      </div>
-                    </div>
-                    <H3 textTitle='Persona a cargo' textColor='plover-blue' />
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                      <FormInput
-                        textName='personInCharge.name'
-                        textLabel='Nombres'
-                        textValue={values.personInCharge.name}
-                        inputId='personInCharge.name'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      {/* validamos que el campo no venga vacio */}
-                      {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                      <FormInput
-                        textName='personInCharge.lastName'
-                        textLabel='Apellidos'
-                        textValue={values.personInCharge.lastName}
-                        inputId='personInCharge.lastName'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-
-                      <FormInput
-                        textName='personInCharge.email'
-                        textLabel='Email'
-                        textValue={values.personInCharge.email}
-                        inputId='personInCharge.email'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='personInCharge.phoneNumber'
-                        textLabel='Número de teléfono'
-                        textValue={values.personInCharge.phoneNumber}
-                        inputId='personInCharge.phoneNumber'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                    </div>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                   </div>)}
                 {/* aqui termina el formulario de informacion general */}
 
@@ -796,7 +548,6 @@ export default function Giform () {
                 {formulario == 'Family Background' && (
                   <div id='Family Background' className='mt-10'>
                     <div className='flex flex-col'>
-<<<<<<< HEAD
                         <TitleHeader
                           pageTitle='Antecedentes Familiares'
                           secondaryText=''
@@ -808,19 +559,6 @@ export default function Giform () {
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                      <TitleHeader
-                        pageTitle='Antecedentes Familiares'
-                        secondaryText=''
-                      />
-                    </div>
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'>
-                      <H3 textTitle='Patologías' textColor='plover-blue' />
-                      <p className='text-plover-blue pt-10'>Ingrese las enfermedades separadas por comas</p>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.father.pathologies'
                           textLabel='Padre'
                           textValue={values.familyBackground.father.pathologies}
@@ -828,15 +566,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.father.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.father.description}
@@ -844,19 +576,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.mother.pathologies'
                           textLabel='Madre'
                           textValue={values.familyBackground.mother.pathologies}
@@ -864,15 +588,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.mother.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.mother.description}
@@ -880,19 +598,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.grandFather.pathologies'
                           textLabel='Abuelo'
                           textValue={values.familyBackground.grandFather.pathologies}
@@ -900,15 +610,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.grandFather.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.grandFather.description}
@@ -916,19 +620,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.grandMother.pathologies'
                           textLabel='Abuela'
                           textValue={values.familyBackground.grandMother.pathologies}
@@ -936,15 +632,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.grandMother.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.grandMother.description}
@@ -952,19 +642,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.partner.pathologies'
                           textLabel='Pareja'
                           textValue={values.familyBackground.partner.pathologies}
@@ -972,15 +654,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.partner.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.partner.description}
@@ -988,19 +664,11 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
                         <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-
-                      <div className='flex flex-col border-b border-lighter-gray'>
-                        <FormInput
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.brothers.pathologies'
                           textLabel='Hermanos'
                           textValue={values.familyBackground.brothers.pathologies}
@@ -1008,15 +676,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-=======
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <Textarea
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           textName='familyBackground.brothers.description'
                           textLabel='descripción'
                           textValue={values.familyBackground.brothers.description}
@@ -1024,15 +686,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-<<<<<<< HEAD
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
                       </div>
-=======
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
-                      </div>
-                    </div>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                   </div>)}
                 {/* aqui termina el formulario de antecedentes familiares */}
 
@@ -1040,7 +696,6 @@ export default function Giform () {
                 {formulario == 'Pathological Background' && (
                   <div id='Pathological Background' className='mt-10'>
                     <TitleHeader
-<<<<<<< HEAD
                         pageTitle='Antecedentes patológicos'
                         secondaryText=''
                       />
@@ -1115,82 +770,6 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
                       </div>
-=======
-                      pageTitle='Antecedentes patológicos'
-                      secondaryText=''
-                    />
-                    <div className='mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                      <FormInput
-                        textName='pathologicalBackground.currentDiseases'
-                        textLabel='Enfermedades actuales'
-                        textValue={values.pathologicalBackground.currentDiseases}
-                        inputId='pathologicalBackground.currentDiseases'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='pathologicalBackground.previousDiseases'
-                        textLabel='Enfermedades previas'
-                        textValue={values.pathologicalBackground.previousDiseases}
-                        inputId='pathologicalBackground.previousDiseases'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='pathologicalBackground.generalAllergies'
-                        textLabel='Alergias'
-                        textValue={values.pathologicalBackground.generalAllergies}
-                        inputId='pathologicalBackground.generalAllergies'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='pathologicalBackground.drugAllergies'
-                        textLabel='Alergias a medicamentos'
-                        textValue={values.pathologicalBackground.drugAllergies}
-                        inputId='pathologicalBackground.drugAllergies'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='pathologicalBackground.currentMedications'
-                        textLabel='Medicacion actual'
-                        textValue={values.pathologicalBackground.currentMedications}
-                        inputId='pathologicalBackground.currentMedications'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <RadioButtons
-                        textLabel='¿Has tomado pastillas anticonceptivas?'
-                        options={['si', 'no']}
-                        setFieldValue={setFieldValue}
-                        textValue={values.pathologicalBackground.birthControlPills}
-                        textName='pathologicalBackground.birthControlPills'
-                      />
-                      <RadioButtons
-                        textLabel='¿Te has operado recientemente?'
-                        options={['si', 'no']}
-                        setFieldValue={setFieldValue}
-                        textValue={values.pathologicalBackground.previousOperations}
-                        textName='pathologicalBackground.previousOperations'
-                      />
-                      <RadioButtons
-                        textLabel='¿Has donado sangre en los últimos 6 meses?'
-                        options={['si', 'no']}
-                        setFieldValue={setFieldValue}
-                        textValue={values.pathologicalBackground.bloodDonation}
-                        textName='pathologicalBackground.bloodDonation'
-                      />
-                      <Textarea
-                        textName='pathologicalBackground.observations'
-                        textLabel='observaciones'
-                        textValue={values.pathologicalBackground.observations}
-                        inputId='pathologicalBackground.observations'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                    </div>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                   </div>)}
                 {/* aqui termina el formulario de antecedentes patologicos */}
 
@@ -1198,7 +777,6 @@ export default function Giform () {
                 {formulario == 'NonPathological Background' && (
                   <div id='NonPathological Background' className='mt-10'>
                     <TitleHeader
-<<<<<<< HEAD
                         pageTitle='Antecedentes no patológicos'
                         secondaryText=''
                       />
@@ -1243,59 +821,12 @@ export default function Giform () {
                           handleBlur={handleBlur}
                           selectQuestion='¿Bebe alcohol frecuentemente?'
                           outputOptions={[
-=======
-                      pageTitle='Antecedentes no patológicos'
-                      secondaryText=''
-                    />
-                    <div className='mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-5 border-b border-lighter-gray'>
-                      <RadioButtons
-                        textLabel='¿Como considera su alimentacion?'
-                        options={['buena', 'regular', 'mala']}
-                        setFieldValue={setFieldValue}
-                        textValue={values.nonPathologicalBackground.feeding}
-                        textName='nonPathologicalBackground.feeding'
-                      />
-                      <FormInput
-                        textName='nonPathologicalBackground.toothBrushingFrequency'
-                        textLabel='¿Con qué frecuencia se cepilla los dientes?'
-                        textValue={values.nonPathologicalBackground.toothBrushingFrequency}
-                        inputId='nonPathologicalBackground.toothBrushingFrequency'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='nonPathologicalBackground.vaccines'
-                        textLabel='Vacunas'
-                        textValue={values.nonPathologicalBackground.vaccines}
-                        inputId='nonPathologicalBackground.vaccines'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                      <FormInput
-                        textName='nonPathologicalBackground.addictions'
-                        textLabel='Adicciones'
-                        textValue={values.nonPathologicalBackground.addictions}
-                        inputId='nonPathologicalBackground.addictions'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-
-                      <Select
-                        selectID='alcoholConsumption'
-                        textName='nonPathologicalBackground.alcoholConsumption'
-                        textValue={values.nonPathologicalBackground.alcoholConsumption}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        selectQuestion='¿Bebe alcohol frecuentemente?'
-                        outputOptions={[
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           'Nunca he tomado',
                           'No tomo',
                           'Una vez al día',
                           'Una vez cada quince días',
                           'Una vez al mes'
                         ]}
-<<<<<<< HEAD
                         />
                         <Select
                           selectID='cigarConsumption'
@@ -1305,17 +836,6 @@ export default function Giform () {
                           handleBlur={handleBlur}
                           selectQuestion='¿Con que frecuencia fuma?'
                           outputOptions={[
-=======
-                      />
-                      <Select
-                        selectID='cigarConsumption'
-                        textName='nonPathologicalBackground.cigarConsumption'
-                        textValue={values.nonPathologicalBackground.cigarConsumption}
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                        selectQuestion='¿Con que frecuencia fuma?'
-                        outputOptions={[
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
                           'Nunca he fumado',
                           'No fumo',
                           '10 ó menos cajetillas por mes',
@@ -1323,7 +843,6 @@ export default function Giform () {
                           '21 a 30 cajetillas por mes',
                           '31 cajetillas por mes ó mas'
                         ]}
-<<<<<<< HEAD
                         />
                         <RadioButtons
                           textLabel='¿Te has tatuado en los ultimos 6 meses?'
@@ -1370,54 +889,6 @@ export default function Giform () {
                         />
                       </div>
                     <button onClick={()=>formatPatient(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
-=======
-                      />
-                      <RadioButtons
-                        textLabel='¿Te has tatuado en los ultimos 6 meses?'
-                        options={['Si', 'No']}
-                        setFieldValue={setFieldValue}
-                        textValue={values.nonPathologicalBackground.recentTattos}
-                        textName='nonPathologicalBackground.recentTattos'
-                      />
-
-                      <Textarea
-                        textName='nonPathologicalBackground.hygieneDescription'
-                        textLabel='Describa su higiene personal'
-                        textValue={values.nonPathologicalBackground.hygieneDescription}
-                        inputId='nonPathologicalBackground.hygieneDescription'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-
-                      <FormInput
-                        textName='nonPathologicalBackground.services'
-                        textLabel='Servicios básicos'
-                        textValue={values.nonPathologicalBackground.services}
-                        inputId='nonPathologicalBackground.services'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-
-                      <Textarea
-                        textName='nonPathologicalBackground.unusualHabits'
-                        textLabel='Hábitos extraños'
-                        textValue={values.nonPathologicalBackground.unusualHabits}
-                        inputId='nonPathologicalBackground.unusualHabits'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-
-                      <Textarea
-                        textName='nonPathologicalBackground.observations'
-                        textLabel='Observaciónes'
-                        textValue={values.nonPathologicalBackground.observations}
-                        inputId='nonPathologicalBackground.observations'
-                        handleChange={handleChange}
-                        handleBlur={handleBlur}
-                      />
-                    </div>
-                    <button type='submit' onClick={() => SeeState(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
 
                   </div>)}
                 {/* aqui termina el formulario de antecedentes no patologiocos */}

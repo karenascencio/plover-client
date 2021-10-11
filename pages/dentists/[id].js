@@ -48,13 +48,10 @@ export async function getStaticProps (context) {
   }
 }
 
-<<<<<<< HEAD
 export default function Home ({ patientsInfo, appointmentsInfo, idDentist,dentistInfo }) {
   const {userImage, name} = dentistInfo
-=======
-export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
   const router = useRouter()
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
+  
   const [search, setSearch] = useState('')
   const [deleteModal, setDeleteModal] = useState(false)
   const [idPatientToDelete, setIdPatientToDelete] = useState('')
@@ -91,16 +88,13 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
-<<<<<<< HEAD
-      <NavBarDentist isHome={true}  imageDentist={userImage} name={name}/>
-=======
+      
       {deleteModal &&
         <ConfirmationModal
           deleteHandler={deleteHandler}
           closeHandler={closeHandler}
         />}
-      <NavBarDentist isHome />
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
+      <NavBarDentist isHome={true}  imageDentist={userImage} name={name}/>
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
