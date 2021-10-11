@@ -21,6 +21,10 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 
+import { getDentistById,
+          getPatientById,
+        getAppointmentsByPatientId} from '../lib/api'    
+
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
@@ -35,9 +39,9 @@ export default function Newappointment () {
   const [appointmentsInfo,setAppointmentsInfo] = useState([])
   useEffect(()=>{
     async function getInfo(){
-      const dentistsInfo = await api.getDentistById(idDentist)
-      const patientInfo = await api.getPatientsById(idPatient)
-      const appointmentsInfo = await api.getAppointmentsByPatientId(idPatient)
+      const dentistsInfo = await getDentistById(idDentist)
+      const patientInfo = await getPatientById(idPatient)
+      const appointmentsInfo = await getAppointmentsByPatientId(idPatient)
       setDentistIfo(dentistsInfo)
       setPatientInfo(patientInfo)
       setAppointmentsInfo(appointmentsInfo)

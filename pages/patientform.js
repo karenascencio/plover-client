@@ -12,6 +12,7 @@ import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
+import { postPatient } from '../lib/api'
 
 // single form
 export default function Giform () {
@@ -57,7 +58,7 @@ export default function Giform () {
     values.nonPathologicalBackground.alcoholConsumption = values.nonPathologicalBackground.alcoholConsumption.toLowerCase()
     values.nonPathologicalBackground.cigarConsumption = values.nonPathologicalBackground.cigarConsumption.toLowerCase()
     values.idDentist = idDentist
-    await api.postPatient(values)
+    await postPatient(values)
   }
   return (
     <div className='flex flex-col sm:flex-row '>

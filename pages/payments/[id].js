@@ -15,7 +15,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
+//import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
 import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
@@ -23,7 +23,9 @@ import {getAllPatientsIds,
         getPaymentsByPatientId,
         getAppointmentsByPatientId,
         getPatientById,
-        getDentistById
+        getDentistById,
+        postPayment
+
       } from '../../lib/api'
 dayjs.extend(utc)
 
@@ -185,8 +187,8 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
        },1000)
      }
      else{
-      await api.postPayment(payment)
-      const newPayments = await api.getPaymentsByPatientId(idPatient)
+      await postPayment(payment)
+      const newPayments = await getPaymentsByPatientId(idPatient)
       console.log(newPayments)
       setDynamicPayments(newPayments)
      }
@@ -306,7 +308,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         </main>
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {visible && (
+   {/* {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -321,7 +323,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )}
+      )} */}
     </>
   )
 }
