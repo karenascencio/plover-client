@@ -16,12 +16,12 @@ import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 
-import dynamic from 'next/dynamic'
+//import dynamic from 'next/dynamic'
 
-const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+//const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-const DocViewerRenderers = dynamic(() =>
-  import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+//const DocViewerRenderers = dynamic(() =>
+  //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
 
 import VoucherButton from '../../components/voucherButton'
 
