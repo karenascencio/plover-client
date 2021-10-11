@@ -23,9 +23,9 @@ dayjs.extend(utc)
 // corregimos los errores de vercer, corregimos el pull request
 // corregimos el carrusel y los links y los erroes de vercel
 
-import {  getAllAppointmentsIds
+import {  getAllAppointmentsIds,
           getAppointmentById,
-          getPatientsById,
+          getPatientById,
           getAppointmentsByPatientId,
           getDentistById} from '../../lib/api'   
 
@@ -49,7 +49,7 @@ export async function getStaticProps (context) {
   //aqui obtenemos los id del dentista y el paciente
   const patientId = appointment.idPatient._id
   const dentistId = appointment.idDentist
-  const patientInfo = await getPatientsById(patientId)
+  const patientInfo = await getPatientById(patientId)
   const appointmentsInfo = await getAppointmentsByPatientId(patientId)
   const dentistInfo = await getDentistById(dentistId)
 
