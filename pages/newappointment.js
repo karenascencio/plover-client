@@ -24,6 +24,9 @@ const cardsInfo = [
   { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
 ]
 
+
+
+
 export async function getStaticProps () {
   return {
     props: {
