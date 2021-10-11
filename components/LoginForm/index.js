@@ -33,17 +33,9 @@ export default function LoginForm ({ Login, error, buttonHandler, webToken }) {
             />
           </div>
           {
-<<<<<<< HEAD
-           !webToken &&
-             <div className=' w-100 d-flex justify-content-center mt-8'>
-               <p className='text-danger'>
-                 Please enter valid credentials
-               </p>
-=======
            error &&
              <div className='flex justify-center text-red-800 mt-4 bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
                <p>La contraseña o el correo que ingresaste son incorrectos.</p>
->>>>>>> 97a4d1ecae31d40e2f0375c0260cabe8b3ab1477
              </div>
           }
           <div className='mb-50px  mt-70px w-200px'>
