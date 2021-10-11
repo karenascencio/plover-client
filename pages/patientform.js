@@ -13,6 +13,7 @@ import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
 
+
 // single form
 export default function Giform () {
   const router = useRouter()
@@ -31,10 +32,9 @@ export default function Giform () {
     }
     return []
   }
-
   async function formatPatient (values) {
     console.log(values)
-    values.idDetist = '61511d3cf6273ea718ebd5f5'
+    values.idDetist = idDentist
     values.email = `user${Math.random()}@gmail.com`
     values.password = `password${Math.random()}@gmail.com`
     values.age = Number(values.age)
@@ -127,9 +127,9 @@ export default function Giform () {
                 generalAllergies: '',
                 drugAllergies: '',
                 currentMedications: '',
-                previousOperations: 'si',
-                bloodDonation: 'si',
-                birthControlPills: 'si',
+                previousOperations: 'no',
+                bloodDonation: 'no',
+                birthControlPills: 'no',
                 observations: ''
               },
               nonPathologicalBackground: {
@@ -252,15 +252,13 @@ export default function Giform () {
               // }
               return errors
             }}
-            onSubmit={async (values) => {
-              alert(JSON.stringify(values, null, 2))
-              await formatPatient(values)
-              router.push('/')
-            }}
+            onSubmit={(values) => {
+              console.log(values)
+          }}
           >
             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
 
-              <form onSubmit={handleSubmit} className=' mt-16 sm:mt-0' onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className=' mt-16 sm:mt-0'>
 
                 {/* aqui comienza el formulario de informacion general */}
                 {formulario == 'General Information' && (
@@ -874,7 +872,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
                       </div>
-                    <button type='submit' className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
+                    <button onClick={()=>formatPatient(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
 
                   </div>)}
                 {/* aqui termina el formulario de antecedentes no patologiocos */}

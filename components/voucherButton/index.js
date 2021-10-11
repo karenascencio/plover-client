@@ -33,22 +33,22 @@ export default function VoucherButton(props) {
     return (
 				<>
 					{!hasVoucher  && (
-        		<div className='lg:px-6'>
+        		<div className=''>
         			<FileInput onChange={handleFileChange} />
         			<button
           			id={payment._id}
           			onClick={openFileDialog}
-          			className='p-1 text-white bg-plover-blue  rounded my-1'
-        				>Agregar comprobabte
+          			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
+        				>Agregar
         			</button>
       			</div>)
 					}
 					{hasVoucher && (
 						<div>
 							<button
-          			className='p-1 text-white bg-plover-blue  rounded my-1'
+          			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
           			onClick={()=>handleSeeFile(file)}
-        				>mostrar comprobante
+        				>mostrar
       				</button>
 						</div> )
 					}

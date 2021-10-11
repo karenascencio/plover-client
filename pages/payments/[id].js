@@ -17,12 +17,12 @@ import VoucherButton from '../../components/voucherButton'
 
 // trabajando en payments
 
-//const cardsInfo = [
-  //{ name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
-  //{ name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
-  //{ name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
-  //{ name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }/
-//]
+const cardsInfo = [
+  { name: 'Alfredo Castuera', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Anotonio ibarra', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Hector Hernandez', procedure: 'Resinas x4', date: '01 septiembre' },
+  { name: 'Karen Ascencio', procedure: 'Resinas x4', date: '01 septiembre' }
+]
 
 export async function getStaticPaths () {
   const ids = await api.getAllPatientsIds()
@@ -90,10 +90,10 @@ export default function Payments ({payments,appointments,patient}) {
   // const idDentist = router.query.idDentist
   // console.log(`el id de odontologo es ${idDentist}`)
 
-  console.log('pagos: ', payments)
-  console.log('citas: ', appointments)
-  console.log('paciente: ', patient)
-  const {idPatient,idDentist} = payments[0]
+  //console.log('pagos: ', payments)
+  //console.log('citas: ', appointments)
+  //console.log('paciente: ', patient)
+  const {_id:idPatient,idDentist} = patient
 
   console.log(idPatient,idDentist)
   
@@ -113,6 +113,8 @@ export default function Payments ({payments,appointments,patient}) {
 
    const [currentPayment, setCurrentPayment] = useState(null)
    const [visible, setVisible] = useState(false)
+
+   const [toMuchPayment,setToMuchPayment] = useState(false)
 
   // console.log(`el total a pagar es ${fullPrice}`)
   // console.log(`el total pagado es ${getPaidOut(dynamicPayments)}`)
@@ -151,10 +153,19 @@ export default function Payments ({payments,appointments,patient}) {
      setInitial(true)
      payment.total = Number(payment.total)
      payment.date = new Date(payment.date)
-     await api.postPayment(payment)
-     const newPayments = await api.getPaymentsByPatientId(idPatient)
-     console.log(newPayments)
-     setDynamicPayments(newPayments)
+     if(fullPrice-getPaidOut(dynamicPayments)-payment.total <0){
+       console.log('no puedes pagar mas de lo que debes')
+       setToMuchPayment(true)
+       setTimeout(()=>{
+          setToMuchPayment(false)
+       },1000)
+     }
+     else{
+      await api.postPayment(payment)
+      const newPayments = await api.getPaymentsByPatientId(idPatient)
+      console.log(newPayments)
+      setDynamicPayments(newPayments)
+     }
 }
 
   // // agregamos el manejador de la subida del archivo
@@ -204,7 +215,7 @@ export default function Payments ({payments,appointments,patient}) {
         />
         <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
           <div className='flex flex-col items-center max-w-screen-lg '>
-            {/* <Carrusel cards={cardsInfo} /> */}
+             <Carrusel cards={cardsInfo} /> 
             <div className='w-full flex justify-between'>
               <H1 textTitle='Pagos' textColor='plover-blue' />
               <div className='mr-4'>
@@ -219,9 +230,10 @@ export default function Payments ({payments,appointments,patient}) {
                 <button
                   disabled={errorDate}
                   onClick={handlePayment}
-                  className={`text-white ${error ? 'bg-lighter-gray' : 'bg-plover-blue'} w-28 h-30px rounded my-1 `}
+                  className={`text-white ${error ? 'bg-lighter-gray' : 'bg-plover-blue'}  rounded my-1 px-5 py-1`}
                 >Agregar pago
                 </button>
+                {toMuchPayment && <div className='text-sm text-plover-blue '>No puedes pagar mas de lo que debes</div>}
               </div>
               <div className='grid grid-cols-5 gap-x-5 place-items-stretch'>
                 <div className='col-span-2 flex flex-col'>
@@ -230,7 +242,7 @@ export default function Payments ({payments,appointments,patient}) {
                 </div>
                 <div className='col-span-2  flex flex-col justify-end items-center pb-4'>
                   <label className='text-plover-blue text-sm pb-2 self-start' htmlFor='calendar'>
-                    Fecha:
+                    Fecha
     				 			</label>
                   <input
                     className='text-plover-blue text-sm border rounded ml-1 py-1.5 px-1 w-full'
@@ -241,6 +253,7 @@ export default function Payments ({payments,appointments,patient}) {
                     onChange={handleChange}
                   />
                 </div>
+                <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
                 {dynamicPayments.map((item, key) => {
 								  return (
   <React.Fragment key={key}>
