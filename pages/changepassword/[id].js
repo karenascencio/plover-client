@@ -15,7 +15,7 @@ import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 import {getDentists, getDentistById, changePassword} from '../../lib/api'
 
 export const getStaticPaths = async () => {
-  const response = await api.getDentists()
+  const response = await getDentists()
   const paths = response.map(dentist => {
     return {
       params: {
