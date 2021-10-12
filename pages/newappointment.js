@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import api from '../lib/api'
+import {postAppointment} from '../lib/api'
 import Carrusel from '../components/Carrusel'
 import Calendar from '../components/Calendar'
 import H3 from '../components/H3'
@@ -103,7 +103,7 @@ export default function Newappointment () {
     setAppointment({ ...appointment, [name]: value })
   }
   async function handleSubmit (e) {
-    await api.postAppointment(appointment)
+    await postAppointment(appointment)
     e.preventDefault()
     console.log(`te quieres mover a /patients/${idPatient}`)
     router.push(`/patients/${idPatient}`)

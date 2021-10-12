@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import AmountDisplay from '../../components/AmountDisplay'
 import TitleHeader from '../../components/TitleHeader'
@@ -16,12 +15,12 @@ import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 
-import dynamic from 'next/dynamic'
+//import dynamic from 'next/dynamic'
 
-const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+//const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-const DocViewerRenderers = dynamic(() =>
-  import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+//const DocViewerRenderers = dynamic(() =>
+//  import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
 
 import VoucherButton from '../../components/voucherButton'
 
