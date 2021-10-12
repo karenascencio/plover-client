@@ -12,7 +12,7 @@ import logo from '../../public/logo.svg'
 import Image from 'next/image'
 
 export default function NavBarDentist (props) {
-  const { isHome, idPatient, idDentist, image,name } = props
+  const { isHome, idPatient, idDentist, image,name,rol } = props
 
   const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
@@ -33,6 +33,7 @@ export default function NavBarDentist (props) {
   function handleHamburgerMenu () {
     setIsOpen(!isOpen)
   }
+  console.log('el rol desde el navBar es: ',rol)
   return (
     <div className='z-40 '>
 

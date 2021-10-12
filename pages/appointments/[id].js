@@ -15,6 +15,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
+import useUserInfo from '../../hooks/useUserInfo'
 
 dayjs.extend(utc)
 
@@ -63,6 +64,13 @@ export async function getStaticProps (context) {
 }
 
 export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo,dentistInfo }) {
+  
+    //hook para traernos el id y el rol del usuario
+    const [id,rol] = useUserInfo()
+    console.log('el id del usuario es ',id)
+    console.log('el rol del usuario es ',rol)
+  
+  
   const { idPatient, idDentist } = appointmentFetched
   console.log('el id de paciente es ', idPatient)
   console.log('el id de odontologo es ', idDentist)
@@ -111,7 +119,14 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={nameDentist} />
+      <NavBarDentist 
+        rol={rol}
+        isHome={false} 
+        idPatient={idPatient._id} 
+        idDentist={idDentist} 
+        image={rol=='paciente'?userImage:imageDentist} 
+        name={rol=='paciente'?name:nameDentist} 
+        />
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>

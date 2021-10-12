@@ -14,6 +14,7 @@ import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
 import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
+import useUserInfo from '../../hooks/useUserInfo'
 
 //import dynamic from 'next/dynamic'
 
@@ -69,6 +70,11 @@ export async function getStaticProps (context) {
 
 export default function Payments ({payments,appointments,patient,dentistInfo}) {
 
+
+    //hook para traernos el id y el rol del usuario
+    const [id,rol] = useUserInfo()
+    console.log('el id del usuario es ',id)
+    console.log('el rol del usuario es ',rol)
 
 
   // const [payments,setPayments] = useState(null)
@@ -245,11 +251,12 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
       <>
       <div className='flex flex-col sm:flex-row '>
         <NavBarDentist
+          rol={rol}
           isHome={false}
           idPatient={idPatient}
           idDentist={idDentist}
-          name={name}
-          image={userImage}
+          name={rol=='paciente'?pacientName:name}
+          image={rol=='paciente'?pacientImage:userImage}
         
 
         />
