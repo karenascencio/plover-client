@@ -120,10 +120,10 @@ export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) 
               searchHandler={searchHandler}
               searchValue={search}
             />
-            <AddNewPatientButton
+            {rol=='dentista' && <AddNewPatientButton
               title='Nuevo'
               imagen={addIcon}
-            />
+            />}
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
