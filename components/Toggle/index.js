@@ -23,7 +23,7 @@ export default function Toggle (props) {
           checked={state}
           onChange={handleChange}
           className='hidden'
-          disabled={status?true:false}
+          disabled={disabled? true :status?true:false}
         />
         {/* slider */}
         <div

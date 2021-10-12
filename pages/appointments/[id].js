@@ -17,6 +17,10 @@ import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 import useUserInfo from '../../hooks/useUserInfo'
 
+import AnotationsCard from '../../components/AnotationsCard'
+
+import annotation from '../../public/post-it.png'
+import care from '../../public/care.png'
 dayjs.extend(utc)
 
 // nota hay un bugsito en el manejo de estado de los toggles
@@ -155,12 +159,16 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
             </div>
             <div className='flex'>
               <div className='w-full grid grid-cols-6 gap-x-5'>
-                <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='flex flex-col items-end mt-5 '>
-                  <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                  <Toggle handleToggle={handleToggle} disabled />
-                </div>
+                {rol=='dentista' &&
+                  <>
+                    <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                    <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                    <div className='flex flex-col items-end mt-5 '>
+                      <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
+                      <Toggle handleToggle={handleToggle} disabled />
+                    </div>
+                  </>
+                }
                 {
 									procedures.map((procedure, key) => {
 									  return (
@@ -176,25 +184,44 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
 							    }
               </div>
             </div>
-            <div className=' grid md:grid-cols-2 gap-x-5'>
-              <Textarea
-                textName='annotations'
-                textLabel='Anotaciones'
-                textValue={appointment.annotations}
-                inputId='annotations'
-                handleChange={handleChange}
-                handleBlur={() => console.log('blur')}
-              />
-              <Textarea
-                textLabel='Recomendaciones'
-                textValue={appointment.recommendations}
-                inputId='recommendations'
-                textName='recommendations'
-                handleChange={handleChange}
-                handleBlur={() => console.log('blur')}
-              />
-            </div>
-            {rol=='dentista' && (<div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>)}
+            {rol =='dentista' && <>
+              <div className=' grid md:grid-cols-2 gap-x-5'>
+                <Textarea
+                  textName='annotations'
+                  textLabel='Anotaciones'
+                  textValue={appointment.annotations}
+                  inputId='annotations'
+                  handleChange={handleChange}
+                  handleBlur={() => console.log('blur')}
+                />
+                <Textarea
+                  textLabel='Recomendaciones'
+                  textValue={appointment.recommendations}
+                  inputId='recommendations'
+                  textName='recommendations'
+                  handleChange={handleChange}
+                  handleBlur={() => console.log('blur')}
+                />
+              </div>
+              <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            </>}
+            {rol =='paciente' && <>
+              <div className=' grid md:grid-cols-2 gap-x-5'>
+                
+                <AnotationsCard 
+                  label={'Anotaciones'}
+                  text={appointment.annotations}
+                  image={annotation}
+                />
+                <AnotationsCard 
+                  label={'Recomendaciones'}
+                  text={appointment.recommendations}
+                  image={care}
+                />
+              </div>
+            
+            </>}
+
           </div>
         </div>
       </main>
