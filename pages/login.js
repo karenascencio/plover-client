@@ -24,6 +24,7 @@ export default function Login () {
         // if (token.length <= 0) throw new Error('Token not found')
         const tokenData = atob(userToken.split('.')[1])
         const tokenJson = JSON.parse(tokenData)
+        const id = tokenJson.id
         router.push(`/dentists/${id}`)
       } else {
       }

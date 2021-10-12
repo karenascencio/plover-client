@@ -26,7 +26,8 @@ import {  getAllAppointmentsIds,
           getAppointmentById,
           getPatientById,
           getAppointmentsByPatientId,
-          getDentistById} from '../../lib/api'   
+          getDentistById,
+          patchAppointment} from '../../lib/api'   
 
 export async function getStaticPaths () {
   const ids = await getAllAppointmentsIds()
@@ -106,7 +107,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     setAppointment({ ...appointment, [name]: value })
   }
   async function handleSubmit () {
-    await api.patchAppointment(appointment, appointmentFetched._id)
+    await patchAppointment(appointment, appointmentFetched._id)
   }
 
   return (
