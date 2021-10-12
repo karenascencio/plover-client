@@ -12,13 +12,15 @@ import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
 import { postPatient } from '../lib/api'
+import useUserInfo from '../hooks/useUserInfo'
 
 // single form
 export default function Giform () {
   const router = useRouter()
-  console.log(router.query)
-  if(router.isReady) var idDentist = router.query.idDentist
-  console.log(idDentist)
+  const [id,rol] = useUserInfo() 
+  console.log('el id es',id)
+  console.log('el rol es ',rol)
+
   const [formulario, setFormulario] = useState('General Information')
 
   function handleOption (value) {
@@ -31,11 +33,9 @@ export default function Giform () {
     }
     return []
   }
-  async function formatPatient (values) {
+   function formatPatient (values) {
     console.log(values)
-    values.idDetist = idDentist
-    values.email = `user${Math.random()}@gmail.com`
-    values.password = `password${Math.random()}@gmail.com`
+    values.password = values.email.split('@')[0]
     values.age = Number(values.age)
     values.height = Number(values.height)
     values.weight = Number(values.weight)
@@ -56,21 +56,24 @@ export default function Giform () {
     values.nonPathologicalBackground.services = stringToArray(values.nonPathologicalBackground.services)
     values.nonPathologicalBackground.alcoholConsumption = values.nonPathologicalBackground.alcoholConsumption.toLowerCase()
     values.nonPathologicalBackground.cigarConsumption = values.nonPathologicalBackground.cigarConsumption.toLowerCase()
-    values.idDentist = idDentist
-    await postPatient(values)
+    values.idDentist = id
+    values.userImage= `https://api.multiavatar.com/${values.name.split(' ')[0]}%20${values.lastName.split(' ')[0]}.png`
+    //await postPatient(values)
+    return values
   }
   return (
     <div className='flex flex-col sm:flex-row '>
       <NavBarPatient 
         formulario={formulario} 
         handleOption={handleOption}
-        idDentist={idDentist} />
+        idDentist={id} />
       <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik
             initialValues={{
               name: '',
               lastName: '',
+              email: '',
               gender: 'masculino',
               age: '',
               height: '',
@@ -158,6 +161,13 @@ export default function Giform () {
               // validacion de apellido
               if (!values.lastName) errors.lastName = 'Por favor ingrese los apellidos del paciente'
               else if (!/^[a-z ,.'-]+$/i.test(values.lastName)) errors.lastName = 'Los apellidos no puede contener numeros ni caracteres especiales'
+              //validacion por email
+              if (!values.email) {
+                errors.email = 'Por favor ingrese el nombre del paciente'
+              }
+              else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
+                errors.email = 'Ingresa un email valido'
+              }
               // validacion por genero
               if (!values.gender) errors.gender = 'Por favor ingrese el genero del paciente'
               else if (!['masculino', 'femenio', 'otro'].includes(values.gender)) {
@@ -254,8 +264,13 @@ export default function Giform () {
               // }
               return errors
             }}
-            onSubmit={(values) => {
-              console.log(values)
+            onSubmit={async (values) => {
+              const formatedValues = formatPatient(values)
+              console.log(formatedValues)
+              alert(JSON.stringify(formatedValues,null,2))
+              await postPatient(formatedValues)
+              router.push(`/dentists/${id}`)
+              
           }}
           >
             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
@@ -296,6 +311,21 @@ export default function Giform () {
                         />
                           {touched.lastName && errors.lastName && <div className='text-plover-blue text-sm'>{errors.lastName}</div>}
                         </div>
+                        {/* campo para el correo electronico */}
+                        <div className='flex flex-col'>
+                          <FormInput
+                          textName='email'
+                          textLabel='Email'
+                          textValue={values.email}
+                          inputId='email'
+                          handleChange={handleChange}
+                          handleBlur={handleBlur}
+                        />
+                          {/* validamos que el campo no venga vacio */}
+                          {touched.email && errors.email && <div className='text-plover-blue text-sm'>{errors.email}</div>}
+                        </div>
+
+
                         <div className='flex flex-col'>
                           <Select
                           selectID='gender'
@@ -874,7 +904,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
                       </div>
-                    <button onClick={()=>formatPatient(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
+                    <button type='submit' className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
 
                   </div>)}
                 {/* aqui termina el formulario de antecedentes no patologiocos */}

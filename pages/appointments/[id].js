@@ -76,9 +76,10 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     console.log('el rol del usuario es ',rol)
   
   
-  const { idPatient, idDentist } = appointmentFetched
+  const { idPatient, idDentist,date } = appointmentFetched
   console.log('el id de paciente es ', idPatient)
   console.log('el id de odontologo es ', idDentist)
+  console.log('la fecha de la cita es: ',date)
 
   const { name, lastName, userImage } = patientInfo
   
@@ -144,7 +145,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
           <Carrusel cards={cardsInfo} />
           <div className='w-full flex justify-between '>
             <H1 textTitle='Cita' textColor='plover-blue' />
-            <div className='self-end '><Calendar value={appointment.date} name='date' handleChange={handleChange} /></div>
+            <div className='self-end '><Calendar value={date} name='date' handleChange={handleChange} /></div>
           </div>
           <div className='w-full flex flex-col w-1/2 '>
             <div className='flex justify-between items-center'>

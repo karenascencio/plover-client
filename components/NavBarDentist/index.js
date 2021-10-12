@@ -10,6 +10,7 @@ import Link from 'next/link'
 import ProfilePicture from '../ProfilePicture'
 import logo from '../../public/logo.svg'
 import Image from 'next/image'
+import LogOutButton from '../LogOutButton'
 
 export default function NavBarDentist (props) {
   const { isHome, idPatient, idDentist, image,name,rol } = props
@@ -78,7 +79,11 @@ export default function NavBarDentist (props) {
                           )
                         })
                     }
+            <motion.li
+               whileHover={{ scale: 1.2 }}
+            > <LogOutButton /></motion.li>
         </ul>
+       
         <HamburgerMenu
           className='sm:hidden mr-3'
           isOpen={isOpen}
