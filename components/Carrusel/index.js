@@ -6,18 +6,19 @@ import '../../node_modules/slick-carousel/slick/slick-theme.css'
 
 export default function Carrusel (props) {
   const { cards } = props
+  const cardNumber = cards.length
   const settings = {
     arrows: false,
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: cardNumber >= 4 ? 4 : cardNumber,
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1500,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: cardNumber >= 4 ? 4 : cardNumber,
           slidesToScroll: 1,
           infinite: false,
           dots: true
@@ -26,7 +27,7 @@ export default function Carrusel (props) {
       {
         breakpoint: 1300,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: cardNumber >= 3 ? 3 : cardNumber,
           slidesToScroll: 1,
           initialSlide: 3
         }
@@ -34,14 +35,14 @@ export default function Carrusel (props) {
       {
         breakpoint: 1000,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: cardNumber >= 2 ? 2 : cardNumber,
           slidesToScroll: 1
         }
       },
       {
         breakpoint: 400,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: cardNumber >= 1 ? 1 : cardNumber,
           slidesToScroll: 1
         }
       }
