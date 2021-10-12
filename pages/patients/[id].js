@@ -4,7 +4,11 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 
 // Api
-import { getPatients, getPatientById, getAppointmentsByPatientId } from '../../lib/api'
+import {getPatients,
+  getPatientById,
+  getAppointmentsByPatientId,
+  getDentistById
+} from '../../lib/api'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
@@ -15,6 +19,8 @@ import ProcedureCard from '../../components/ProcedureCard'
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
+
+
 
 export const getStaticPaths = async () => {
   const response = await getPatients()
@@ -35,17 +41,32 @@ export const getStaticProps = async (context) => {
   const id = context.params.id
   const patientInfo = await getPatientById(id)
   const appointmentsInfo = await getAppointmentsByPatientId(id)
+  const idDentist = patientInfo.idDentist
+  const dentistInfo = await getDentistById(idDentist)
   return {
     props: {
       patientInfo,
-      appointmentsInfo
+      appointmentsInfo,
+      dentistInfo
     }
   }
 }
 
-export default function Patient ({ patientInfo, appointmentsInfo }) {
-  const { idPatient, idDentist, userImage } = patientInfo
+export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) {
+  const { _id:idPatient, idDentist, userImage } = patientInfo
+  console.log(idPatient,idDentist)
   const { name, lastName } = patientInfo
+
+
+
+
+  //nos traemos los datos necesarios para pintar el nombre 
+  //y la imagen del odontologo 
+  console.log(dentistInfo)
+  const {name:dentistName, userImage:imageDentist } = dentistInfo
+  console.log(dentistName,imageDentist)
+
+  
   const [search, setSearch] = useState('')
   const cardsInfo = []
   appointmentsInfo.sort((a, b) => b.date - a.date)
@@ -65,7 +86,7 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={dentistName} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader

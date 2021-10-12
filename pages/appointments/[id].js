@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-import api from '../../lib/api'
 import Carrusel from '../../components/Carrusel'
 import Calendar from '../../components/Calendar'
 import H3 from '../../components/H3'
@@ -23,8 +22,14 @@ dayjs.extend(utc)
 // corregimos los errores de vercer, corregimos el pull request
 // corregimos el carrusel y los links y los erroes de vercel
 
+import {  getAllAppointmentsIds,
+          getAppointmentById,
+          getPatientById,
+          getAppointmentsByPatientId,
+          getDentistById} from '../../lib/api'   
+
 export async function getStaticPaths () {
-  const ids = await api.getAllAppointmentsIds()
+  const ids = await getAllAppointmentsIds()
   const paths = ids.map(item => {
     return {
       params: { id: item }
@@ -39,24 +44,35 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const appointment = await api.getAppointmentById(id)
+  const appointment = await getAppointmentById(id)
+  //aqui obtenemos los id del dentista y el paciente
   const patientId = appointment.idPatient._id
-  const patientInfo = await api.getPatientsById(patientId)
-  const appointmentsInfo = await api.getAppointmentsByPatientId(patientId)
+  const dentistId = appointment.idDentist
+  const patientInfo = await getPatientById(patientId)
+  const appointmentsInfo = await getAppointmentsByPatientId(patientId)
+  const dentistInfo = await getDentistById(dentistId)
+
   return {
     props: {
       appointmentFetched: appointment,
       patientInfo,
-      appointmentsInfo
+      appointmentsInfo,
+      dentistInfo
     }
   }
 }
 
-export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo }) {
+export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo,dentistInfo }) {
   const { idPatient, idDentist } = appointmentFetched
   console.log('el id de paciente es ', idPatient)
   console.log('el id de odontologo es ', idDentist)
+
   const { name, lastName, userImage } = patientInfo
+  
+  //nos traemos los datos necesarios para pintar el nombre 
+  //y la imagen del odontologo 
+  const {name:nameDentist, userImage:imageDentist } = dentistInfo
+  console.log(nameDentist,imageDentist)
   const [procedures, setProcedures] = useState(appointmentFetched.procedures)
   const [procedure, setProcedure] = useState({ name: '', price: 0, status: false })
   const [appointment, setAppointment] = useState(appointmentFetched)
@@ -95,7 +111,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={nameDentist} />
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>

@@ -8,7 +8,7 @@ export default function Greeting (props) {
         Hola,
       </h2>
       <p className='text-2xl text-white font-semibold capitalize'>
-        {userName}!
+        {`Dr. ${userName}!`}
       </p>
     </div>
   )

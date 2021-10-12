@@ -12,17 +12,17 @@ import logo from '../../public/logo.svg'
 import Image from 'next/image'
 
 export default function NavBarDentist (props) {
-  const { isHome, idPatient, idDentist } = props
+  const { isHome, idPatient, idDentist, image,name } = props
 
-  const options = [{ title: 'Home', link: '/' },
+  const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
     { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
-    { title: 'Configuración', link: '/configuration ' }
+    { title: 'Configuración', link: `/configuration/${idDentist} ` }
   ]
 
-  const optionsHome = [{ title: 'Home', link: '/' },
+  const optionsHome = [{ title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Configuración ', link: `/configuration/${idDentist}` }
   ]
 
@@ -34,14 +34,14 @@ export default function NavBarDentist (props) {
     setIsOpen(!isOpen)
   }
   return (
-    <div className='z-40'>
+    <div className='z-40 '>
 
-      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem   bg-plover-blue'>
-        <div className='flex  '>
+      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
+        <div className='flex'>
           <H1 textTitle='Plover' textColor='white' />
         </div>
-        <ProfilePicture profilePicture='https://api.multiavatar.com/jorge%20castuera.png' />
-        <div className='hidden sm:block'><Greeting userName='mariana' /></div>
+        <ProfilePicture profilePicture={image?image:''} />
+        <div className='hidden sm:block'><Greeting userName={name?name.split(' ')[0]:'fulano'} /></div>
 
         <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
           {
