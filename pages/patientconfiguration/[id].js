@@ -48,7 +48,7 @@ export default function Configuration ({ patientInfo }) {
 
   const buttonHandler = async () => {
     const response = await patchPatient(patientUpdate, _id)
-    router.push(`/configuration/${_id}`)
+    router.push(`/patientconfiguration/${_id}`)
     response.success ? setUpdatedStatus(true) : setUpdatedStatus(false)
     setUpdatedAlert(true)
   }
