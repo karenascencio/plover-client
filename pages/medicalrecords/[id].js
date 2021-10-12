@@ -31,8 +31,12 @@ import tattoo from '../../public/tattoo-machine.png'
 import higiene from '../../public/hygienic.png'
 import oddHabits from '../../public/broken-tooth.png'
 
+import { getAllPatientsIds,
+          getPatientById} from '../../lib/api'     
+
+
 export async function getStaticPaths () {
-  const ids = await api.getAllPatientsIds()
+  const ids = await getAllPatientsIds()
   const paths = ids.map(item => {
     return {
       params: { id: item }
@@ -47,7 +51,7 @@ export async function getStaticPaths () {
 
 export async function getStaticProps (context) {
   const id = context.params.id
-  const patient = await api.getPatientsById(id)
+  const patient = await getPatientById(id)
   return {
     props: {
       patientFetched: patient
@@ -57,6 +61,7 @@ export async function getStaticProps (context) {
 
 export default function Medicalrecord ({ patientFetched }) {
   console.log(patientFetched)
+  const {idDentist} = patientFetched
   const [formulario, setFormulario] = useState('General Information')
   function handleOption (value) {
     setFormulario(value)
@@ -72,12 +77,16 @@ export default function Medicalrecord ({ patientFetched }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarPatient formulario={formulario} handleOption={handleOption} />
-      <main className='flex  justify-center flex-grow sm:w-65vw mx-11'>
+      <NavBarPatient 
+        formulario={formulario} 
+        handleOption={handleOption} 
+        idDentist={idDentist}
+        />
+      <main className='flex mt-16 sm:mt-1 justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           {/* aqui comienza el formulario de informacion general */}
           {formulario == 'General Information' && (
-            <div id='General Information' className='pt-10'>
+            <div id='General Information' className='pt-14 md:pt-10'>
               <div className='flex flex-col'>
                 <TitleHeader
                   pageTitle='Información general'
@@ -214,7 +223,7 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comineza el formulario de antecedentes famililares */}
           {formulario == 'Family Background' && (
-            <div id='Family Background' className='pt-10'>
+            <div id='Family Background' className='pt-14 md:pt-10'>
               <div className='flex flex-col'>
                 <TitleHeader
                   pageTitle='Antecedentes Familiares'
@@ -308,7 +317,7 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comienza el formulario de antecedentes patologicos */}
           {formulario == 'Pathological Background' && (
-            <div id='Pathological Background' className='pt-10'>
+            <div id='Pathological Background' className='pt-14 md:pt-10'>
               <TitleHeader
                 pageTitle='Antecedentes patológicos'
                 secondaryText=''
@@ -372,7 +381,7 @@ export default function Medicalrecord ({ patientFetched }) {
 
           {/* aqui comienza el formulario de antecedentes no patologicos */}
           {formulario == 'NonPathological Background' && (
-            <div id='NonPathological Background' className='pt-10'>
+            <div id='NonPathological Background' className='pt-14 md:pt-10'>
               <TitleHeader
                 pageTitle='Antecedentes no patológicos'
                 secondaryText=''

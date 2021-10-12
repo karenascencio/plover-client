@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import api from '../lib/api'
+import {postAppointment} from '../lib/api'
 import Carrusel from '../components/Carrusel'
 import Calendar from '../components/Calendar'
 import H3 from '../components/H3'
@@ -9,6 +9,7 @@ import Textarea from '../components/Textarea'
 import PlainText from '../components/PlainText'
 import Toggle from '../components/Toggle'
 import NavBarDentist from '../components/NavBarDentist'
+import TitleHeader from '../components/TitleHeader'
 
 import { useRouter } from 'next/router'
 import addIcon from '../public/addIcon.svg'
@@ -18,28 +19,53 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 
+
+import { getDentistById,
+          getPatientById,
+        getAppointmentsByPatientId} from '../lib/api'    
+
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
-const cardsInfo = [
-  { title: 'Alfredo Castuera', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Anotonio ibarra', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Hector Hernandez', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' },
-  { title: 'Karen Ascencio', subtitle: 'Resinas x4', thirdTitle: '01 septiembre' }
-]
-
-export async function getStaticProps () {
-  return {
-    props: {
-
-    }
-  }
-}
 
 export default function Newappointment () {
   const router = useRouter()
   console.log(router.query)
   const { idPatient, idDentist } = router.query
+
+  const [dentistInfo,setDentistIfo] = useState(null)
+  const [patientInfo,setPatientInfo] = useState(null)
+  const [appointmentsInfo,setAppointmentsInfo] = useState([])
+  useEffect(()=>{
+    async function getInfo(){
+      const dentistsInfo = await getDentistById(idDentist)
+      const patientInfo = await getPatientById(idPatient)
+      const appointmentsInfo = await getAppointmentsByPatientId(idPatient)
+      setDentistIfo(dentistsInfo)
+      setPatientInfo(patientInfo)
+      setAppointmentsInfo(appointmentsInfo)
+    }
+    if(router.isReady) getInfo()
+  },[router.isReady])
+
+  console.log(dentistInfo)
+  if(dentistInfo){
+    var {name,userImage} = dentistInfo
+  }
+  if(patientInfo){
+    var {name:patientName,lastName:patientLastName,userImage:patientImage} = patientInfo
+  }
+
+  const cardsInfo = []
+  appointmentsInfo.forEach(appointment => {
+    const now = dayjs.utc()
+    const appointmentDate = dayjs.utc(appointment.date)
+    appointment.procedures.forEach(procedure => {
+      appointmentDate >= now && cardsInfo.push({ title: appointmentDate.locale('es').format('dddd D MMMM'), subtitle: procedure.name })
+    })
+  })
+
+
 
   console.log('el id de paciente es: ', idPatient)
   console.log('el id de dentista es: ', idDentist)
@@ -58,6 +84,8 @@ export default function Newappointment () {
     setAppointment({ ...appointment, procedures })
   }, [procedures])
 
+  console.log(`las lista de procedimientos tiente ${procedures.length} procedimientod`)
+
   function handleProcedure (event) {
     const { name, value } = event.target
     setProcedure({ ...procedure, [name]: value })
@@ -75,26 +103,36 @@ export default function Newappointment () {
     setAppointment({ ...appointment, [name]: value })
   }
   async function handleSubmit (e) {
-    await api.postAppointment(appointment)
+    await postAppointment(appointment)
     e.preventDefault()
     console.log(`te quieres mover a /patients/${idPatient}`)
     router.push(`/patients/${idPatient}`)
   }
+  function handleDelete (index) {
+    const newProcedures = procedures.filter((item, key) => key !== index)
+    setProcedures([...newProcedures])
+  }
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} name={name} image={userImage}/>
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>
-          <Carrusel cards={cardsInfo} />
+          <TitleHeader
+              pageTitle='Paciente'
+              patientName={patientName?patientName:''}
+              patientLastName={patientLastName?patientLastName:''}
+              patientImage={patientImage?patientImage:''}
+            />
+          <Carrusel cards={cardsInfo} /> 
           <div className='w-full flex justify-between '>
             <H1 textTitle='Cita' textColor='plover-blue' />
             <div className='self-end '><Calendar value={appointment.date} name='date' handleChange={handleChange} /></div>
           </div>
           <div className='w-full flex flex-col w-1/2 '>
             <div className='flex justify-between items-center'>
-              <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
+              <div className='self-start '><H3 textTitle='Lista de procedimientos' textColor='plover-blue' /></div>
 
               <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
@@ -103,18 +141,20 @@ export default function Newappointment () {
               </div>
             </div>
             <div className='flex'>
-              <div className='w-full grid grid-cols-6 gap-x-5'>
-                <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+              <div className='w-full grid grid-cols-7 gap-x-3'>
+                <div className='col-span-4 '><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
                 <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='flex flex-col items-end mt-5 '>
+                <div className='flex flex-col  mt-5'>
                   <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                  <Toggle handleToggle={handleToggle} disabled />
+                  <div className='flex justify-end'>
+                    <Toggle handleToggle={handleToggle} disabled />
+                  </div>
                 </div>
                 {
 									procedures.map((procedure, key) => {
 									  return (
   <React.Fragment key={key}>
-    <div className='col-span-3'><PlainText text={procedure.name} /></div>
+    <div className='col-span-4 relative'><PlainText text={procedure.name} /><button onClick={() => handleDelete(key)} className='text-red-500 absolute top-0 right-2'>x</button></div>
     <div className='col-span-2'><PlainText text={procedure.price} /></div>
     <div className='flex justify-end'>
       <Toggle id={key} handleToggle={handleToggle} />
@@ -143,7 +183,7 @@ export default function Newappointment () {
                 handleBlur={() => console.log('blur')}
               />
             </div>
-            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            <div><button disabled={!procedures.length} onClick={handleSubmit} className={`text-white text-sm pb-1 ${!procedures.length ? 'bg-lighter-gray' : 'bg-plover-blue'} w-28 h-30px rounded my-1`}>Guardar</button> </div>
           </div>
         </div>
       </main>

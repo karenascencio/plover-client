@@ -12,10 +12,10 @@ import PasswordInput from '../../components/PasswordInput'
 // Validation schema
 import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
-import api from '../../lib/api'
+import {getDentists, getDentistById, changePassword} from '../../lib/api'
 
 export const getStaticPaths = async () => {
-  const response = await api.getDentists()
+  const response = await getDentists()
   const paths = response.map(dentist => {
     return {
       params: {
@@ -31,7 +31,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id
-  const dentistInfo = await api.getDentistById(id)
+  const dentistInfo = await getDentistById(id)
   return {
     props: {
       dentistInfo
@@ -49,7 +49,7 @@ export default function Configuration ({ dentistInfo }) {
       console.log('Cuack!!')
       const dataUser = { ...values, id: dentistInfo._id }
       // console.log('dataUser', dataUser)
-      const response = await api.changePassword(dataUser)
+      const response = await changePassword(dataUser)
       const success = response.success
       if (success) {
         setSuccessPop(true)

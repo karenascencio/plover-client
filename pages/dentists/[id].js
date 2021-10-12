@@ -11,7 +11,13 @@ import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
-import { getDentists, getPatientsByDentistId, getAppointmentsByDentistId, deletePatient } from '../../lib/api'
+import {
+  getDentists,
+  getPatientsByDentistId,
+  getAppointmentsByDentistId,
+  deletePatient,
+  getDentistById
+} from '../../lib/api'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import PatientCard from '../../components/PatientCard'
@@ -37,21 +43,34 @@ export async function getStaticProps (context) {
   const id = context.params.id
   const patientsInfo = await getPatientsByDentistId(id)
   const appointmentsInfo = await getAppointmentsByDentistId(id)
+  const dentistInfo = await getDentistById(id)
   return {
     props: {
       patientsInfo,
       appointmentsInfo,
-      idDentist: id
+      idDentist: id,
+      dentistInfo
     }
   }
 }
 
-export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
+export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  const { userImage, name } = dentistInfo
   const router = useRouter()
+  // nos traemos los datos necesarios para pintar el nombre
+  // y la imagen del odontologo
+  const { name: dentistName, userImage: imageDentist, _id: idDentist } = dentistInfo
+  console.log(dentistName, imageDentist)
+  // necesito el id del dentista y del paciente para la navegacio
+  const { _id: idPatient } = patientsInfo
+
+
+
   const [search, setSearch] = useState('')
   const [deleteModal, setDeleteModal] = useState(false)
   const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
+  console.log(dentistInfo)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -83,12 +102,13 @@ export default function Home ({ patientsInfo, appointmentsInfo, idDentist }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
+
       {deleteModal &&
         <ConfirmationModal
           deleteHandler={deleteHandler}
           closeHandler={closeHandler}
         />}
-      <NavBarDentist isHome />
+      <NavBarDentist isHome idDentist={idDentist} idPatient={idPatient} image={userImage} name={name} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader

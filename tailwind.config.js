@@ -78,12 +78,18 @@ module.exports = {
         '41px': '2.56rem',
         '70px': '4.37rem',
         '90px': '5.62rem',
-        '676px': '42.188rem'
+        '676px': '42.188rem',
+        '100%': '100%'
       },
       maxWidth: {
         '18rem': '18rem',
         '26rem': '26rem',
         '10rem': '10rem'
+      },
+      minWidth: {
+        '25%': '25%',
+        '30%': '30%',
+        '100px': '100px'
       }
     },
     minWidth: {
