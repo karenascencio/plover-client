@@ -5,7 +5,7 @@ import { useEffect,useState} from 'react'
 import {patchPayment} from '../../lib/api'
 
 export default function VoucherButton(props) {
-		const {payment,handleSeeFile} = props
+		const {payment,handleSeeFile,rol} = props
 
 		const { FileInput, openFileDialog, uploadToS3 } = useS3Upload()
 
@@ -34,13 +34,14 @@ export default function VoucherButton(props) {
 
     return (
 				<>
-					{!hasVoucher  && (
+					{!hasVoucher && (
         		<div className=''>
         			<FileInput onChange={handleFileChange} />
         			<button
+					disabled={rol=='paciente'?true:false}
           			id={payment._id}
           			onClick={openFileDialog}
-          			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
+          			className={`p-1 px-5 text-white ${rol=='paciente'?'bg-lighter-gray':'bg-plover-blue'}  rounded my-1`}
         				>Agregar
         			</button>
       			</div>)

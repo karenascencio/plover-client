@@ -108,7 +108,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
           deleteHandler={deleteHandler}
           closeHandler={closeHandler}
         />}
-      <NavBarDentist isHome idDentist={idDentist} idPatient={idPatient} image={userImage} name={name} />
+      <NavBarDentist isHome={true} idDentist={idDentist} idPatient={idPatient} image={userImage} name={name} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader

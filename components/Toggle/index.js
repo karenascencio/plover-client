@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function Toggle (props) {
   const { id, handleToggle, disabled, status } = props
-  const [state, setState] = useState(disabled ? status : false)
+  const [state, setState] = useState(status)
 
   function handleChange () {
     setState(!state)
@@ -23,7 +23,7 @@ export default function Toggle (props) {
           checked={state}
           onChange={handleChange}
           className='hidden'
-          disabled={disabled}
+          disabled={disabled? true :status?true:false}
         />
         {/* slider */}
         <div

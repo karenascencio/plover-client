@@ -14,11 +14,11 @@ const forms = [{ title: 'Informacion general', form: 'General Information' },
   { title: 'Antecedentes familiares', form: 'Family Background' },
   { title: 'Antecedentes patologicos', form: 'Pathological Background' },
   { title: 'Antecedentes no-patologicos', form: 'NonPathological Background' }
-
 ]
 
+
 export default function NavBarPatient (props) {
-  const { formulario, handleOption,idDentist } = props
+  const { formulario, handleOption,idDentist,idPatient,rol } = props
 
   const [isOpen, setIsOpen] = useState(false)
   function handleHamburgerMenu () {
@@ -45,7 +45,8 @@ export default function NavBarPatient (props) {
                     }
 
         </ul>
-        <Link href={`/dentists/${idDentist}`}><motion.a
+        <Link href={rol=='paciente' ? `/patients/${idPatient}` : `/dentists/${idDentist}`}>
+        <motion.a
           whileHover={{ scale: 1.2 }}
           className=' w-11/12 hidden sm:block max-w-10rem bg-white block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'
                        >Home
