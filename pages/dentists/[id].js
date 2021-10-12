@@ -56,6 +56,8 @@ export async function getStaticProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo,dentistInfo }) {
+  
+  
   const {userImage, name} = dentistInfo
   const router = useRouter()
   //nos traemos los datos necesarios para pintar el nombre 

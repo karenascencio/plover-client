@@ -5,6 +5,8 @@ import api from '../lib/api'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
+import { login } from '../lib/api'
+
 export default function Login () {
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
@@ -18,11 +20,12 @@ export default function Login () {
   const buttonHandler = async () => {
     try {
       console.log('handler', userData)
-      const response = await api.login(userData)
+      const response = await login(userData)
       const success = response.success
       // console.log('response', response.data.token)
       if (success) {
         const tokent = response.data.token
+        
         const tokenjwt = api.parseJwt(tokent)
         const { id } = tokenjwt
         router.push(`/dentists/${id}`)
