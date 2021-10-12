@@ -34,6 +34,7 @@ export default function NavBarDentist (props) {
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
     { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
+    { title: 'Configuración', link:`/patientconfiguration/${idPatient}`}
     // { title: 'Configuración', link: `/configuration/${idDentist} ` }
 
   ]
@@ -65,7 +66,7 @@ export default function NavBarDentist (props) {
           <H1 textTitle='Plover' textColor='white' />
         </div>
         <ProfilePicture profilePicture={image?image:''} />
-        <div className='hidden sm:block'><Greeting userName={name?name.split(' ')[0]:'fulano'} /></div>
+        <div className='hidden sm:block'><Greeting userName={name?name.split(' ')[0]:'fulano'} rol={rol}/></div>
 
         <ul className='mt-10 hidden w-11/12 sm:block max-w-10rem'>
           {

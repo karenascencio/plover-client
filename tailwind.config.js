@@ -35,7 +35,8 @@ module.exports = {
         '30px': '1.875rem',
         '60vw': '60vw',
         '90vw': '90vw',
-        '18rem': '18rem'
+        '18rem': '18rem',
+        '230px': '230px'
       },
       fontSize: {
         '14px': '14px',
@@ -84,7 +85,8 @@ module.exports = {
       maxWidth: {
         '18rem': '18rem',
         '26rem': '26rem',
-        '10rem': '10rem'
+        '10rem': '10rem',
+        '230px': '230px'
       },
       minWidth: {
         '25%': '25%',

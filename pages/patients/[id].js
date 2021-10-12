@@ -92,8 +92,8 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
         isHome={false}
         idPatient={idPatient}
         idDentist={idDentist}
-        image={rol == 'paciente' ? imagePatient : imageDentist}
-        name={rol == 'paciente' ? name : dentistName}
+        image={rol == 'paciente' ? imagePatient:imageDentist}
+        name={rol == 'paciente' ? name:dentistName}
       />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
@@ -117,10 +117,10 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
               searchHandler={searchHandler}
               searchValue={search}
             />
-            {rol === 'dentista' && <AddNewPatientButton
+            {rol == 'dentista' && <AddNewPatientButton
               title='Nuevo'
               imagen={addIcon}
-                                   />}
+                                />}
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
