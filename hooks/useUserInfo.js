@@ -9,6 +9,7 @@ export default function useUserInfo(){
         const tokenJson = JSON.parse(tokenData)
         setId(tokenJson.id)
         setRol(tokenJson.rol)
-    },[])
+        console.log(tokenJson.rol)
+    },[id,rol])
     return [id,rol]
 }

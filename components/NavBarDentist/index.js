@@ -14,7 +14,8 @@ import Image from 'next/image'
 export default function NavBarDentist (props) {
   const { isHome, idPatient, idDentist, image,name,rol } = props
 
-  const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
+  const options = [
+    { title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
@@ -22,11 +23,31 @@ export default function NavBarDentist (props) {
     { title: 'Configuración', link: `/configuration/${idDentist} ` }
   ]
 
-  const optionsHome = [{ title: 'Home', link: `/dentists/${idDentist}` },
+  const optionsHome = [
+    { title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Configuración ', link: `/configuration/${idDentist}` }
   ]
 
-  const items = isHome ? optionsHome : options
+  const optionsPatient = [
+    { title: 'Home', link: `/patients/${idPatient}` },
+    { title: 'Consultar citas', link: `/patients/${idPatient}` },
+    { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
+    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
+    // { title: 'Configuración', link: `/configuration/${idDentist} ` }
+
+  ]
+  
+  //const items = isHome ? optionsHome : options
+  let items
+  if(isHome){
+    items == optionsHome
+  }
+  else if(isHome==false){
+    items=options
+  }
+  if(rol=='paciente'){
+    items=optionsPatient
+  }
 
   console.log(isHome)
   const [isOpen, setIsOpen] = useState(false)

@@ -21,7 +21,9 @@ import useUserInfo from '../../hooks/useUserInfo'
 //const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
 //const DocViewerRenderers = dynamic(() =>
-//  import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+  //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
@@ -280,15 +282,18 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </div>
             <div className='w-full flex flex-col'>
               <div className='self-start'>
-                <button
+                
+                {rol=='dentista' &&
+                  <button
                   disabled={errorDate}
                   onClick={handlePayment}
                   className={`text-white ${error ? 'bg-lighter-gray' : 'bg-plover-blue'}  rounded my-1 px-5 py-1`}
                 >Agregar pago
-                </button>
+                </button>}
                 {toMuchPayment && <div className='text-sm text-plover-blue '>No puedes pagar mas de lo que debes</div>}
               </div>
               <div className='grid grid-cols-5 gap-x-5 place-items-stretch'>
+                {rol=='dentista' && <>
                 <div className='col-span-2 flex flex-col'>
                   <FormInput textLabel='Monto' textName='total' textValue={payment.total} inputID='Monto' handleChange={handleChange} handleBlur={() => console.log('blur')} />
                   {initial && error && <div className='text-sm text-plover-blue -mt-5'>Ingresa el costo </div>}
@@ -306,6 +311,11 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                     onChange={handleChange}
                   />
                 </div>
+                </>}
+                {rol=='paciente' && <>
+                <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Monto</div>
+                <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Fecha</div>
+                </>}
                 <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
                 {!!dynamicPayments.lenght && (<div>aun no tienes pagos</div>)}
                 {!dynamicPayments.lenght && dynamicPayments.map((item, key) => {
@@ -314,6 +324,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
     <div className='col-span-2'><PlainText text={item.total} /></div>
     <div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
     <VoucherButton
+      rol={rol}
       payment={item}
       handleSeeFile={handleSeeFile}
     />
@@ -326,7 +337,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         </main>
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {/* {visible && (
+   {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -341,7 +352,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )} */}
+      )}
     </>
   )
 }

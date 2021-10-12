@@ -4,7 +4,6 @@ import FormInput from '../components/FormInput'
 import Textarea from '../components/Textarea'
 import RadioButtons from '../components/RadioButtons'
 import Select from '../components/Select'
-import useLocalStorage from '../hooks/useLocalStorage'
 
 import H1 from '../components/H1'
 import H3 from '../components/H3'

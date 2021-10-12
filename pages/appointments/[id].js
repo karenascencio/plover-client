@@ -145,10 +145,11 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
             <div className='flex justify-between items-center'>
               <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
 
-              <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
+              <div>
+                {rol=='dentista' && (<button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>
+                   </button>)}
               </div>
             </div>
             <div className='flex'>
@@ -166,7 +167,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     <div className='col-span-3'><PlainText text={procedure.name} /></div>
     <div className='col-span-2'><PlainText text={procedure.price} /></div>
     <div className='flex justify-end'>
-      <Toggle id={key} handleToggle={handleToggle} status={procedure.status} />
+      <Toggle id={key} handleToggle={handleToggle} status={procedure.status} disabled={rol=='paciente'?true:false} />
     </div>
   </React.Fragment>
 									  )
@@ -192,7 +193,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
                 handleBlur={() => console.log('blur')}
               />
             </div>
-            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            {rol=='dentista' && (<div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>)}
           </div>
         </div>
       </main>
