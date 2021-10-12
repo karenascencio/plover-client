@@ -7,8 +7,6 @@ export default function SignOutButton() {
         window.localStorage.removeItem('userToken')
         router.push('/login')
     }
-
-
     return (
          <button onClick={logOut} className='w-full bg-white block text-plover-blue text-center text-sm md:text-base py-1  rounded-lg'>Log out</button>
     )
