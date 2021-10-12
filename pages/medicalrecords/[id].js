@@ -7,7 +7,6 @@ import Select from '../../components/Select'
 
 import H1 from '../../components/H1'
 import H3 from '../../components/H3'
-import api from '../../lib/api'
 import NavBarPatient from '../../components/NavBarPatient'
 import TitleHeader from '../../components/TitleHeader'
 import TextWithLabel from '../../components/TextWithLabel'
@@ -30,6 +29,7 @@ import cigar from '../../public/cigar.png'
 import tattoo from '../../public/tattoo-machine.png'
 import higiene from '../../public/hygienic.png'
 import oddHabits from '../../public/broken-tooth.png'
+import useUserInfo from '../../hooks/useUserInfo'
 
 import { getAllPatientsIds,
           getPatientById} from '../../lib/api'     
@@ -60,8 +60,10 @@ export async function getStaticProps (context) {
 }
 
 export default function Medicalrecord ({ patientFetched }) {
+  
+  const [id,rol] = useUserInfo()
   console.log(patientFetched)
-  const {idDentist} = patientFetched
+  const {idDentist,_id:idPatient} = patientFetched
   const [formulario, setFormulario] = useState('General Information')
   function handleOption (value) {
     setFormulario(value)
@@ -78,9 +80,11 @@ export default function Medicalrecord ({ patientFetched }) {
 
     <div className='flex flex-col sm:flex-row '>
       <NavBarPatient 
+        rol={rol}
         formulario={formulario} 
         handleOption={handleOption} 
         idDentist={idDentist}
+        idPatient={idPatient}
         />
       <main className='flex mt-16 sm:mt-1 justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>

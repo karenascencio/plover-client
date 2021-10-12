@@ -10,11 +10,13 @@ import Link from 'next/link'
 import ProfilePicture from '../ProfilePicture'
 import logo from '../../public/logo.svg'
 import Image from 'next/image'
+import LogOutButton from '../LogOutButton'
 
 export default function NavBarDentist (props) {
-  const { isHome, idPatient, idDentist, image,name } = props
+  const { isHome, idPatient, idDentist, image,name,rol } = props
 
-  const options = [{ title: 'Home', link: `/dentists/${idDentist}` },
+  const options = [
+    { title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
@@ -22,17 +24,39 @@ export default function NavBarDentist (props) {
     { title: 'Configuración', link: `/configuration/${idDentist} ` }
   ]
 
-  const optionsHome = [{ title: 'Home', link: `/dentists/${idDentist}` },
+  const optionsHome = [
+    { title: 'Home', link: `/dentists/${idDentist}` },
     { title: 'Configuración ', link: `/configuration/${idDentist}` }
   ]
 
-  const items = isHome ? optionsHome : options
+  const optionsPatient = [
+    { title: 'Home', link: `/patients/${idPatient}` },
+    { title: 'Consultar citas', link: `/patients/${idPatient}` },
+    { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
+    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
+    // { title: 'Configuración', link: `/configuration/${idDentist} ` }
+
+  ]
+  
+  //const items = isHome ? optionsHome : options
+  let items
+  if(isHome==true){
+    console.log('estamos en home')
+    items = optionsHome
+  }
+  else if(isHome==false){
+    items=options
+  }
+  if(rol=='paciente'){
+    items=optionsPatient
+  }
 
   console.log(isHome)
   const [isOpen, setIsOpen] = useState(false)
   function handleHamburgerMenu () {
     setIsOpen(!isOpen)
   }
+  console.log('el rol desde el navBar es: ',rol)
   return (
     <div className='z-40 '>
 
@@ -55,7 +79,11 @@ export default function NavBarDentist (props) {
                           )
                         })
                     }
+            <motion.li
+               whileHover={{ scale: 1.2 }}
+            > <LogOutButton /></motion.li>
         </ul>
+       
         <HamburgerMenu
           className='sm:hidden mr-3'
           isOpen={isOpen}

@@ -4,6 +4,7 @@ import { login } from '../lib/api'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
+
 export default function Login () {
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
@@ -23,8 +24,14 @@ export default function Login () {
         window.localStorage.setItem('userToken', userToken)
         const tokenData = atob(userToken.split('.')[1])
         const tokenJson = JSON.parse(tokenData)
+        console.log(tokenJson)
         const id = tokenJson.id
-        router.push(`/dentists/${id}`)
+        if(tokenJson.rol=='dentista'){
+          router.push(`/dentists/${id}`)
+        }
+        else if(tokenJson.rol=='paciente'){
+          router.push(`/patients/${id}`)
+        }
       } else {
         setError(true)
       }

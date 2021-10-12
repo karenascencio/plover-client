@@ -147,7 +147,7 @@ export default function Newappointment () {
                 <div className='flex flex-col  mt-5'>
                   <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
                   <div className='flex justify-end'>
-                    <Toggle handleToggle={handleToggle} disabled />
+                    <Toggle handleToggle={handleToggle} disabled={true} />
                   </div>
                 </div>
                 {

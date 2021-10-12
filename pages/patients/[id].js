@@ -18,6 +18,7 @@ import ProcedureCard from '../../components/ProcedureCard'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
+import useUserInfo from '../../hooks/useUserInfo'
 dayjs.extend(utc)
 
 
@@ -53,12 +54,16 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) {
+ 
+  //hook para traernos el id y el rol del usuario
+  const [id,rol] = useUserInfo()
+  console.log('el id del usuario es ',id)
+  console.log('el rol del usuario es ',rol)
+ 
+ 
   const { _id:idPatient, idDentist, userImage } = patientInfo
   console.log(idPatient,idDentist)
-  const { name, lastName } = patientInfo
-
-
-
+  const { name, lastName,userImage:imagePatient } = patientInfo
 
   //nos traemos los datos necesarios para pintar el nombre 
   //y la imagen del odontologo 
@@ -86,7 +91,13 @@ export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) 
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={dentistName} />
+      <NavBarDentist 
+        rol={rol}
+        isHome={false} 
+        idPatient={idPatient} 
+        idDentist={idDentist} 
+        image={rol=='paciente'?imagePatient:imageDentist} 
+        name={rol=='paciente'?name:dentistName} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader
@@ -109,10 +120,10 @@ export default function Patient ({ patientInfo, appointmentsInfo,dentistInfo }) 
               searchHandler={searchHandler}
               searchValue={search}
             />
-            <AddNewPatientButton
+            {rol=='dentista' && <AddNewPatientButton
               title='Nuevo'
               imagen={addIcon}
-            />
+            />}
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
