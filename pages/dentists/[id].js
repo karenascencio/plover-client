@@ -24,6 +24,9 @@ import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
+import useUserInfo from '../../hooks/useUserInfo'
+
+
 export async function getStaticPaths () {
   const response = await getDentists()
   const paths = response.map(dentist => {
@@ -55,6 +58,8 @@ export async function getStaticProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  //hook para traer el rol del usuario
+  const [id,rol] = useUserInfo()
   const { userImage, name } = dentistInfo
   const router = useRouter()
   // nos traemos los datos necesarios para pintar el nombre
@@ -108,7 +113,14 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
           deleteHandler={deleteHandler}
           closeHandler={closeHandler}
         />}
-      <NavBarDentist isHome={true} idDentist={idDentist} idPatient={idPatient} image={userImage} name={name} />
+      <NavBarDentist 
+        isHome={true} 
+        idDentist={idDentist} 
+        idPatient={idPatient} 
+        image={userImage} 
+        name={name} 
+        rol={rol}
+        />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
