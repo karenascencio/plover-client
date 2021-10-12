@@ -4,32 +4,31 @@ import { login } from '../lib/api'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
-
 export default function Login () {
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
   const [error, setError] = useState(false)
   const router = useRouter()
-  async function Login(details) {
+  async function Login (details) {
     setUserData(details)
   }
 
   const buttonHandler = async () => {
-    if(userData.email === '' && userData.password === '' ) console.log('cuack')
+    if (userData.email === '' && userData.password === '') console.log('cuack')
     try {
       const response = await login(userData)
       const success = response.success
       if (success) {
         const userToken = response.data.token
         window.localStorage.setItem('userToken', userToken)
+        // if (token.length <= 0) throw new Error('Token not found')
         const tokenData = atob(userToken.split('.')[1])
         const tokenJson = JSON.parse(tokenData)
         console.log(tokenJson)
         const id = tokenJson.id
-        if(tokenJson.rol=='dentista'){
+        if (tokenJson.rol == 'dentista') {
           router.push(`/dentists/${id}`)
-        }
-        else if(tokenJson.rol=='paciente'){
+        } else if (tokenJson.rol == 'paciente') {
           router.push(`/patients/${id}`)
         }
       } else {
