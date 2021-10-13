@@ -18,12 +18,7 @@ import useUserInfo from '../../hooks/useUserInfo'
 
 import dynamic from 'next/dynamic'
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 //const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
-
-
 
 //const DocViewerRenderers = dynamic(() =>
   //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
@@ -31,6 +26,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
+
+//librerias para trabajar con alertas
+import { ToastContainer, toast ,Zoom} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // trabajando en payments
 import {getAllPatientsIds,
@@ -198,6 +198,19 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
      }
      setPayment({ ...payment, [name]: value })
    }
+
+   const notify = () => toast.success('Pago agregado', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    icon:false
+    });
+
+
    async function handlePayment () {
      setInitial(true)
      payment.total = Number(payment.total)
@@ -210,10 +223,11 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
        },1000)
      }
      else{
-      await postPayment(payment)
-      const newPayments = await getPaymentsByPatientId(idPatient)
-      console.log(newPayments)
-      setDynamicPayments(newPayments)
+      notify()
+      //await postPayment(payment)
+      //const newPayments = await getPaymentsByPatientId(idPatient)
+      //console.log(newPayments)
+      //setDynamicPayments(newPayments)
      }
 }
 
@@ -333,6 +347,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
       payment={item}
       handleSeeFile={handleSeeFile}
     />
+    
   </React.Fragment>
 								  )
                 })}
@@ -340,6 +355,19 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </div>
           </div>
         </main>
+        <ToastContainer
+          toastStyle={{backgroundColor:'#EDF5FC'}}
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          transition={Zoom}
+        />
       </div>
     {/*aqui va la logica para mostrar el documento*/}
    {visible && (
