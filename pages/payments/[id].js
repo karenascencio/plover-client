@@ -27,9 +27,10 @@ import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
-//librerias para trabajar con alertas
+//librerias para trabajar con alertas (toast)
 import { ToastContainer, toast ,Zoom} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 // trabajando en payments
