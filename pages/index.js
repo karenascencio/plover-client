@@ -1,9 +1,9 @@
 import React from 'react'
 import SuccessAlert from '../components/SuccessAlert'
-import useAuth from '../hooks/useAuth'
+import useAvailableToken from '../hooks/useAvailableToken'
 
 export default function Index () {
-  // const tokenJson = useAuth()
+  useAvailableToken()
   return (
     <>
       <div className='text-plover-blue text-9xl'>

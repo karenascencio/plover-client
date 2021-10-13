@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import useAvailableToken from '../../hooks/useAvailableToken'
 import { useRouter } from 'next/router'
 import { resetPassword } from '../../lib/api'
 import H1 from '../../components/H1'
@@ -11,6 +11,7 @@ import hidepsw from '../../public/hidepsw.svg'
 import Image from 'next/image'
 
 export default function ChangePass () {
+  useAvailableToken()
   const [seePassword, setSeePassword] = useState(false)
   const [successPop, setSuccessPop] = useState(false)
   const [falsePop, setFalsePop] = useState(false)
