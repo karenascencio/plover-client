@@ -26,6 +26,8 @@ dayjs.extend(utc)
 // corregimos los errores de vercer, corregimos el pull request
 // corregimos el carrusel y los links y los erroes de vercel
 
+import swal from 'sweetalert';
+
 import {  getAllAppointmentsIds,
           getAppointmentById,
           getPatientById,
@@ -120,6 +122,11 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
   }
   async function handleSubmit () {
     await patchAppointment(appointment, appointmentFetched._id)
+    swal("Informacion de la cita", "actualizada exitosamente", "success",{
+      button:{
+        className:'bg-plover-blue'
+      }
+    });
   }
 
   return (
@@ -151,21 +158,16 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
               <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
 
               <div>
-                {rol=='dentista' && (<button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
-                <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
-                <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>)}
+              
               </div>
             </div>
             <div className='flex'>
               <div className='w-full grid grid-cols-6 gap-x-5'>
                 {rol=='dentista' &&
                   <>
-                    <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                    <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                    <div className='flex flex-col items-end mt-5 '>
-                      <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                      <Toggle handleToggle={handleToggle} disabled />
+                    <div className='col-span-3 mb-4'><span className='text-plover-blue self-center text-sm mb-2 '>Procedimiento</span></div>
+                    <div className='col-span-2  mb-4'><span className='text-plover-blue self-center text-sm mb-2 '>Costo</span></div>
+                    <div className='flex flex-col items-end  mb-4'><span className='text-plover-blue self-center text-sm pb-2  xl:pl-6'>Estatus</span>
                     </div>
                   </>
                 }

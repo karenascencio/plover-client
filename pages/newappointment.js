@@ -26,6 +26,13 @@ import { getDentistById,
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
+
+//librerias para trabajar con alertas 
+import { ToastContainer, toast ,Zoom} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import swal from 'sweetalert';
+
 export default function Newappointment () {
   useAvailableToken()
   const router = useRouter()
@@ -89,9 +96,23 @@ export default function Newappointment () {
     const { name, value } = event.target
     setProcedure({ ...procedure, [name]: value })
   }
+
+  const notifyAppointment = () => toast.success('Procedimiento agregado', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    icon:false
+    });
+
+
   function handleAddProcedure () {
     setProcedures([...procedures, procedure])
     setProcedure({ name: '', price: 0, status: false })
+    notifyAppointment()
   }
   function handleToggle (index) {
     procedures[index].status = !procedures[index].status
@@ -102,10 +123,17 @@ export default function Newappointment () {
     setAppointment({ ...appointment, [name]: value })
   }
   async function handleSubmit (e) {
-    await postAppointment(appointment)
     e.preventDefault()
+    await postAppointment(appointment)
+    //modal de exito de creacion de cita
+    swal("Nueva cita", "creada exitosamente", "success",{
+      button:{
+        className:'bg-plover-blue'
+      }
+    });
+
     console.log(`te quieres mover a /patients/${idPatient}`)
-    router.push(`/patients/${idPatient}`)
+    //router.push(`/patients/${idPatient}`)
   }
   function handleDelete (index) {
     const newProcedures = procedures.filter((item, key) => key !== index)
@@ -186,6 +214,19 @@ export default function Newappointment () {
           </div>
         </div>
       </main>
+      <ToastContainer
+        toastStyle={{backgroundColor:'#EDF5FC'}}
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Zoom}
+      />
     </div>
   )
 }
