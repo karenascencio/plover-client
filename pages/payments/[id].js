@@ -8,11 +8,11 @@ import TitleHeader from '../../components/TitleHeader'
 import H1 from '../../components/H1'
 import FormInput from '../../components/FormInput'
 import PlainText from '../../components/PlainText'
-
+import useAvailableToken from '../../hooks/useAvailableToken'
 import router, { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
-import Image from 'next/image'
+import Image from 'next/image' 
 import { useS3Upload } from 'next-s3-upload'
 import useUserInfo from '../../hooks/useUserInfo'
 
@@ -71,8 +71,7 @@ export async function getStaticProps (context) {
 }
 
 export default function Payments ({payments,appointments,patient,dentistInfo}) {
-
-
+  useAvailableToken()
     //hook para traernos el id y el rol del usuario
     const [id,rol] = useUserInfo()
     console.log('el id del usuario es ',id)

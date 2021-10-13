@@ -30,6 +30,7 @@ import tattoo from '../../public/tattoo-machine.png'
 import higiene from '../../public/hygienic.png'
 import oddHabits from '../../public/broken-tooth.png'
 import useUserInfo from '../../hooks/useUserInfo'
+import useAvailableToken from '../../hooks/useAvailableToken'
 
 import { getAllPatientsIds,
           getPatientById} from '../../lib/api'     
@@ -60,7 +61,7 @@ export async function getStaticProps (context) {
 }
 
 export default function Medicalrecord ({ patientFetched }) {
-  
+  useAvailableToken()
   const [id,rol] = useUserInfo()
   console.log(patientFetched)
   const {idDentist,_id:idPatient} = patientFetched

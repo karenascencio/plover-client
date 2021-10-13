@@ -10,7 +10,9 @@ import PasswordInput from '../../components/PasswordInput'
 // Validation schema
 import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
-import {getDentists, getDentistById, changePassword} from '../../lib/api'
+import { getDentists, getDentistById, changePassword } from '../../lib/api'
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 
 export const getStaticPaths = async () => {
   const response = await getDentists()
@@ -38,6 +40,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Configuration ({ dentistInfo }) {
+  useAvailableToken()
   const { _id, userImage, name, lastName, password } = dentistInfo
   const [successPop, setSuccessPop] = useState(false)
   const [falsePop, setFalsePop] = useState(false)

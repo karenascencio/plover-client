@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+// My Hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
+import useUserInfo from '../../hooks/useUserInfo'
 // My dependencies
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
@@ -23,9 +26,6 @@ import addIcon from '../../public/addIcon.svg'
 import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
-
-import useUserInfo from '../../hooks/useUserInfo'
-
 
 export async function getStaticPaths () {
   const response = await getDentists()
@@ -58,6 +58,7 @@ export async function getStaticProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  useAvailableToken()
   //hook para traer el rol del usuario
   const [id,rol] = useUserInfo()
   const { userImage, name } = dentistInfo

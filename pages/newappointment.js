@@ -10,7 +10,7 @@ import PlainText from '../components/PlainText'
 import Toggle from '../components/Toggle'
 import NavBarDentist from '../components/NavBarDentist'
 import TitleHeader from '../components/TitleHeader'
-
+import useAvailableToken from '../hooks/useAvailableToken'
 import { useRouter } from 'next/router'
 import addIcon from '../public/addIcon.svg'
 import Image from 'next/image'
@@ -19,7 +19,6 @@ import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 
-
 import { getDentistById,
           getPatientById,
         getAppointmentsByPatientId} from '../lib/api'    
@@ -27,8 +26,8 @@ import { getDentistById,
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 
-
 export default function Newappointment () {
+  useAvailableToken()
   const router = useRouter()
   console.log(router.query)
   const { idPatient, idDentist } = router.query

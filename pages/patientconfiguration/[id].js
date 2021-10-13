@@ -11,6 +11,8 @@ import TextWithLabel from '../../components/TextWithLabel'
 import H3 from '../../components/H3'
 // Api
 import { getPatients, getPatientById, patchPatient } from '../../lib/api'
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 
 export const getStaticPaths = async () => {
   const response = await getPatients()
@@ -38,6 +40,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Configuration ({ patientInfo }) {
+  useAvailableToken()
   const { _id, userImage, name, lastName, email } = patientInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [patientUpdate, setPatientUpdate] = useState(null)
@@ -65,7 +68,7 @@ export default function Configuration ({ patientInfo }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={true} idDentist={_id} name={name} image={userImage} />
+      <NavBarDentist isHome idDentist={_id} name={name} image={userImage} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader

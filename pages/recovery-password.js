@@ -7,8 +7,10 @@ import LoginButtons from '../components/LoginButtons'
 import emailImg from '../public/email.svg'
 import teeth from '../public/teeth.svg'
 import Image from 'next/image'
+import useAvailableToken from '../hooks/useAvailableToken'
 
 export default function RecoverPassword () {
+  useAvailableToken()
   const [emailData, setEmailData] = useState({ email: '' })
   const [successPop, setSuccessPop] = useState(false)
   const [falsePop, setFalsePop] = useState(false)
