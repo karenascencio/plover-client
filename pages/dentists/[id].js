@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import useAvailableToken from '../../hooks/useAvailableToken'
 import useUserInfo from '../../hooks/useUserInfo'
 // My dependencies
+import swal from 'sweetalert'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
@@ -71,8 +72,8 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   const { _id: idPatient } = patientsInfo
 
   const [search, setSearch] = useState('')
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [idPatientToDelete, setIdPatientToDelete] = useState('')
+  // const [deleteModal, setDeleteModal] = useState(false)
+  // const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
   console.log(dentistInfo)
   appointmentsInfo.forEach(appointment => {
@@ -88,30 +89,40 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
     setSearch(searchInput)
   }
 
-  const preDeleteHandler = async event => {
-    setDeleteModal(true)
-    const idPatient = event.target.id
-    setIdPatientToDelete(idPatient)
-  }
+  // const preDeleteHandler = async event => {
+  //   setDeleteModal(true)
+  //   const idPatient = event.target.id
+  //   setIdPatientToDelete(idPatient)
+  // }
 
-  const deleteHandler = async () => {
-    await deletePatient(idPatientToDelete)
-    setDeleteModal(false)
-    router.push(`/dentists/${idDentist}`)
-  }
+  // const deleteHandlerr = async () => {
+  //   await deletePatient(idPatientToDelete)
+  //   setDeleteModal(false)
+  //   router.push(`/dentists/${idDentist}`)
+  // }
 
-  const closeHandler = () => {
-    setDeleteModal(false)
+  const deleteHandler = async event => {
+    const patientToDelete = event.target.id
+    swal({
+      title: 'Eliminar paciente',
+      text: '¿Estás seguro que deseas eliminar el paciente? Esta acción es irreversible.',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    })
+      .then(async (willDelete) => {
+        if (willDelete) {
+          await deletePatient(patientToDelete)
+          swal('¡El paciente ha sido eliminado exitosamente!', {
+            icon: 'success'
+          })
+          router.push(`/dentists/${idDentist}`)
+        }
+      })
   }
 
   return (
     <div className='flex flex-col sm:flex-row '>
-
-      {deleteModal &&
-        <ConfirmationModal
-          deleteHandler={deleteHandler}
-          closeHandler={closeHandler}
-        />}
       <NavBarDentist
         isHome
         idDentist={idDentist}
@@ -157,7 +168,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
                 key={patient._id}
                 idPatient={patient._id}
                 idDentist={idDentist}
-                deleteHandler={preDeleteHandler}
+                deleteHandler={deleteHandler}
               />
             )
           : patientsInfo.map(patient =>
@@ -167,7 +178,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
               key={patient._id}
               idPatient={patient._id}
               idDentist={idDentist}
-              deleteHandler={preDeleteHandler}
+              deleteHandler={deleteHandler}
             />
           )
         }
