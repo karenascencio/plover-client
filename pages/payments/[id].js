@@ -16,9 +16,14 @@ import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 import useUserInfo from '../../hooks/useUserInfo'
 
-//import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+
+
 
 //const DocViewerRenderers = dynamic(() =>
   //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
@@ -175,6 +180,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
 	 	  }, 0)
      }, 0)
 	   }
+    
 
    function handleChange (event) {
      setInitial(true)
