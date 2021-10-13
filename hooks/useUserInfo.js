@@ -5,6 +5,7 @@ export default function useUserInfo () {
   const [rol, setRol] = useState(null)
   useEffect(() => {
     const userToken = localStorage.getItem('userToken')
+      if (!userToken) return
     const tokenData = atob(userToken.split('.')[1])
     const tokenJson = JSON.parse(tokenData)
     setId(tokenJson.id)
