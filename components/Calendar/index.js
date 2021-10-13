@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 export default function Calendar (props) {
   const { value, handleChange, name } = props
-  const dateInitializer = () => {
-    const initialDate = new Date()
+  const dateInitializer = (value) => {
+    const initialDate = new Date(value)
     return initialDate.toDateString()
   }
-  const [date, setDate] = useState(dateInitializer())
+  const [date, setDate] = useState(dateInitializer(value))
 
   const appointmentDate = event => {
     const readableDate = new Date(event.target.value)

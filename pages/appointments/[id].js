@@ -15,7 +15,12 @@ import NavBarDentist from '../../components/NavBarDentist'
 import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
+import useUserInfo from '../../hooks/useUserInfo'
 
+import AnotationsCard from '../../components/AnotationsCard'
+
+import annotation from '../../public/post-it.png'
+import care from '../../public/care.png'
 dayjs.extend(utc)
 
 // nota hay un bugsito en el manejo de estado de los toggles
@@ -26,7 +31,8 @@ import {  getAllAppointmentsIds,
           getAppointmentById,
           getPatientById,
           getAppointmentsByPatientId,
-          getDentistById} from '../../lib/api'   
+          getDentistById,
+          patchAppointment} from '../../lib/api'   
 
 export async function getStaticPaths () {
   const ids = await getAllAppointmentsIds()
@@ -63,9 +69,17 @@ export async function getStaticProps (context) {
 }
 
 export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo,dentistInfo }) {
-  const { idPatient, idDentist } = appointmentFetched
+  
+    //hook para traernos el id y el rol del usuario
+    const [id,rol] = useUserInfo()
+    console.log('el id del usuario es ',id)
+    console.log('el rol del usuario es ',rol)
+  
+  
+  const { idPatient, idDentist,date } = appointmentFetched
   console.log('el id de paciente es ', idPatient)
   console.log('el id de odontologo es ', idDentist)
+  console.log('la fecha de la cita es: ',date)
 
   const { name, lastName, userImage } = patientInfo
   
@@ -106,12 +120,19 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     setAppointment({ ...appointment, [name]: value })
   }
   async function handleSubmit () {
-    await api.patchAppointment(appointment, appointmentFetched._id)
+    await patchAppointment(appointment, appointmentFetched._id)
   }
 
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} image={imageDentist} name={nameDentist} />
+      <NavBarDentist 
+        rol={rol}
+        isHome={false} 
+        idPatient={idPatient._id} 
+        idDentist={idDentist} 
+        image={rol=='paciente'?userImage:imageDentist} 
+        name={rol=='paciente'?name:nameDentist} 
+        />
       {/* el w-full rompe el layout */}
       <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center '>
@@ -124,26 +145,31 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
           <Carrusel cards={cardsInfo} />
           <div className='w-full flex justify-between '>
             <H1 textTitle='Cita' textColor='plover-blue' />
-            <div className='self-end '><Calendar value={appointment.date} name='date' handleChange={handleChange} /></div>
+            <div className='self-end '><Calendar value={date} name='date' handleChange={handleChange} /></div>
           </div>
           <div className='w-full flex flex-col w-1/2 '>
             <div className='flex justify-between items-center'>
               <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
 
-              <div><button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
+              <div>
+                {rol=='dentista' && (<button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>
+                   </button>)}
               </div>
             </div>
             <div className='flex'>
               <div className='w-full grid grid-cols-6 gap-x-5'>
-                <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                <div className='flex flex-col items-end mt-5 '>
-                  <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                  <Toggle handleToggle={handleToggle} disabled />
-                </div>
+                {rol=='dentista' &&
+                  <>
+                    <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                    <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                    <div className='flex flex-col items-end mt-5 '>
+                      <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
+                      <Toggle handleToggle={handleToggle} disabled />
+                    </div>
+                  </>
+                }
                 {
 									procedures.map((procedure, key) => {
 									  return (
@@ -151,7 +177,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     <div className='col-span-3'><PlainText text={procedure.name} /></div>
     <div className='col-span-2'><PlainText text={procedure.price} /></div>
     <div className='flex justify-end'>
-      <Toggle id={key} handleToggle={handleToggle} status={procedure.status} />
+      <Toggle id={key} handleToggle={handleToggle} status={procedure.status} disabled={rol=='paciente'?true:false} />
     </div>
   </React.Fragment>
 									  )
@@ -159,25 +185,44 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
 							    }
               </div>
             </div>
-            <div className=' grid md:grid-cols-2 gap-x-5'>
-              <Textarea
-                textName='annotations'
-                textLabel='Anotaciones'
-                textValue={appointment.annotations}
-                inputId='annotations'
-                handleChange={handleChange}
-                handleBlur={() => console.log('blur')}
-              />
-              <Textarea
-                textLabel='Recomendaciones'
-                textValue={appointment.recommendations}
-                inputId='recommendations'
-                textName='recommendations'
-                handleChange={handleChange}
-                handleBlur={() => console.log('blur')}
-              />
-            </div>
-            <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            {rol =='dentista' && <>
+              <div className=' grid md:grid-cols-2 gap-x-5'>
+                <Textarea
+                  textName='annotations'
+                  textLabel='Anotaciones'
+                  textValue={appointment.annotations}
+                  inputId='annotations'
+                  handleChange={handleChange}
+                  handleBlur={() => console.log('blur')}
+                />
+                <Textarea
+                  textLabel='Recomendaciones'
+                  textValue={appointment.recommendations}
+                  inputId='recommendations'
+                  textName='recommendations'
+                  handleChange={handleChange}
+                  handleBlur={() => console.log('blur')}
+                />
+              </div>
+              <div><button onClick={handleSubmit} className='text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button> </div>
+            </>}
+            {rol =='paciente' && <>
+              <div className=' grid md:grid-cols-2 gap-x-5'>
+                
+                <AnotationsCard 
+                  label={'Anotaciones'}
+                  text={appointment.annotations}
+                  image={annotation}
+                />
+                <AnotationsCard 
+                  label={'Recomendaciones'}
+                  text={appointment.recommendations}
+                  image={care}
+                />
+              </div>
+            
+            </>}
+
           </div>
         </div>
       </main>
