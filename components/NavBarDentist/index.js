@@ -39,7 +39,7 @@ export default function NavBarDentist (props) {
 
   ]
   
-  //const items = isHome ? optionsHome : options
+  //const items = isHome ? optionsHome : options    
   let items
   if(isHome==true){
     console.log('estamos en home')

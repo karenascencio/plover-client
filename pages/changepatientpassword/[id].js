@@ -10,7 +10,7 @@ import PasswordInput from '../../components/PasswordInput'
 // Validation schema
 import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
-import { getPatients, getPatientById, changePassword } from '../../lib/api'
+import { getPatients, getPatientById, changePasswordPatient } from '../../lib/api'
 
 export const getStaticPaths = async () => {
   const response = await getPatients()
@@ -46,7 +46,7 @@ export default function Configuration ({ patientInfo }) {
       console.log('Cuack!!')
       const dataUser = { ...values, id: _id }
       // console.log('dataUser', dataUser)
-      const response = await changePassword(dataUser)
+      const response = await changePasswordPatient(dataUser)
       const success = response.success
       if (success) {
         setSuccessPop(true)
