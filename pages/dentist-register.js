@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useS3Upload } from 'next-s3-upload'
 import { Formik, Form} from 'formik'
 import * as Yup from 'yup'
-
+import useAvailableToken from '../hooks/useAvailableToken'
 import { signUp } from '../lib/api'
 // .: userSchema
 import { dentistSchema } from '../lib/DentistSchemaValidation'
@@ -18,6 +18,7 @@ import close from '../public/close.svg'
 const defaultPicture = 'https://plover-bucket.s3.us-east-2.amazonaws.com/next-s3-uploads/13c4f937-4c34-4f51-b0c4-bc633854b13f/12artboard_1.png'
 
 export default function DentistRegister () {
+  useAvailableToken()
   const router = useRouter()
   // .: hooks
   const [falsePop, setFalsePop] = useState(false)

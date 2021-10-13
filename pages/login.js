@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { login } from '../lib/api'
+import useAvailableToken from '../hooks/useAvailableToken'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
 export default function Login () {
+  useAvailableToken()
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
   const [error, setError] = useState(false)

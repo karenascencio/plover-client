@@ -8,7 +8,7 @@ export default function Greeting (props) {
         Hola,
       </h2>
       <p className='text-2xl text-white font-semibold capitalize'>
-        {rol=='dentista' ? `Dr. ${userName}!` : `${userName}`}
+        {rol === 'dentista' ? `Dr. ${userName}!` : `${userName}`}
       </p>
     </div>
   )

@@ -10,13 +10,12 @@ import FormInput from '../../components/FormInput'
 import Textarea from '../../components/Textarea'
 import PlainText from '../../components/PlainText'
 import Toggle from '../../components/Toggle'
-
+import useAvailableToken from '../../hooks/useAvailableToken'
 import NavBarDentist from '../../components/NavBarDentist'
 import H1 from '../../components/H1'
 import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 import useUserInfo from '../../hooks/useUserInfo'
-
 import AnotationsCard from '../../components/AnotationsCard'
 
 import annotation from '../../public/post-it.png'
@@ -69,7 +68,7 @@ export async function getStaticProps (context) {
 }
 
 export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo,dentistInfo }) {
-  
+  useAvailableToken()
     //hook para traernos el id y el rol del usuario
     const [id,rol] = useUserInfo()
     console.log('el id del usuario es ',id)

@@ -4,10 +4,9 @@ import FormInput from '../components/FormInput'
 import Textarea from '../components/Textarea'
 import RadioButtons from '../components/RadioButtons'
 import Select from '../components/Select'
-
+import useAvailableToken from '../hooks/useAvailableToken'
 import H1 from '../components/H1'
 import H3 from '../components/H3'
-import api from '../lib/api'
 import NavBarPatient from '../components/NavBarPatient'
 import TitleHeader from '../components/TitleHeader'
 import { useRouter } from 'next/router'
@@ -16,6 +15,7 @@ import useUserInfo from '../hooks/useUserInfo'
 
 // single form
 export default function Giform () {
+  useAvailableToken()
   const router = useRouter()
   const [id,rol] = useUserInfo() 
   console.log('el id es',id)

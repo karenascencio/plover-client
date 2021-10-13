@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 // Api
 import {
   getPatients,
@@ -53,6 +54,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo }) {
+  useAvailableToken()
   // hook para traernos el id y el rol del usuario
   const [id, rol] = useUserInfo()
   console.log('el id del usuario es ', id)

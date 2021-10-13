@@ -11,6 +11,8 @@ import PasswordInput from '../../components/PasswordInput'
 import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
 import { getPatients, getPatientById, changePasswordPatient } from '../../lib/api'
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 
 export const getStaticPaths = async () => {
   const response = await getPatients()
@@ -38,6 +40,7 @@ export const getStaticProps = async (context) => {
 }
 
 export default function Configuration ({ patientInfo }) {
+  useAvailableToken()
   const { _id, userImage, name, lastName, password } = patientInfo
   const [successPop, setSuccessPop] = useState(false)
   const [falsePop, setFalsePop] = useState(false)

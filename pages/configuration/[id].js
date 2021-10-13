@@ -12,6 +12,8 @@ import FormInput from '../../components/FormInput'
 import H3 from '../../components/H3'
 // Api
 import { getDentists, getDentistById, patchDentist } from '../../lib/api'
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 
 export const getStaticPaths = async () => {
   const response = await getDentists()
@@ -38,8 +40,8 @@ export const getStaticProps = async (context) => {
   }
 }
 
-
 export default function Configuration ({ dentistInfo }) {
+  useAvailableToken()
   const { _id, userImage, name, lastName, gender, email, telephoneNumber, clinicName, clinicNumber, clinicEmail, clinicAdress, neighborhood, zipCode, degree, college, profesionalLicense } = dentistInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [dentistUpdate, setDentistUpdate] = useState(null)
