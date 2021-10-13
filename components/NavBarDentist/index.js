@@ -3,7 +3,6 @@ import H1 from '../H1'
 import H3 from '../H3'
 import Greeting from '../Greeting'
 import HamburgerMenu from 'react-hamburger-menu'
-
 import useWindowSize from '../../hooks/useWindowSize'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
@@ -60,10 +59,15 @@ export default function NavBarDentist (props) {
   console.log('el rol desde el navBar es: ',rol)
   return (
     <div className='z-40 '>
-
       <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
-        <div className='flex'>
-          <H1 textTitle='Plover' textColor='white' />
+        <div className='h-16 flex justify-center'>
+          <div className='hidden md:block h-10 w-10'>
+          </div>
+          <p
+            className='text-white text-3xl md:text-5xl font-thin font-lato'
+          >
+            Plover
+          </p>
         </div>
         <ProfilePicture profilePicture={image?image:''} />
         <div className='hidden sm:block'><Greeting userName={name?name.split(' ')[0]:'fulano'} rol={rol}/></div>

@@ -30,7 +30,7 @@ import VoucherButton from '../../components/voucherButton'
 //incorporamos cambios de hector y karen
 //librerias para trabajar con alertas 
 import { ToastContainer, toast ,Zoom} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 

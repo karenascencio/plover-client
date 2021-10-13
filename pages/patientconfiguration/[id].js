@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useS3Upload } from 'next-s3-upload'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+// My dependencies
+import { ToastContainer, toast, Zoom } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import NavBarDentist from '../../components/NavBarDentist'
@@ -44,20 +47,23 @@ export default function Configuration ({ patientInfo }) {
   const { _id, userImage, name, lastName, email } = patientInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [patientUpdate, setPatientUpdate] = useState(null)
-  const [updatedAlert, setUpdatedAlert] = useState(false)
-  const [updatedStatus, setUpdatedStatus] = useState(false)
   const { uploadToS3 } = useS3Upload()
   const router = useRouter()
 
+  const notify = () => toast.success('Perfil actualizado correctamente', {
+    position: 'top-right',
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    icon: false
+  })
   const buttonHandler = async () => {
     const response = await patchPatient(patientUpdate, _id)
-    router.push(`/patientconfiguration/${_id}`)
-    response.success ? setUpdatedStatus(true) : setUpdatedStatus(false)
-    setUpdatedAlert(true)
-  }
-
-  const closeHandler = () => {
-    setUpdatedAlert(false)
+    notify()
+    router.reload()
   }
 
   const handleFileChange = async file => {
@@ -68,30 +74,25 @@ export default function Configuration ({ patientInfo }) {
 
   return (
     <div className='flex flex-col sm:flex-row '>
+      <ToastContainer
+        toastStyle={{ backgroundColor: '#EDF5FC' }}
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Zoom}
+      />
       <NavBarDentist isHome idDentist={_id} name={name} image={userImage} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Configuración'
           />
-          {
-            updatedAlert &&
-              (updatedStatus
-                ? <SuccessAlert
-                    textAlert='Tu información fue actualizada correctamente.'
-                    status='¡Éxito!'
-                    mainColor='plover-blue'
-                    bgColor='light-blue'
-                    closeHandler={closeHandler}
-                  />
-                : <SuccessAlert
-                    textAlert='Tu información no fue actualizada correctamente, intenta de nuevo.'
-                    status='¡Error!'
-                    mainColor='red-700'
-                    bgColor='red-100'
-                    closeHandler={closeHandler}
-                  />)
-          }
           <div className='flex flex-col justify-center items-center w-full py-5 border-b border-lighter-gray'>
             <ChangePicture
               profilePicture={profileImage}

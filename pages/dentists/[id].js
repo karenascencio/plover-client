@@ -114,7 +114,10 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
         if (willDelete) {
           await deletePatient(patientToDelete)
           swal('¡El paciente ha sido eliminado exitosamente!', {
-            icon: 'success'
+            icon: 'success',
+            button: {
+              className: 'bg-plover-blue hover:bg-input-hover'
+            }
           })
           router.push(`/dentists/${idDentist}`)
         }
