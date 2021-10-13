@@ -4,17 +4,13 @@ import { useRouter } from 'next/router'
 export default function useAvailableToken () {
   const router = useRouter()
   useEffect(() => {
-    try{
+    try {
       const token = localStorage.getItem('userToken')
       console.log(token)
-      //setIsTokenAvailable(token)
-      //console.log(isTokenAvailable)
       !token && alert('no puedes entrar')
-      !token && router.push('/login') 
-    }
-    catch(error){
+      !token && router.push('/login')
+    } catch (error) {
       console.log(error)
     }
-    
   }, [])
 }
