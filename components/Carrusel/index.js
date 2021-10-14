@@ -40,7 +40,7 @@ export default function Carrusel (props) {
         }
       },
       {
-        breakpoint: 400,
+        breakpoint: 500,
         settings: {
           slidesToShow: cardNumber >= 1 ? 1 : cardNumber,
           slidesToScroll: 1

@@ -20,7 +20,7 @@ export default function Calendar (props) {
 
   return (
     <div className='my-5 text-right'>
-      <p className='text-4xl text-lighter-gray font-thin mb-1'>
+      <p className='text-4xl text-lighter-gray font-thin mb-1 capitalize'>
         {
           
           date.locale('es').format('dddd D MMMM')

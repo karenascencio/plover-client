@@ -12,10 +12,11 @@ import useAvailableToken from '../../hooks/useAvailableToken'
 import router, { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
+import NothingToSee from '../../components/NothingToSee'
 import Image from 'next/image' 
 import { useS3Upload } from 'next-s3-upload'
 import useUserInfo from '../../hooks/useUserInfo'
-
+import AnotationsCard from '../../components/AnotationsCard'
 import dynamic from 'next/dynamic'
 
 //const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
@@ -30,7 +31,7 @@ import VoucherButton from '../../components/voucherButton'
 //incorporamos cambios de hector y karen
 //librerias para trabajar con alertas 
 import { ToastContainer, toast ,Zoom} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -302,7 +303,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 />
               </div>
             </div>
-            <div className='w-full flex flex-col'>
+             <div className='w-full flex flex-col'>
               <div className='self-start'>
                 
                 {rol=='dentista' &&
@@ -334,17 +335,18 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                   />
                 </div>
                 </>}
+                
                 {rol=='paciente' && <>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Monto</div>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Fecha</div>
                 </>}
                 <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
-                {!!dynamicPayments.lenght && (<div>aun no tienes pagos</div>)}
-                {!dynamicPayments.lenght && dynamicPayments.map((item, key) => {
+             
+                {!!dynamicPayments.length && dynamicPayments.map((item, key) => {
 								  return (
   <React.Fragment key={key}>
     <div className='col-span-2'><PlainText text={item.total} /></div>
-    <div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
+    <div className='col-span-2'><PlainText text={dayjs.utc(item.date).locale('es').format('DD/MM/YYYY')} /></div>
     <VoucherButton
       rol={rol}
       payment={item}
@@ -356,6 +358,13 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 })}
               </div>
             </div>
+              {!dynamicPayments.length && 
+                <div className='w-full flex items-center'>
+                  <NothingToSee />
+              </div>
+              }
+
+
           </div>
         </main>
         <ToastContainer
@@ -382,9 +391,9 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
               pluginRenderers={DocViewerRenderers}
             />
             <button
-              className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0'
+              className='z-50 px-3 py-1 text-xl md:text-3xl bg-plover-blue text-white rounded absolute top-0 right-0'
               onClick={() => setVisible(false)}
-            >cerrar
+            >Cerrar
             </button>
           </div>
         </>

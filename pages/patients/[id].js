@@ -17,6 +17,7 @@ import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ProcedureCard from '../../components/ProcedureCard'
+import NothingToSee from '../../components/NothingToSee'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
@@ -94,8 +95,8 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
         isHome={false}
         idPatient={idPatient}
         idDentist={idDentist}
-        image={rol == 'paciente' ? imagePatient:imageDentist}
-        name={rol == 'paciente' ? name:dentistName}
+        image={rol == 'paciente' ? imagePatient : imageDentist}
+        name={rol == 'paciente' ? name : dentistName}
       />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
@@ -122,38 +123,44 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
             {rol == 'dentista' && <AddNewPatientButton
               title='Nuevo'
               imagen={addIcon}
-                                />}
+                                  />}
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
-          search
-            ? appointmentsInfo.map(appointment => {
-                const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
-                const appointmentId = appointment._id
-                return appointment.procedures.filter(procedure =>
-                  procedure.name.includes(search.toLowerCase())).map(procedure =>
-                    <ProcedureCard
-                      key={procedure._id}
-                      procedureDate={procedureDate}
-                      procedureName={procedure.name}
-                      procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
-                      anchor={appointmentId}
-                    />
-                )
-              })
-            : appointmentsInfo.map(appointment => {
-              const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
-              const appointmentId = appointment._id
-              return appointment.procedures.map(procedure =>
-                <ProcedureCard
-                  key={procedure._id}
-                  procedureDate={procedureDate}
-                  procedureName={procedure.name}
-                  procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
-                  anchor={appointmentId}
-                />
+          appointmentsInfo.length > 0
+            ? (
+                search
+                  ? appointmentsInfo.map(appointment => {
+                      const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
+                      const appointmentId = appointment._id
+                      return appointment.procedures.filter(procedure =>
+                        procedure.name.includes(search.toLowerCase())).map(procedure =>
+                          <ProcedureCard
+                            key={procedure._id}
+                            procedureDate={procedureDate}
+                            procedureName={procedure.name}
+                            procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                            anchor={appointmentId}
+                          />
+                      )
+                    })
+                  : appointmentsInfo.map(appointment => {
+                    const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
+                    const appointmentId = appointment._id
+                    return appointment.procedures.map(procedure =>
+                      <ProcedureCard
+                        key={procedure._id}
+                        procedureDate={procedureDate}
+                        procedureName={procedure.name}
+                        procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                        anchor={appointmentId}
+                      />
+                    )
+                  })
               )
-            })
+            : <div className='w-full flex items-center'>
+              <NothingToSee />
+            </div>
         }
           </div>
         </div>

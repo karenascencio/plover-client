@@ -99,7 +99,7 @@ export default function VoucherButton(props) {
 							<button
           			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
           			onClick={()=>handleSeeFile(file)}
-        				>mostrar
+        				>Mostrar
       				</button>
 						</div> )
 					}

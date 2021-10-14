@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import useAvailableToken from '../../hooks/useAvailableToken'
 import useUserInfo from '../../hooks/useUserInfo'
 // My dependencies
+import swal from 'sweetalert'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
@@ -12,7 +13,7 @@ import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
-import ConfirmationModal from '../../components/ConfirmationModal'
+import NothingToSee from '../../components/NothingToSee'
 // Api
 import {
   getDentists,
@@ -59,8 +60,8 @@ export async function getStaticProps (context) {
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   useAvailableToken()
-  //hook para traer el rol del usuario
-  const [id,rol] = useUserInfo()
+  // hook para traer el rol del usuario
+  const [id, rol] = useUserInfo()
   const { userImage, name } = dentistInfo
   const router = useRouter()
   // nos traemos los datos necesarios para pintar el nombre
@@ -70,13 +71,9 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   // necesito el id del dentista y del paciente para la navegacio
   const { _id: idPatient } = patientsInfo
 
-
-
   const [search, setSearch] = useState('')
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
-  console.log(dentistInfo)
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -90,38 +87,39 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
     setSearch(searchInput)
   }
 
-  const preDeleteHandler = async event => {
-    setDeleteModal(true)
-    const idPatient = event.target.id
-    setIdPatientToDelete(idPatient)
-  }
-
-  const deleteHandler = async () => {
-    await deletePatient(idPatientToDelete)
-    setDeleteModal(false)
-    router.push(`/dentists/${idDentist}`)
-  }
-
-  const closeHandler = () => {
-    setDeleteModal(false)
+  const deleteHandler = async event => {
+    const patientToDelete = event.target.id
+    swal({
+      title: 'Eliminar paciente',
+      text: '¿Estás seguro que deseas eliminar el paciente? Esta acción es irreversible.',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    })
+      .then(async (willDelete) => {
+        if (willDelete) {
+          await deletePatient(patientToDelete)
+          swal('¡El paciente ha sido eliminado exitosamente!', {
+            icon: 'success',
+            button: {
+              className: 'bg-plover-blue hover:bg-input-hover'
+            }
+          })
+          router.push(`/dentists/${idDentist}`)
+        }
+      })
   }
 
   return (
     <div className='flex flex-col sm:flex-row '>
-
-      {deleteModal &&
-        <ConfirmationModal
-          deleteHandler={deleteHandler}
-          closeHandler={closeHandler}
-        />}
-      <NavBarDentist 
-        isHome={true} 
-        idDentist={idDentist} 
-        idPatient={idPatient} 
-        image={userImage} 
-        name={name} 
+      <NavBarDentist
+        isHome
+        idDentist={idDentist}
+        idPatient={idPatient}
+        image={userImage}
+        name={name}
         rol={rol}
-        />
+      />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
@@ -133,7 +131,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
             </p>
           </div>
           <Carrusel
-            cards={cardsInfo}
+            cards={cardsInfo.sort((a, b) => b.thirdTitle - a.thirdTitle)}
           />
           <div className='w-full flex justify-between items-center mb-5'>
             <SearchInput
@@ -149,30 +147,36 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
-        search
-          ? patientsInfo.filter(patient => {
-              return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
-            }).map(patient =>
-              <PatientCard
-                patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-                patientImage={patient.userImage}
-                key={patient._id}
-                idPatient={patient._id}
-                idDentist={idDentist}
-                deleteHandler={preDeleteHandler}
-              />
-            )
-          : patientsInfo.map(patient =>
-            <PatientCard
-              patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-              patientImage={patient.userImage}
-              key={patient._id}
-              idPatient={patient._id}
-              idDentist={idDentist}
-              deleteHandler={preDeleteHandler}
-            />
-          )
-        }
+              patientsInfo.length > 0
+                ? (
+                    search
+                      ? patientsInfo.filter(patient => {
+                          return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
+                        }).map(patient =>
+                          <PatientCard
+                            patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                            patientImage={patient.userImage}
+                            key={patient._id}
+                            idPatient={patient._id}
+                            idDentist={idDentist}
+                            deleteHandler={deleteHandler}
+                          />
+                        )
+                      : patientsInfo.map(patient =>
+                        <PatientCard
+                          patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                          patientImage={patient.userImage}
+                          key={patient._id}
+                          idPatient={patient._id}
+                          idDentist={idDentist}
+                          deleteHandler={deleteHandler}
+                        />
+                      )
+                  )
+                : <div className='w-full flex items-center'>
+                  <NothingToSee />
+                </div>
+            }
           </div>
         </div>
       </main>
