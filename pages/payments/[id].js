@@ -19,10 +19,10 @@ import useUserInfo from '../../hooks/useUserInfo'
 import AnotationsCard from '../../components/AnotationsCard'
 import dynamic from 'next/dynamic'
 
-const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+//const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-const {DocViewerRenderers} = dynamic(() =>
-  import('react-doc-viewer'), {ssr:false});
+//const {DocViewerRenderers} = dynamic(() =>
+  //import('react-doc-viewer'), {ssr:false});
 
 //import { DocViewerRenderers } from "react-doc-viewer";
 
@@ -382,7 +382,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         />
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {visible && (
+   {/* {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -397,7 +397,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )}
+      )} */}
     </>
   )
 }

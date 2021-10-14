@@ -96,11 +96,13 @@ export default function VoucherButton(props) {
 					}
 					{hasVoucher && (
 						<div>
-							<button
+							<a
           			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
-          			onClick={()=>handleSeeFile(file)}
+          			href={file}
+								download
+								target='_blank'
         				>Mostrar
-      				</button>
+      				</a>
 						</div> )
 					}
 				</>
