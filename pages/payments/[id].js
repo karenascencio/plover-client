@@ -21,12 +21,10 @@ import dynamic from 'next/dynamic'
 
 const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-const DocViewerRenderers = dynamic(() =>
-  import('react-doc-viewer').then(module => {
-    console.log(module)
-    return module.DocViewerRenderers}), {ssr:false});
+//const {DocViewerRenderers} = dynamic(() =>
+  //import('react-doc-viewer'), {ssr:false});
 
-// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+//import { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
@@ -48,21 +46,21 @@ import {getAllPatientsIds,
       } from '../../lib/api'
 dayjs.extend(utc)
 
-export async function getStaticPaths () {
-  const ids = await getAllPatientsIds()
-  const paths = ids.map(item => {
-    return {
-      params: { id: item }
-    }
-  })
+// export async function getStaticPaths () {
+//   const ids = await getAllPatientsIds()
+//   const paths = ids.map(item => {
+//     return {
+//       params: { id: item }
+//     }
+//   })
 
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
+export async function getServerSideProps (context) {
   const id = context.params.id
   const payments = await getPaymentsByPatientId(id)
   const appointments = await getAppointmentsByPatientId(id)
@@ -384,7 +382,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         />
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {visible && (
+   {/* {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -399,7 +397,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )}
+      )} */}
     </>
   )
 }

@@ -17,22 +17,22 @@ import { getDentists, getDentistById, patchDentist } from '../../lib/api'
 // My hooks
 import useAvailableToken from '../../hooks/useAvailableToken'
 
-export const getStaticPaths = async () => {
-  const response = await getDentists()
-  const paths = response.map(dentist => {
-    return {
-      params: {
-        id: dentist._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export const getStaticPaths = async () => {
+//   const response = await getDentists()
+//   const paths = response.map(dentist => {
+//     return {
+//       params: {
+//         id: dentist._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const id = context.params.id
   const dentistInfo = await getDentistById(id)
   return {

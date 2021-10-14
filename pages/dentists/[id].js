@@ -44,8 +44,7 @@ dayjs.extend(utc)
 // }
 
 export async function getServerSideProps (context) {
-  const id = context.query.id
-  console.log('este es el contexto', context)
+  const id = context.params.id
   const patientsInfo = await getPatientsByDentistId(id)
   const appointmentsInfo = await getAppointmentsByDentistId(id)
   const dentistInfo = await getDentistById(id)
