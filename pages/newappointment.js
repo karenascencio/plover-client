@@ -128,12 +128,16 @@ export default function Newappointment () {
     //modal de exito de creacion de cita
     swal("Nueva cita", "creada exitosamente", "success",{
       button:{
-        className:'bg-plover-blue'
-      }
-    });
+        className:'bg-plover-blue',
+        visible:false
+      },
+      timer:2000
+    }).then(()=>{
+      router.push(`/patients/${idPatient}`)
+    })
 
     console.log(`te quieres mover a /patients/${idPatient}`)
-    //router.push(`/patients/${idPatient}`)
+   
   }
   function handleDelete (index) {
     const newProcedures = procedures.filter((item, key) => key !== index)
@@ -184,7 +188,7 @@ export default function Newappointment () {
     <div className='col-span-4 relative'><PlainText text={procedure.name} /><button onClick={() => handleDelete(key)} className='text-red-500 absolute top-0 right-2'>x</button></div>
     <div className='col-span-2'><PlainText text={procedure.price} /></div>
     <div className='flex justify-end'>
-      <Toggle id={key} handleToggle={handleToggle} />
+      <Toggle id={key} handleToggle={handleToggle} status={procedure.status} />
     </div>
   </React.Fragment>
 									  )
