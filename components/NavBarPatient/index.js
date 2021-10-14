@@ -25,7 +25,7 @@ export default function NavBarPatient (props) {
     setIsOpen(!isOpen)
   }
   return (
-    <div className='z-50 border border-red-400 min-h-screen '>
+    <div className='z-50 border border-red-400 sm:min-h-screen '>
 
       <div className='flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
         <div className='flex flex-col items-start'>
@@ -79,7 +79,7 @@ export default function NavBarPatient (props) {
                           return <li className='mb-4' key={key}><button onClick={(() => handleOption(item.form))} className='text-white text-base '>{item.title}</button></li>
                         })
                     }
-            <li className='mb-4'><Link href='/'><a className='text-white text-base'>Home</a></Link></li>
+            <li className='mb-4'> <Link href={rol=='paciente' ? `/patients/${idPatient}` : `/dentists/${idDentist}`}><a className='text-white text-base'>Home</a></Link></li>
           </motion.ul>)}
       </AnimatePresence>
     </div>

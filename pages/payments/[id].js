@@ -21,10 +21,12 @@ import dynamic from 'next/dynamic'
 
 const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-//const {DocViewerRenderers} = dynamic(() =>
-  //import('react-doc-viewer'), {ssr:false});
+const DocViewerRenderers = dynamic(() =>
+  import('react-doc-viewer').then(module => {
+    console.log(module)
+    return module.DocViewerRenderers}), {ssr:false});
 
-//import { DocViewerRenderers } from "react-doc-viewer";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
@@ -46,21 +48,21 @@ import {getAllPatientsIds,
       } from '../../lib/api'
 dayjs.extend(utc)
 
-// export async function getStaticPaths () {
-//   const ids = await getAllPatientsIds()
-//   const paths = ids.map(item => {
-//     return {
-//       params: { id: item }
-//     }
-//   })
+export async function getStaticPaths () {
+  const ids = await getAllPatientsIds()
+  const paths = ids.map(item => {
+    return {
+      params: { id: item }
+    }
+  })
 
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
+  return {
+    paths,
+    fallback: false
+  }
+}
 
-export async function getServerSideProps (context) {
+export async function getStaticProps (context) {
   const id = context.params.id
   const payments = await getPaymentsByPatientId(id)
   const appointments = await getAppointmentsByPatientId(id)
@@ -340,7 +342,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Monto</div>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Fecha</div>
                 </>}
-                <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
+                <div className='hidden md:block text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
              
                 {!!dynamicPayments.length && dynamicPayments.map((item, key) => {
 								  return (
@@ -352,7 +354,6 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
       payment={item}
       handleSeeFile={handleSeeFile}
     />
-    
   </React.Fragment>
 								  )
                 })}
