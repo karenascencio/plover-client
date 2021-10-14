@@ -19,7 +19,7 @@ export default function NavBarDentist (props) {
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
-    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
+    { title: 'Historial de pagos', link: `/payments/${idPatient}` },
     { title: 'Configuración', link: `/configuration/${idDentist} ` }
   ]
 
@@ -32,8 +32,8 @@ export default function NavBarDentist (props) {
     { title: 'Home', link: `/patients/${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
-    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
-    { title: 'Configuración', link:`/patientconfiguration/${idPatient}`}
+    { title: 'Historial de pagos', link: `/payments/${idPatient}` },
+    { title: 'Configuración', link: `/patientconfiguration/${idPatient}`}
     // { title: 'Configuración', link: `/configuration/${idDentist} ` }
 
   ]
