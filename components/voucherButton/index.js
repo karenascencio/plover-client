@@ -101,6 +101,7 @@ export default function VoucherButton(props) {
           			href={file}
 								download
 								target='_blank'
+								rel="noreferrer"
         				>Mostrar
       				</a>
 						</div> )
