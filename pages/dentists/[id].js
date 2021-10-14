@@ -13,6 +13,7 @@ import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
+import NothingToSee from '../../components/NothingToSee'
 // Api
 import {
   getDentists,
@@ -71,8 +72,6 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   const { _id: idPatient } = patientsInfo
 
   const [search, setSearch] = useState('')
-  // const [deleteModal, setDeleteModal] = useState(false)
-  // const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
   appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
@@ -87,18 +86,6 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
     const searchInput = event.target.value
     setSearch(searchInput)
   }
-
-  // const preDeleteHandler = async event => {
-  //   setDeleteModal(true)
-  //   const idPatient = event.target.id
-  //   setIdPatientToDelete(idPatient)
-  // }
-
-  // const deleteHandlerr = async () => {
-  //   await deletePatient(idPatientToDelete)
-  //   setDeleteModal(false)
-  //   router.push(`/dentists/${idDentist}`)
-  // }
 
   const deleteHandler = async event => {
     const patientToDelete = event.target.id
@@ -160,30 +147,36 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
-        search
-          ? patientsInfo.filter(patient => {
-              return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
-            }).map(patient =>
-              <PatientCard
-                patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-                patientImage={patient.userImage}
-                key={patient._id}
-                idPatient={patient._id}
-                idDentist={idDentist}
-                deleteHandler={deleteHandler}
-              />
-            )
-          : patientsInfo.map(patient =>
-            <PatientCard
-              patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
-              patientImage={patient.userImage}
-              key={patient._id}
-              idPatient={patient._id}
-              idDentist={idDentist}
-              deleteHandler={deleteHandler}
-            />
-          )
-        }
+              patientsInfo.length > 0
+                ? (
+                    search
+                      ? patientsInfo.filter(patient => {
+                          return patient.name.includes(search.toLowerCase()) || patient.lastName.includes(search.toLowerCase())
+                        }).map(patient =>
+                          <PatientCard
+                            patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                            patientImage={patient.userImage}
+                            key={patient._id}
+                            idPatient={patient._id}
+                            idDentist={idDentist}
+                            deleteHandler={deleteHandler}
+                          />
+                        )
+                      : patientsInfo.map(patient =>
+                        <PatientCard
+                          patientName={patient.name.split(' ', 1).join() + ' ' + patient.lastName.split(' ', 1).join()}
+                          patientImage={patient.userImage}
+                          key={patient._id}
+                          idPatient={patient._id}
+                          idDentist={idDentist}
+                          deleteHandler={deleteHandler}
+                        />
+                      )
+                  )
+                : <div className='w-full flex items-center'>
+                  <NothingToSee />
+                </div>
+            }
           </div>
         </div>
       </main>

@@ -62,6 +62,7 @@ export async function getStaticProps (context) {
 
 export default function Medicalrecord ({ patientFetched }) {
   useAvailableToken()
+  console.log(patientFetched)
   const [id,rol] = useUserInfo()
   console.log(patientFetched)
   const {idDentist,_id:idPatient} = patientFetched
@@ -128,7 +129,7 @@ export default function Medicalrecord ({ patientFetched }) {
                 <TextWithLabel
                   textId='weigth'
                   textLabel='Peso'
-                  textValue={patientFetched.weigth + ' kg'}
+                  textValue={patientFetched.weight + ' kg'}
                 />
                 <TextWithLabel
                   textId='bloodType'
@@ -137,7 +138,7 @@ export default function Medicalrecord ({ patientFetched }) {
                 />
                 <TextWithLabel
                   textId='maritalStatus'
-                  textLabel='maritalStatus'
+                  textLabel='Estado civil'
                   textValue={capitalizeName(patientFetched.maritalStatus)}
                 />
               </div>

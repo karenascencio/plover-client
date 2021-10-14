@@ -48,7 +48,7 @@ export default function NavBarPatient (props) {
         <Link href={rol=='paciente' ? `/patients/${idPatient}` : `/dentists/${idDentist}`}>
         <motion.a
           whileHover={{ scale: 1.2 }}
-          className=' w-11/12 hidden sm:block max-w-10rem bg-white block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'
+          className=' w-11/12 hidden sm:block max-w-10rem bg-white cursor-pointer block text-plover-blue text-center text-sm md:text-base py-1   rounded-lg'
                        >Home
         </motion.a>
         </Link>

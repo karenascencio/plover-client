@@ -13,16 +13,16 @@ import { useRouter } from 'next/router'
 import { postPatient } from '../lib/api'
 import useUserInfo from '../hooks/useUserInfo'
 
-import swal from 'sweetalert';
+import swal from 'sweetalert'
 
 
 // single form
 export default function Giform () {
   useAvailableToken()
   const router = useRouter()
-  const [id,rol] = useUserInfo() 
-  console.log('el id es',id)
-  console.log('el rol es ',rol)
+  const [id, rol] = useUserInfo()
+  console.log('el id es', id)
+  console.log('el rol es ', rol)
 
   const [formulario, setFormulario] = useState('General Information')
 
@@ -36,7 +36,7 @@ export default function Giform () {
     }
     return []
   }
-   function formatPatient (values) {
+  function formatPatient (values) {
     console.log(values)
     values.password = values.email.split('@')[0]
     values.age = Number(values.age)
@@ -60,16 +60,35 @@ export default function Giform () {
     values.nonPathologicalBackground.alcoholConsumption = values.nonPathologicalBackground.alcoholConsumption.toLowerCase()
     values.nonPathologicalBackground.cigarConsumption = values.nonPathologicalBackground.cigarConsumption.toLowerCase()
     values.idDentist = id
-    values.userImage= `https://api.multiavatar.com/${values.name.split(' ')[0]}%20${values.lastName.split(' ')[0]}.png`
-    //await postPatient(values)
+    values.userImage = `https://api.multiavatar.com/${values.name.split(' ')[0]}%20${values.lastName.split(' ')[0]}.png`
+    // await postPatient(values)
     return values
   }
+  const sendPatient = async (values) => {
+    const formatedValues = formatPatient(values)
+    console.log(formatedValues)
+    // alert(JSON.stringify(formatedValues,null,2))
+    await postPatient(formatedValues)
+    swal('Nueva Paciente', 'creado exitosamente', 'success', {
+      button: {
+        className: 'bg-plover-blue',
+        visible: false
+      },
+      timer: 2000
+    })
+      .then(() => {
+        router.push(`/dentists/${id}`)
+      })
+    // router.push(`/dentists/${id}`)
+  }
+
   return (
     <div className='flex flex-col sm:flex-row '>
-      <NavBarPatient 
-        formulario={formulario} 
+      <NavBarPatient
+        formulario={formulario}
         handleOption={handleOption}
-        idDentist={id} />
+        idDentist={id}
+      />
       <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik
@@ -164,11 +183,10 @@ export default function Giform () {
               // validacion de apellido
               if (!values.lastName) errors.lastName = 'Por favor ingrese los apellidos del paciente'
               else if (!/^[a-z ,.'-]+$/i.test(values.lastName)) errors.lastName = 'Los apellidos no puede contener numeros ni caracteres especiales'
-              //validacion por email
+              // validacion por email
               if (!values.email) {
                 errors.email = 'Por favor ingrese el nombre del paciente'
-              }
-              else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
+              } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)) {
                 errors.email = 'Ingresa un email valido'
               }
               // validacion por genero
@@ -267,118 +285,117 @@ export default function Giform () {
               // }
               return errors
             }}
-            onSubmit={async (values) => {
-              const formatedValues = formatPatient(values)
-              console.log(formatedValues)
-              //alert(JSON.stringify(formatedValues,null,2))
-              await postPatient(formatedValues)
-              swal("Nueva Paciente", "creado exitosamente", "success",{
-                button:{
-                className:'bg-plover-blue'
-                }
-              });
-              //router.push(`/dentists/${id}`)
-          }}
+          //   onSubmit={async (values) => {
+          //     const formatedValues = formatPatient(values)
+          //     console.log(formatedValues)
+          //     //alert(JSON.stringify(formatedValues,null,2))
+          //     await postPatient(formatedValues)
+          //     swal("Nueva Paciente", "creado exitosamente", "success",{
+          //       button:{
+          //       className:'bg-plover-blue'
+          //       }
+          //     });
+          //     //router.push(`/dentists/${id}`)
+          // }}
           >
             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
 
-              <form onSubmit={handleSubmit} className=' mt-16 sm:mt-0'>
+              <form className=' mt-16 sm:mt-0'>
 
                 {/* aqui comienza el formulario de informacion general */}
                 {formulario == 'General Information' && (
                   <div id='General Information' className='mt-10'>
                     <div className='flex flex-col'>
-                        <TitleHeader
+                      <TitleHeader
                           pageTitle='Información general'
                           secondaryText=''
                         />
-                        <H3 textTitle='Paciente' textColor='plover-blue' />
-                      </div>
+                      <H3 textTitle='Paciente' textColor='plover-blue' />
+                    </div>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='name'
-                          textLabel='Nombres'
-                          textValue={values.name}
-                          inputId='name'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='name'
+                            textLabel='Nombres'
+                            textValue={values.name}
+                            inputId='name'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {touched.name && errors.name && <div className='text-plover-blue text-sm'>{errors.name}</div>}
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='lastName'
-                          textLabel='Apellidos'
-                          textValue={values.lastName}
-                          inputId='lastName'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='lastName'
+                            textLabel='Apellidos'
+                            textValue={values.lastName}
+                            inputId='lastName'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {touched.lastName && errors.lastName && <div className='text-plover-blue text-sm'>{errors.lastName}</div>}
                         </div>
-                        {/* campo para el correo electronico */}
-                        <div className='flex flex-col'>
+                      {/* campo para el correo electronico */}
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='email'
-                          textLabel='Email'
-                          textValue={values.email}
-                          inputId='email'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='email'
+                            textLabel='Email'
+                            textValue={values.email}
+                            inputId='email'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {touched.email && errors.email && <div className='text-plover-blue text-sm'>{errors.email}</div>}
                         </div>
 
-
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <Select
-                          selectID='gender'
-                          textName='gender'
-                          textValue={values.gender}
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                          selectQuestion='Género'
-                          outputOptions={['masculino', 'femenino', 'otro']}
-                        />
+                            selectID='gender'
+                            textName='gender'
+                            textValue={values.gender}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            selectQuestion='Género'
+                            outputOptions={['masculino', 'femenino', 'otro']}
+                          />
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='age'
-                          textLabel='Edad'
-                          textValue={values.age}
-                          inputId='age'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='age'
+                            textLabel='Edad'
+                            textValue={values.age}
+                            inputId='age'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {touched.age && errors.age && <div className='text-plover-blue text-sm'>{errors.age}</div>}
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='height'
-                          textLabel='Altura'
-                          textValue={values.height}
-                          inputId='height'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='height'
+                            textLabel='Altura'
+                            textValue={values.height}
+                            inputId='height'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {touched.height && errors.height && <div className='text-plover-blue text-sm'>{errors.height}</div>}
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='weight'
-                          textLabel='Peso'
-                          textValue={values.weight}
-                          inputId='weight'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='weight'
+                            textLabel='Peso'
+                            textValue={values.weight}
+                            inputId='weight'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {touched.weight && errors.weight && <div className='text-plover-blue text-sm'>{errors.weight}</div>}
                         </div>
 
-                        <Select
+                      <Select
                           selectID='bloodType'
                           textName='bloodType'
                           textValue={values.bloodType}
@@ -388,7 +405,7 @@ export default function Giform () {
                           outputOptions={['A+', 'O+', 'B+', 'AB+', 'A-', 'O-', 'B-', 'AB-']}
                         />
 
-                        <Select
+                      <Select
                           selectID='maritalStatus'
                           textName='maritalStatus'
                           textValue={values.maritalStatus}
@@ -397,137 +414,137 @@ export default function Giform () {
                           selectQuestion='Estado civil'
                           outputOptions={['Soltero', 'Casado', 'Divorciado', 'Separación en proceso judicial', 'Viudo', 'Concubinato']}
                         />
-                      </div>
+                    </div>
 
                     <H3 textTitle='Dirección' textColor='plover-blue' />
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.state'
-                          textLabel='Estado'
-                          textValue={values.address.state}
-                          inputId='address.state'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.state'
+                            textLabel='Estado'
+                            textValue={values.address.state}
+                            inputId='address.state'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {getIn(touched, 'address.state') && getIn(errors, 'state') && <div className='text-plover-blue text-sm'>{errors.state}</div>}
 
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.city'
-                          textLabel='Ciudad'
-                          textValue={values.address.city}
-                          inputId='address.city'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.city'
+                            textLabel='Ciudad'
+                            textValue={values.address.city}
+                            inputId='address.city'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                           {getIn(touched, 'address.city') && getIn(errors, 'city') && <div className='text-plover-blue text-sm'>{errors.city}</div>}
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.neighborhood'
-                          textLabel='Colonia'
-                          textValue={values.address.neighborhood}
-                          inputId='address.neighborhood'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.neighborhood'
+                            textLabel='Colonia'
+                            textValue={values.address.neighborhood}
+                            inputId='address.neighborhood'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'address.neighborhood') && getIn(errors, 'neighborhood') && <div className='text-plover-blue text-sm'>{errors.neighborhood}</div>}
 
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.street'
-                          textLabel='Calle'
-                          textValue={values.address.street}
-                          inputId='address.street'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.street'
+                            textLabel='Calle'
+                            textValue={values.address.street}
+                            inputId='address.street'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'address.street') && getIn(errors, 'street') && <div className='text-plover-blue text-sm'>{errors.street}</div>}
 
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.streetNumber'
-                          textLabel='Número exterior'
-                          textValue={values.address.streetNumber}
-                          inputId='address.streetNumber'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.streetNumber'
+                            textLabel='Número exterior'
+                            textValue={values.address.streetNumber}
+                            inputId='address.streetNumber'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'address.streetNumber') && getIn(errors, 'streetNumber') && <div className='text-plover-blue text-sm'>{errors.streetNumber}</div>}
                         </div>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='address.innerNumber'
-                          textLabel='Número interior (opcional)'
-                          textValue={values.address.innerNumber}
-                          inputId='address.innerNumber'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='address.innerNumber'
+                            textLabel='Número interior (opcional)'
+                            textValue={values.address.innerNumber}
+                            inputId='address.innerNumber'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'address.innerNumber') && getIn(errors, 'innerNumber') && <div className='text-plover-blue text-sm'>{errors.innerNumber}</div>}
                         </div>
 
-                      </div>
+                    </div>
 
                     <H3 textTitle='Médico familiar (opcional)' textColor='plover-blue' />
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                        <div className='flex flex-col'>
+                      <div className='flex flex-col'>
                           <FormInput
-                          textName='familyPractitioner.name'
-                          textLabel='Nombres'
-                          textValue={values.familyPractitioner.name}
-                          inputId='familyPractitioner.name'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyPractitioner.name'
+                            textLabel='Nombres'
+                            textValue={values.familyPractitioner.name}
+                            inputId='familyPractitioner.name'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'familyPractitioner.name') && getIn(errors, 'doctorName') && <div className='text-plover-blue text-sm'>{errors.doctorName}</div>}
                         </div>
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <div>
+                      {/* validamos que el campo no venga vacio */}
+                      {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
+                      <div>
                           <FormInput
-                          textName='familyPractitioner.lastName'
-                          textLabel='Apellidos'
-                          textValue={values.familyPractitioner.lastName}
-                          inputId='familyPractitioner.lastName'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyPractitioner.lastName'
+                            textLabel='Apellidos'
+                            textValue={values.familyPractitioner.lastName}
+                            inputId='familyPractitioner.lastName'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                           {getIn(touched, 'familyPractitioner.lastName') && getIn(errors, 'doctorLastName') && <div className='text-plover-blue text-sm'>{errors.doctorLastName}</div>}
                         </div>
-                        <div>
+                      <div>
                           <FormInput
-                          textName='familyPractitioner.email'
-                          textLabel='Email'
-                          textValue={values.familyPractitioner.email}
-                          inputId='familyPractitioner.email'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyPractitioner.email'
+                            textLabel='Email'
+                            textValue={values.familyPractitioner.email}
+                            inputId='familyPractitioner.email'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'familyPractitioner.email') && getIn(errors, 'doctorEmail') && <div className='text-plover-blue text-sm'>{errors.doctorEmail}</div>}
                         </div>
-                        <div>
+                      <div>
                           <FormInput
-                          textName='familyPractitioner.phoneNumber'
-                          textLabel='Número de teléfono'
-                          textValue={values.familyPractitioner.phoneNumber}
-                          inputId='familyPractitioner.phoneNumber'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyPractitioner.phoneNumber'
+                            textLabel='Número de teléfono'
+                            textValue={values.familyPractitioner.phoneNumber}
+                            inputId='familyPractitioner.phoneNumber'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {getIn(touched, 'familyPractitioner.phoneNumber') && getIn(errors, 'doctorPhoneNumber') && <div className='text-plover-blue text-sm'>{errors.doctorPhoneNumber}</div>}
                         </div>
-                      </div>
+                    </div>
                     <H3 textTitle='Persona a cargo' textColor='plover-blue' />
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                        <FormInput
+                      <FormInput
                           textName='personInCharge.name'
                           textLabel='Nombres'
                           textValue={values.personInCharge.name}
@@ -535,9 +552,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        {/* validamos que el campo no venga vacio */}
-                        {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
-                        <FormInput
+                      {/* validamos que el campo no venga vacio */}
+                      {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
+                      <FormInput
                           textName='personInCharge.lastName'
                           textLabel='Apellidos'
                           textValue={values.personInCharge.lastName}
@@ -545,9 +562,9 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
+                      {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
 
-                        <FormInput
+                      <FormInput
                           textName='personInCharge.email'
                           textLabel='Email'
                           textValue={values.personInCharge.email}
@@ -555,7 +572,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='personInCharge.phoneNumber'
                           textLabel='Número de teléfono'
                           textValue={values.personInCharge.phoneNumber}
@@ -563,7 +580,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                      </div>
+                    </div>
                   </div>)}
                 {/* aqui termina el formulario de informacion general */}
 
@@ -571,147 +588,147 @@ export default function Giform () {
                 {formulario == 'Family Background' && (
                   <div id='Family Background' className='mt-10'>
                     <div className='flex flex-col'>
-                        <TitleHeader
+                      <TitleHeader
                           pageTitle='Antecedentes Familiares'
                           secondaryText=''
                         />
-                      </div>
+                    </div>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8'>
-                        <H3 textTitle='Patologías' textColor='plover-blue' />
-                        <p className='text-plover-blue pt-10'>Ingrese las enfermedades separadas por comas</p>
+                      <H3 textTitle='Patologías' textColor='plover-blue' />
+                      <p className='text-plover-blue pt-10'>Ingrese las enfermedades separadas por comas</p>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.father.pathologies'
-                          textLabel='Padre'
-                          textValue={values.familyBackground.father.pathologies}
-                          inputId='familyBackground.father.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.father.pathologies'
+                            textLabel='Padre'
+                            textValue={values.familyBackground.father.pathologies}
+                            inputId='familyBackground.father.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.father.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.father.description}
-                          inputId='familyBackground.father.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.father.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.father.description}
+                            inputId='familyBackground.father.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.mother.pathologies'
-                          textLabel='Madre'
-                          textValue={values.familyBackground.mother.pathologies}
-                          inputId='familyBackground.mother.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.mother.pathologies'
+                            textLabel='Madre'
+                            textValue={values.familyBackground.mother.pathologies}
+                            inputId='familyBackground.mother.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.mother.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.mother.description}
-                          inputId='familyBackground.mother.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.mother.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.mother.description}
+                            inputId='familyBackground.mother.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.grandFather.pathologies'
-                          textLabel='Abuelo'
-                          textValue={values.familyBackground.grandFather.pathologies}
-                          inputId='familyBackground.grandFather.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.grandFather.pathologies'
+                            textLabel='Abuelo'
+                            textValue={values.familyBackground.grandFather.pathologies}
+                            inputId='familyBackground.grandFather.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.grandFather.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.grandFather.description}
-                          inputId='familyBackground.grandFather.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.grandFather.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.grandFather.description}
+                            inputId='familyBackground.grandFather.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.grandMother.pathologies'
-                          textLabel='Abuela'
-                          textValue={values.familyBackground.grandMother.pathologies}
-                          inputId='familyBackground.grandMother.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.grandMother.pathologies'
+                            textLabel='Abuela'
+                            textValue={values.familyBackground.grandMother.pathologies}
+                            inputId='familyBackground.grandMother.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.grandMother.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.grandMother.description}
-                          inputId='familyBackground.grandMother.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.grandMother.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.grandMother.description}
+                            inputId='familyBackground.grandMother.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.partner.pathologies'
-                          textLabel='Pareja'
-                          textValue={values.familyBackground.partner.pathologies}
-                          inputId='familyBackground.partner.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.partner.pathologies'
+                            textLabel='Pareja'
+                            textValue={values.familyBackground.partner.pathologies}
+                            inputId='familyBackground.partner.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.partner.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.partner.description}
-                          inputId='familyBackground.partner.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.partner.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.partner.description}
+                            inputId='familyBackground.partner.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
 
-                        <div className='flex flex-col border-b border-lighter-gray'>
+                      <div className='flex flex-col border-b border-lighter-gray'>
                           <FormInput
-                          textName='familyBackground.brothers.pathologies'
-                          textLabel='Hermanos'
-                          textValue={values.familyBackground.brothers.pathologies}
-                          inputId='familyBackground.brothers.pathologies'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.brothers.pathologies'
+                            textLabel='Hermanos'
+                            textValue={values.familyBackground.brothers.pathologies}
+                            inputId='familyBackground.brothers.pathologies'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* validamos que el campo no venga vacio */}
                           {/* touched.nombres && errors.nombres && <div>{errors.nombres}</div> */}
                           <Textarea
-                          textName='familyBackground.brothers.description'
-                          textLabel='descripción'
-                          textValue={values.familyBackground.brothers.description}
-                          inputId='familyBackground.brothers.description'
-                          handleChange={handleChange}
-                          handleBlur={handleBlur}
-                        />
+                            textName='familyBackground.brothers.description'
+                            textLabel='descripción'
+                            textValue={values.familyBackground.brothers.description}
+                            inputId='familyBackground.brothers.description'
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                          />
                           {/* touched.apellidos && errors.apellidos && <div>{errors.apellidos}</div> */}
                         </div>
-                      </div>
+                    </div>
                   </div>)}
                 {/* aqui termina el formulario de antecedentes familiares */}
 
@@ -719,11 +736,11 @@ export default function Giform () {
                 {formulario == 'Pathological Background' && (
                   <div id='Pathological Background' className='mt-10'>
                     <TitleHeader
-                        pageTitle='Antecedentes patológicos'
-                        secondaryText=''
-                      />
+                      pageTitle='Antecedentes patológicos'
+                      secondaryText=''
+                    />
                     <div className='mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-8 border-b border-lighter-gray'>
-                        <FormInput
+                      <FormInput
                           textName='pathologicalBackground.currentDiseases'
                           textLabel='Enfermedades actuales'
                           textValue={values.pathologicalBackground.currentDiseases}
@@ -731,7 +748,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='pathologicalBackground.previousDiseases'
                           textLabel='Enfermedades previas'
                           textValue={values.pathologicalBackground.previousDiseases}
@@ -739,7 +756,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='pathologicalBackground.generalAllergies'
                           textLabel='Alergias'
                           textValue={values.pathologicalBackground.generalAllergies}
@@ -747,7 +764,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='pathologicalBackground.drugAllergies'
                           textLabel='Alergias a medicamentos'
                           textValue={values.pathologicalBackground.drugAllergies}
@@ -755,7 +772,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='pathologicalBackground.currentMedications'
                           textLabel='Medicacion actual'
                           textValue={values.pathologicalBackground.currentMedications}
@@ -763,28 +780,28 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <RadioButtons
+                      <RadioButtons
                           textLabel='¿Has tomado pastillas anticonceptivas?'
                           options={['si', 'no']}
                           setFieldValue={setFieldValue}
                           textValue={values.pathologicalBackground.birthControlPills}
                           textName='pathologicalBackground.birthControlPills'
                         />
-                        <RadioButtons
+                      <RadioButtons
                           textLabel='¿Te has operado recientemente?'
                           options={['si', 'no']}
                           setFieldValue={setFieldValue}
                           textValue={values.pathologicalBackground.previousOperations}
                           textName='pathologicalBackground.previousOperations'
                         />
-                        <RadioButtons
+                      <RadioButtons
                           textLabel='¿Has donado sangre en los últimos 6 meses?'
                           options={['si', 'no']}
                           setFieldValue={setFieldValue}
                           textValue={values.pathologicalBackground.bloodDonation}
                           textName='pathologicalBackground.bloodDonation'
                         />
-                        <Textarea
+                      <Textarea
                           textName='pathologicalBackground.observations'
                           textLabel='observaciones'
                           textValue={values.pathologicalBackground.observations}
@@ -792,7 +809,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                      </div>
+                    </div>
                   </div>)}
                 {/* aqui termina el formulario de antecedentes patologicos */}
 
@@ -800,18 +817,18 @@ export default function Giform () {
                 {formulario == 'NonPathological Background' && (
                   <div id='NonPathological Background' className='mt-10'>
                     <TitleHeader
-                        pageTitle='Antecedentes no patológicos'
-                        secondaryText=''
-                      />
+                      pageTitle='Antecedentes no patológicos'
+                      secondaryText=''
+                    />
                     <div className='mt-5 grid grid-cols-1 lg:grid-cols-2 gap-x-20 pb-5 border-b border-lighter-gray'>
-                        <RadioButtons
+                      <RadioButtons
                           textLabel='¿Como considera su alimentacion?'
                           options={['buena', 'regular', 'mala']}
                           setFieldValue={setFieldValue}
                           textValue={values.nonPathologicalBackground.feeding}
                           textName='nonPathologicalBackground.feeding'
                         />
-                        <FormInput
+                      <FormInput
                           textName='nonPathologicalBackground.toothBrushingFrequency'
                           textLabel='¿Con qué frecuencia se cepilla los dientes?'
                           textValue={values.nonPathologicalBackground.toothBrushingFrequency}
@@ -819,7 +836,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='nonPathologicalBackground.vaccines'
                           textLabel='Vacunas'
                           textValue={values.nonPathologicalBackground.vaccines}
@@ -827,7 +844,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                        <FormInput
+                      <FormInput
                           textName='nonPathologicalBackground.addictions'
                           textLabel='Adicciones'
                           textValue={values.nonPathologicalBackground.addictions}
@@ -836,7 +853,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
 
-                        <Select
+                      <Select
                           selectID='alcoholConsumption'
                           textName='nonPathologicalBackground.alcoholConsumption'
                           textValue={values.nonPathologicalBackground.alcoholConsumption}
@@ -844,14 +861,14 @@ export default function Giform () {
                           handleBlur={handleBlur}
                           selectQuestion='¿Bebe alcohol frecuentemente?'
                           outputOptions={[
-                          'Nunca he tomado',
-                          'No tomo',
-                          'Una vez al día',
-                          'Una vez cada quince días',
-                          'Una vez al mes'
-                        ]}
+                            'Nunca he tomado',
+                            'No tomo',
+                            'Una vez al día',
+                            'Una vez cada quince días',
+                            'Una vez al mes'
+                          ]}
                         />
-                        <Select
+                      <Select
                           selectID='cigarConsumption'
                           textName='nonPathologicalBackground.cigarConsumption'
                           textValue={values.nonPathologicalBackground.cigarConsumption}
@@ -859,15 +876,15 @@ export default function Giform () {
                           handleBlur={handleBlur}
                           selectQuestion='¿Con que frecuencia fuma?'
                           outputOptions={[
-                          'Nunca he fumado',
-                          'No fumo',
-                          '10 ó menos cajetillas por mes',
-                          '11 a 20 cajetillas por mes',
-                          '21 a 30 cajetillas por mes',
-                          '31 cajetillas por mes ó mas'
-                        ]}
+                            'Nunca he fumado',
+                            'No fumo',
+                            '10 ó menos cajetillas por mes',
+                            '11 a 20 cajetillas por mes',
+                            '21 a 30 cajetillas por mes',
+                            '31 cajetillas por mes ó mas'
+                          ]}
                         />
-                        <RadioButtons
+                      <RadioButtons
                           textLabel='¿Te has tatuado en los ultimos 6 meses?'
                           options={['Si', 'No']}
                           setFieldValue={setFieldValue}
@@ -875,7 +892,7 @@ export default function Giform () {
                           textName='nonPathologicalBackground.recentTattos'
                         />
 
-                        <Textarea
+                      <Textarea
                           textName='nonPathologicalBackground.hygieneDescription'
                           textLabel='Describa su higiene personal'
                           textValue={values.nonPathologicalBackground.hygieneDescription}
@@ -884,7 +901,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
 
-                        <FormInput
+                      <FormInput
                           textName='nonPathologicalBackground.services'
                           textLabel='Servicios básicos'
                           textValue={values.nonPathologicalBackground.services}
@@ -893,7 +910,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
 
-                        <Textarea
+                      <Textarea
                           textName='nonPathologicalBackground.unusualHabits'
                           textLabel='Hábitos extraños'
                           textValue={values.nonPathologicalBackground.unusualHabits}
@@ -902,7 +919,7 @@ export default function Giform () {
                           handleBlur={handleBlur}
                         />
 
-                        <Textarea
+                      <Textarea
                           textName='nonPathologicalBackground.observations'
                           textLabel='Observaciónes'
                           textValue={values.nonPathologicalBackground.observations}
@@ -910,8 +927,8 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                         />
-                      </div>
-                    <button type='submit' className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
+                    </div>
+                    <button type='button' onClick={() => sendPatient(values)} className='my-5 text-white text-sm pb-1 bg-plover-blue w-28 h-30px rounded my-1'>Guardar</button>
 
                   </div>)}
                 {/* aqui termina el formulario de antecedentes no patologiocos */}

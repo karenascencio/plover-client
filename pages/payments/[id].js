@@ -12,10 +12,11 @@ import useAvailableToken from '../../hooks/useAvailableToken'
 import router, { useRouter } from 'next/router'
 import NavBarDentist from '../../components/NavBarDentist'
 import bill from '../../public/bill.svg'
+import NothingToSee from '../../components/NothingToSee'
 import Image from 'next/image' 
 import { useS3Upload } from 'next-s3-upload'
 import useUserInfo from '../../hooks/useUserInfo'
-
+import AnotationsCard from '../../components/AnotationsCard'
 import dynamic from 'next/dynamic'
 
 //const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
@@ -302,7 +303,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 />
               </div>
             </div>
-            <div className='w-full flex flex-col'>
+             <div className='w-full flex flex-col'>
               <div className='self-start'>
                 
                 {rol=='dentista' &&
@@ -334,13 +335,14 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                   />
                 </div>
                 </>}
+                
                 {rol=='paciente' && <>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Monto</div>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Fecha</div>
                 </>}
                 <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
-                {!!dynamicPayments.lenght && (<div>aun no tienes pagos</div>)}
-                {!dynamicPayments.lenght && dynamicPayments.map((item, key) => {
+             
+                {!!dynamicPayments.length && dynamicPayments.map((item, key) => {
 								  return (
   <React.Fragment key={key}>
     <div className='col-span-2'><PlainText text={item.total} /></div>
@@ -356,6 +358,13 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 })}
               </div>
             </div>
+              {!dynamicPayments.length && 
+                <div className='w-full flex items-center'>
+                  <NothingToSee />
+              </div>
+              }
+
+
           </div>
         </main>
         <ToastContainer
