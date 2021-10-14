@@ -13,7 +13,6 @@ import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
-import ConfirmationModal from '../../components/ConfirmationModal'
 // Api
 import {
   getDentists,
@@ -75,7 +74,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   // const [deleteModal, setDeleteModal] = useState(false)
   // const [idPatientToDelete, setIdPatientToDelete] = useState('')
   const cardsInfo = []
-  console.log(dentistInfo)
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
@@ -145,7 +144,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
             </p>
           </div>
           <Carrusel
-            cards={cardsInfo}
+            cards={cardsInfo.sort((a, b) => b.thirdTitle - a.thirdTitle)}
           />
           <div className='w-full flex justify-between items-center mb-5'>
             <SearchInput
