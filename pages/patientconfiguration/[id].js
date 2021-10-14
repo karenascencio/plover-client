@@ -12,6 +12,7 @@ import ChangePicture from '../../components/ChangePicture'
 import SuccessAlert from '../../components/SuccessAlert'
 import TextWithLabel from '../../components/TextWithLabel'
 import H3 from '../../components/H3'
+import useUserInfo from '../../hooks/useUserInfo'
 // Api
 import { getPatients, getPatientById, patchPatient } from '../../lib/api'
 // My hooks
@@ -44,6 +45,7 @@ export const getServerSideProps = async (context) => {
 
 export default function Configuration ({ patientInfo }) {
   useAvailableToken()
+  const [id,rol] = useUserInfo()
   const { _id, userImage, name, lastName, email } = patientInfo
   const [profileImage, setProfileImage] = useState(userImage)
   const [patientUpdate, setPatientUpdate] = useState(null)
@@ -87,7 +89,12 @@ export default function Configuration ({ patientInfo }) {
         pauseOnHover
         transition={Zoom}
       />
-      <NavBarDentist isHome idDentist={_id} name={name} image={userImage} />
+      <NavBarDentist isHome
+        rol={rol} 
+        idDentist={_id} 
+        idPatient={_id}
+        name={name} 
+        image={userImage} />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
