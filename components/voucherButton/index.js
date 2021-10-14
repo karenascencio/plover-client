@@ -2,6 +2,10 @@ import React from 'react'
 import { useS3Upload } from 'next-s3-upload'
 //import DocViewer, { DocViewerRenderers } from 'react-doc-viewer'
 import { useEffect,useState} from 'react'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {patchPayment} from '../../lib/api'
 
 export default function VoucherButton(props) {
@@ -16,20 +20,64 @@ export default function VoucherButton(props) {
 		const [hasVoucher,setVoucher] = useState(!!payment.receipt)
 
 		//una vez que tengas la url de la imagen hacemos la peticion de patch
-		useEffect(() => {
-			async function uploadPicture(){
-				await patchPayment(payment._id, { receipt: file })
+		//useEffect(() => {
+			//async function uploadPicture(){
+				//await patchPayment(payment._id, { receipt: file })
+
+		// const notify = () => toast.promise(
+		// 	patchPayment(payment._id, { receipt: file }),
+		// 	{
+		// 	  pending: 'Subiendo comprobante',
+		// 	  success: {
+		// 		render({data}){
+		// 		  return `Comprobante agregado exitosamente`
+		// 		},
+		// 		// other options
+		// 		icon: "🟢",
+		// 	  },
+		// 	  error: {
+		// 		render({data}){
+		// 		  // When the promise reject, data will contains the error
+		// 		  return `Error al agregar comprobante`
+		// 		}
+		// 	  }
+		// 	}
+		// )
+		// notify()
+		// 	//uploadPicture()
+		// }, [file])
+
+
+
+		const notifyPatch = (url) => toast.promise(
+			patchPayment(payment._id, { receipt: url }),
+			{
+			  pending: 'Subiendo comprobante',
+			  success: {
+				render({data}){
+				  return `Comprobante agregado exitosamente`
+				},
+				// other options
+				icon: "🟢",
+			  },
+			  error: {
+				render({data}){
+				  // When the promise reject, data will contains the error
+				  return `Error al agregar comprobante`
+				}
+			  }
 			}
-			uploadPicture()
-		}, [file])
+		)
 
 		const handleFileChange = async file => {
 			console.log('estamos tratando de subir una imagen')
 			const { url } = await uploadToS3(file)
 			console.log(url)
+			notifyPatch(url)
 			setFile(url)
 			setVoucher(true)
 		}
+
 
 
     return (
@@ -56,5 +104,6 @@ export default function VoucherButton(props) {
 						</div> )
 					}
 				</>
+				
     )
 }
