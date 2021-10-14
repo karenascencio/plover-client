@@ -395,7 +395,7 @@ export default function Giform () {
                           handleChange={handleChange}
                           handleBlur={handleBlur}
                           selectQuestion='Estado civil'
-                          outputOptions={['soltero', 'casado', 'divorciado', 'separación en proceso judicial', 'viudo', 'concubinato']}
+                          outputOptions={['Soltero', 'Casado', 'Divorciado', 'Separación en proceso judicial', 'Viudo', 'Concubinato']}
                         />
                       </div>
 

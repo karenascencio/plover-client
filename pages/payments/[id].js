@@ -344,7 +344,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
 								  return (
   <React.Fragment key={key}>
     <div className='col-span-2'><PlainText text={item.total} /></div>
-    <div className='col-span-2'><PlainText text={new Date(item.date).toLocaleDateString()} /></div>
+    <div className='col-span-2'><PlainText text={dayjs.utc(item.date).locale('es').format('DD/MM/YYYY')} /></div>
     <VoucherButton
       rol={rol}
       payment={item}
@@ -382,9 +382,9 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
               pluginRenderers={DocViewerRenderers}
             />
             <button
-              className='z-50 w-2/12 h-1/5 bg-red-500 absolute top-0 right-0'
+              className='z-50 px-3 py-1 text-xl md:text-3xl bg-plover-blue text-white rounded absolute top-0 right-0'
               onClick={() => setVisible(false)}
-            >cerrar
+            >Cerrar
             </button>
           </div>
         </>
