@@ -24,23 +24,24 @@ import NavBarDentist from '../../components/NavBarDentist'
 import useUserInfo from '../../hooks/useUserInfo'
 dayjs.extend(utc)
 
-export const getStaticPaths = async () => {
-  const response = await getPatients()
-  const paths = response.map(patient => {
-    return {
-      params: {
-        id: patient._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export const getStaticPaths = async () => {
+//   const response = await getPatients()
+//   const paths = response.map(patient => {
+//     return {
+//       params: {
+//         id: patient._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export const getStaticProps = async (context) => {
-  const id = context.params.id
+export const getServerSideProps = async (context) => {
+  const id = context.query.id
+  console.log('el query es: ', context.query)
   const patientInfo = await getPatientById(id)
   const appointmentsInfo = await getAppointmentsByPatientId(id)
   const idDentist = patientInfo.idDentist

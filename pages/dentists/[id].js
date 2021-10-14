@@ -28,23 +28,24 @@ import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
-export async function getStaticPaths () {
-  const response = await getDentists()
-  const paths = response.map(dentist => {
-    return {
-      params: {
-        id: dentist._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export async function getStaticPaths () {
+//   const response = await getDentists()
+//   const paths = response.map(dentist => {
+//     return {
+//       params: {
+//         id: dentist._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
-  const id = context.params.id
+export async function getServerSideProps (context) {
+  const id = context.query.id
+  console.log('este es el contexto', context)
   const patientsInfo = await getPatientsByDentistId(id)
   const appointmentsInfo = await getAppointmentsByDentistId(id)
   const dentistInfo = await getDentistById(id)
@@ -59,6 +60,8 @@ export async function getStaticProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  
+  
   useAvailableToken()
   // hook para traer el rol del usuario
   const [id, rol] = useUserInfo()
