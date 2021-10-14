@@ -1,23 +1,29 @@
 import React, { useState } from 'react'
+import dayjs from 'dayjs'
+import 'dayjs/locale/es'
+import utc from 'dayjs/plugin/utc' 
+
+dayjs.extend(utc) 
 
 export default function Calendar (props) {
   const { value, handleChange, name } = props
-  const dateInitializer = () => {
-    const initialDate = new Date()
-    return initialDate.toDateString()
+  const dateInitializer = (value) => {
+    const initialDate = dayjs.utc(value)
+    return initialDate
   }
-  const [date, setDate] = useState(dateInitializer())
+  const [date, setDate] = useState(dateInitializer(value))
 
   const appointmentDate = event => {
-    const readableDate = new Date(event.target.value)
-    setDate(readableDate.toGMTString())
+    const readableDate = dayjs.utc(event.target.value)
+    setDate(readableDate)
   }
 
   return (
     <div className='my-5 text-right'>
-      <p className='text-4xl text-lighter-gray font-thin mb-1'>
+      <p className='text-4xl text-lighter-gray font-thin mb-1 capitalize'>
         {
-          date.split(' ').slice(1, 4).join(' ')
+          
+          date.locale('es').format('dddd D MMMM')
         }
       </p>
       <div>

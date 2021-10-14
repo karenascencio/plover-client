@@ -2,22 +2,30 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import utc from 'dayjs/plugin/utc'
-
+// My hooks
+import useAvailableToken from '../../hooks/useAvailableToken'
 // Api
-import api from '../../lib/api'
+import {
+  getPatients,
+  getPatientById,
+  getAppointmentsByPatientId,
+  getDentistById
+} from '../../lib/api'
 // My components
 import TitleHeader from '../../components/TitleHeader'
 import Carrusel from '../../components/Carrusel'
 import SearchInput from '../../components/SearchInput'
 import AddNewPatientButton from '../../components/AddNewPatientButton'
 import ProcedureCard from '../../components/ProcedureCard'
+import NothingToSee from '../../components/NothingToSee'
 // My images
 import addIcon from '../../public/addIcon.svg'
 import NavBarDentist from '../../components/NavBarDentist'
+import useUserInfo from '../../hooks/useUserInfo'
 dayjs.extend(utc)
 
 export const getStaticPaths = async () => {
-  const response = await api.getPatients()
+  const response = await getPatients()
   const paths = response.map(patient => {
     return {
       params: {
@@ -33,22 +41,39 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id
-  const patientInfo = await api.getPatientsById(id)
-  const appointmentsInfo = await api.getAppointmentsByPatientId(id)
+  const patientInfo = await getPatientById(id)
+  const appointmentsInfo = await getAppointmentsByPatientId(id)
+  const idDentist = patientInfo.idDentist
+  const dentistInfo = await getDentistById(idDentist)
   return {
     props: {
       patientInfo,
-      appointmentsInfo
+      appointmentsInfo,
+      dentistInfo
     }
   }
 }
 
-export default function Patient ({ patientInfo, appointmentsInfo }) {
-  const { idPatient, idDentist, userImage } = patientInfo
-  const { name, lastName } = patientInfo
+export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo }) {
+  useAvailableToken()
+  // hook para traernos el id y el rol del usuario
+  const [id, rol] = useUserInfo()
+  console.log('el id del usuario es ', id)
+  console.log('el rol del usuario es ', rol)
+
+  const { _id: idPatient, idDentist, userImage } = patientInfo
+  console.log(idPatient, idDentist)
+  const { name, lastName, userImage: imagePatient } = patientInfo
+
+  // nos traemos los datos necesarios para pintar el nombre
+  // y la imagen del odontologo
+  console.log(dentistInfo)
+  const { name: dentistName, userImage: imageDentist } = dentistInfo
+  console.log(dentistName, imageDentist)
+
   const [search, setSearch] = useState('')
   const cardsInfo = []
-
+  appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
@@ -65,7 +90,14 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
   return (
 
     <div className='flex flex-col sm:flex-row '>
-      <NavBarDentist isHome={false} idPatient={idPatient} idDentist={idDentist} />
+      <NavBarDentist
+        rol={rol}
+        isHome={false}
+        idPatient={idPatient}
+        idDentist={idDentist}
+        image={rol == 'paciente' ? imagePatient : imageDentist}
+        name={rol == 'paciente' ? name : dentistName}
+      />
       <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader
@@ -88,41 +120,47 @@ export default function Patient ({ patientInfo, appointmentsInfo }) {
               searchHandler={searchHandler}
               searchValue={search}
             />
-            <AddNewPatientButton
+            {rol == 'dentista' && <AddNewPatientButton
               title='Nuevo'
               imagen={addIcon}
-            />
+                                  />}
           </div>
           <div className='w-full border-t border-lighter-gray'>
             {
-          search
-            ? appointmentsInfo.map(appointment => {
-                const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
-                const appointmentId = appointment._id
-                return appointment.procedures.filter(procedure =>
-                  procedure.name.includes(search.toLowerCase())).map(procedure =>
-                    <ProcedureCard
-                      key={procedure._id}
-                      procedureDate={procedureDate}
-                      procedureName={procedure.name}
-                      procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
-                      anchor={appointmentId}
-                    />
-                )
-              })
-            : appointmentsInfo.map(appointment => {
-              const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
-              const appointmentId = appointment._id
-              return appointment.procedures.map(procedure =>
-                <ProcedureCard
-                  key={procedure._id}
-                  procedureDate={procedureDate}
-                  procedureName={procedure.name}
-                  procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
-                  anchor={appointmentId}
-                />
+          appointmentsInfo.length > 0
+            ? (
+                search
+                  ? appointmentsInfo.map(appointment => {
+                      const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
+                      const appointmentId = appointment._id
+                      return appointment.procedures.filter(procedure =>
+                        procedure.name.includes(search.toLowerCase())).map(procedure =>
+                          <ProcedureCard
+                            key={procedure._id}
+                            procedureDate={procedureDate}
+                            procedureName={procedure.name}
+                            procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                            anchor={appointmentId}
+                          />
+                      )
+                    })
+                  : appointmentsInfo.map(appointment => {
+                    const procedureDate = dayjs.utc(appointment.date).locale('es').format('dddd D MMMM')
+                    const appointmentId = appointment._id
+                    return appointment.procedures.map(procedure =>
+                      <ProcedureCard
+                        key={procedure._id}
+                        procedureDate={procedureDate}
+                        procedureName={procedure.name}
+                        procedureStatus={procedure.status ? 'Terminado' : 'Pendiente'}
+                        anchor={appointmentId}
+                      />
+                    )
+                  })
               )
-            })
+            : <div className='w-full flex items-center'>
+              <NothingToSee />
+            </div>
         }
           </div>
         </div>

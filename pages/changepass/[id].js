@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-
+import useAvailableToken from '../../hooks/useAvailableToken'
 import { useRouter } from 'next/router'
-import api from '../../lib/api'
+import { resetPassword } from '../../lib/api'
 import H1 from '../../components/H1'
-import PasswordInput from '../../components/PasswordInput'
 import LoginButtons from '../../components/LoginButtons'
 import lock from '../../public/lock.svg'
 import teeth from '../../public/teeth.svg'
@@ -12,8 +11,10 @@ import hidepsw from '../../public/hidepsw.svg'
 import Image from 'next/image'
 
 export default function ChangePass () {
+  useAvailableToken()
   const [seePassword, setSeePassword] = useState(false)
-  const [differentPassword, setDifferentPassword] = useState(true)
+  const [successPop, setSuccessPop] = useState(false)
+  const [falsePop, setFalsePop] = useState(false)
   const [resetPassword, setResetPassword] = useState({ password: '', verifyPassword: '' })
   const passwordRequirement = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
   const { query } = useRouter()
@@ -34,10 +35,10 @@ export default function ChangePass () {
     const requirements = passwordRequirement.test(password)
 
     if (matchPassword === false || requirements === false) {
-      setDifferentPassword(false)
+      setFalsePop(true)
       console.log('La contraseña no cumple los requisitos')
     } else {
-      setDifferentPassword(true)
+      setSuccessPop(true)
       newPassword(resetPassword)
     }
   }
@@ -45,8 +46,15 @@ export default function ChangePass () {
   const buttonHandler = async () => {
     try {
       console.log('handler', resetPassword)
-      const response = await api.resetPassword(resetPassword, query.id)
-      console.log(response)
+      const response = await resetPassword(resetPassword, query.id)
+      if (response.success) {
+        setTimeout(() => {
+          router.push('/login')
+        }, 5000)
+      } else {
+        setTimeout(() => {
+        }, 5000)
+      }
     } catch (error) { console.log(error.message) }
   }
 
@@ -60,7 +68,18 @@ export default function ChangePass () {
               textColor='plover-blue'
             />
           </div>
-          {!differentPassword && <h3>Las contaseñas no son iguales</h3>}
+          
+          {successPop &&
+            <div className='flex justify-center text-green-800  bg-green-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+              <p>Se ha mandado un correo con el enlace.</p>
+            </div>
+          }
+          {
+            falsePop &&
+              <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                <p>El correo que ingresaste no existe.</p>
+              </div>
+                  }
           <div className=' mb-10px  mt-70px w-200px'>
             <div className='flex justify-center justify-items-start border-b-2 mb-4 border-black w-250px md:w-408px lg:w-539px'>
               <Image src={lock} heigth={40} width={40} />
