@@ -21,10 +21,10 @@ import dynamic from 'next/dynamic'
 
 const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-//const DocViewerRenderers = dynamic(() =>
-  //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+const {DocViewerRenderers} = dynamic(() =>
+  import('react-doc-viewer'), {ssr:false});
 
-import { DocViewerRenderers } from "react-doc-viewer";
+//import { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
