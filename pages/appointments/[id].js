@@ -35,21 +35,21 @@ import {  getAllAppointmentsIds,
           getDentistById,
           patchAppointment} from '../../lib/api'   
 
-export async function getStaticPaths () {
-  const ids = await getAllAppointmentsIds()
-  const paths = ids.map(item => {
-    return {
-      params: { id: item }
-    }
-  })
+// export async function getStaticPaths () {
+//   const ids = await getAllAppointmentsIds()
+//   const paths = ids.map(item => {
+//     return {
+//       params: { id: item }
+//     }
+//   })
 
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
+export async function getServerSideProps (context) {
   const id = context.params.id
   const appointment = await getAppointmentById(id)
   //aqui obtenemos los id del dentista y el paciente

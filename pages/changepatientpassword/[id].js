@@ -14,22 +14,22 @@ import { getPatients, getPatientById, changePasswordPatient } from '../../lib/ap
 // My hooks
 import useAvailableToken from '../../hooks/useAvailableToken'
 
-export const getStaticPaths = async () => {
-  const response = await getPatients()
-  const paths = response.map(patient => {
-    return {
-      params: {
-        id: patient._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export const getStaticPaths = async () => {
+//   const response = await getPatients()
+//   const paths = response.map(patient => {
+//     return {
+//       params: {
+//         id: patient._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const id = context.params.id
   const patientInfo = await getPatientById(id)
   return {
