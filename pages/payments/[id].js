@@ -46,21 +46,21 @@ import {getAllPatientsIds,
       } from '../../lib/api'
 dayjs.extend(utc)
 
-export async function getStaticPaths () {
-  const ids = await getAllPatientsIds()
-  const paths = ids.map(item => {
-    return {
-      params: { id: item }
-    }
-  })
+// export async function getStaticPaths () {
+//   const ids = await getAllPatientsIds()
+//   const paths = ids.map(item => {
+//     return {
+//       params: { id: item }
+//     }
+//   })
 
-  return {
-    paths,
-    fallback: false
-  }
-}
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
+export async function getServerSideProps (context) {
   const id = context.params.id
   const payments = await getPaymentsByPatientId(id)
   const appointments = await getAppointmentsByPatientId(id)
