@@ -28,22 +28,22 @@ import PatientCard from '../../components/PatientCard'
 import NavBarDentist from '../../components/NavBarDentist'
 dayjs.extend(utc)
 
-export async function getStaticPaths () {
-  const response = await getDentists()
-  const paths = response.map(dentist => {
-    return {
-      params: {
-        id: dentist._id.toString()
-      }
-    }
-  })
-  return {
-    paths,
-    fallback: false
-  }
-}
+// export async function getStaticPaths () {
+//   const response = await getDentists()
+//   const paths = response.map(dentist => {
+//     return {
+//       params: {
+//         id: dentist._id.toString()
+//       }
+//     }
+//   })
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
 
-export async function getStaticProps (context) {
+export async function getServerSideProps (context) {
   const id = context.params.id
   const patientsInfo = await getPatientsByDentistId(id)
   const appointmentsInfo = await getAppointmentsByDentistId(id)
