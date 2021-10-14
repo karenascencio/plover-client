@@ -24,7 +24,7 @@ import dynamic from 'next/dynamic'
 //const DocViewerRenderers = dynamic(() =>
   //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
 
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
@@ -382,7 +382,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         />
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {visible && (
+   {/* {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -397,7 +397,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )}
+      )} */}
     </>
   )
 }
