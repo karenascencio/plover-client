@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import router, { useRouter } from 'next/router'
-import Link from 'next/link'
-import api from '../lib/api'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { login } from '../lib/api'
+import useAvailableToken from '../hooks/useAvailableToken'
 // .: Components
 import LoginForm from '../components/LoginForm'
 
 export default function Login () {
+  useAvailableToken()
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
   const [error, setError] = useState(false)
   const router = useRouter()
-  const Login = async details => {
-    console.log('login INFO', userData)
+  async function Login (details) {
     setUserData(details)
   }
 
   const buttonHandler = async () => {
+    if (userData.email === '' && userData.password === '') console.log('cuack')
     try {
-      console.log('handler', userData)
-      const response = await api.login(userData)
+      const response = await login(userData)
       const success = response.success
-      // console.log('response', response.data.token)
       if (success) {
-        const tokent = response.data.token
-        const tokenjwt = api.parseJwt(tokent)
-        const { id } = tokenjwt
-        router.push(`/dentists/${id}`)
+        const userToken = response.data.token
+        window.localStorage.setItem('userToken', userToken)
+        // if (token.length <= 0) throw new Error('Token not found')
+        const tokenData = atob(userToken.split('.')[1])
+        const tokenJson = JSON.parse(tokenData)
+        console.log(tokenJson)
+        const id = tokenJson.id
+        if (tokenJson.rol == 'dentista') {
+          router.push(`/dentists/${id}`)
+        } else if (tokenJson.rol == 'paciente') {
+          router.push(`/patients/${id}`)
+        }
       } else {
         setError(true)
       }

@@ -10,16 +10,16 @@ import PasswordInput from '../../components/PasswordInput'
 // Validation schema
 import { loggedPasswordSchema } from '../../lib/DentistSchemaValidation'
 // Api
-import { getDentists, getDentistById, changePassword } from '../../lib/api'
+import { getPatients, getPatientById, changePasswordPatient } from '../../lib/api'
 // My hooks
 import useAvailableToken from '../../hooks/useAvailableToken'
 
 export const getStaticPaths = async () => {
-  const response = await getDentists()
-  const paths = response.map(dentist => {
+  const response = await getPatients()
+  const paths = response.map(patient => {
     return {
       params: {
-        id: dentist._id.toString()
+        id: patient._id.toString()
       }
     }
   })
@@ -31,25 +31,25 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = context.params.id
-  const dentistInfo = await getDentistById(id)
+  const patientInfo = await getPatientById(id)
   return {
     props: {
-      dentistInfo
+      patientInfo
     }
   }
 }
 
-export default function Configuration ({ dentistInfo }) {
+export default function Configuration ({ patientInfo }) {
   useAvailableToken()
-  const { _id, userImage, name, lastName, password } = dentistInfo
+  const { _id, userImage, name, lastName, password } = patientInfo
   const [successPop, setSuccessPop] = useState(false)
   const [falsePop, setFalsePop] = useState(false)
   const buttonHandler = async (values) => {
     try {
       console.log('Cuack!!')
-      const dataUser = { ...values, id: dentistInfo._id }
+      const dataUser = { ...values, id: _id }
       // console.log('dataUser', dataUser)
-      const response = await changePassword(dataUser)
+      const response = await changePasswordPatient(dataUser)
       const success = response.success
       if (success) {
         setSuccessPop(true)

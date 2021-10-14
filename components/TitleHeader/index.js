@@ -13,7 +13,7 @@ export default function TitleHeader (props) {
           patientLastName={patientLastName}
         />
         <img
-          className='h-10 w-10 rounded-full hidden md:block'
+          className='h-10 w-10 rounded-full hidden md:block object-cover'
           src={patientImage}
           alt='patient-image'
         />

@@ -1,41 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import { Formik, Form, useField } from 'formik'
+import { useS3Upload } from 'next-s3-upload'
+import { Formik, Form} from 'formik'
 import * as Yup from 'yup'
-
-import api from '../lib/api'
+import useAvailableToken from '../hooks/useAvailableToken'
+import { signUp } from '../lib/api'
 // .: userSchema
 import { dentistSchema } from '../lib/DentistSchemaValidation'
 // .: components
 import RegisterInput from '../components/dentistRegisterInput'
 import RegisterSelectInput from '../components/RegisterSelectInput'
 import PasswordInput from '../components/PasswordInput'
-import ChangePicture from '../components/ChangePicture'
+import RegisterPicture from '../components/RegisterPicture'
 
 // .: Images
 import close from '../public/close.svg'
+const defaultPicture = 'https://plover-bucket.s3.us-east-2.amazonaws.com/next-s3-uploads/13c4f937-4c34-4f51-b0c4-bc633854b13f/12artboard_1.png'
 
 export default function DentistRegister () {
+  useAvailableToken()
   const router = useRouter()
   // .: hooks
   const [falsePop, setFalsePop] = useState(false)
+  const [profileImage, setProfileImage] = useState(defaultPicture)
+  const { uploadToS3 } = useS3Upload()
+  console.log('cuack', profileImage)
   // .: Handdler
-  const registerHandler = async (values) => {
+  const registerHandler = async (values, file) => {
     try {
       console.log(values)
       if (values) {
-        const response = await api.signIn(values)
+        const response = await signUp(values)
         const success = response.success
         if (success) {
           alert('Se ha mandado un correo para verificar tu cuenta')
-          router.push('/login')
+          //router//.push('/login')
         } else {
           setFalsePop(true)
         }
       } else throw new Error()
     } catch (error) { console.log((error.message)) }
   }
+
+  const handleFileChange = async file => {
+    const { url } = await uploadToS3(file)
+    setProfileImage(url)
+    console.log('handler', profileImage)
+  }
+ 
+  // .: UseEffect
+  useEffect(() => {
+    
+  }, [profileImage])
+ 
   return (
     <>
       <Formik
@@ -56,15 +73,17 @@ export default function DentistRegister () {
           college: '',
           profesionalLicense: '',
           password: '',
-          comparePassword: ''
+          comparePassword: '',
+          userImage: ''
         }}
         /* .: Validation Schema using Yup */
         validationSchema={dentistSchema}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            // alert(JSON.stringify(values, null, 2))
+            //alert(JSON.stringify(values, null, 2))     
             setSubmitting(false)
-            registerHandler(values)
+            const userData = {...values, userImage: profileImage}
+            registerHandler(userData)
           }, 400)
         }}
       >
@@ -75,7 +94,12 @@ export default function DentistRegister () {
               <div className='mt-90px mb-50px border-b-2 border-plover-blue'>
                 <h3 className='text-plover-blue text-center text-2xl'>Datos Personales</h3>
               </div>
-              {/* <ChangePicture /> */}
+              <div className='flex justify-center'>
+                <RegisterPicture 
+                  profileImage={profileImage}
+                  uploadHandler={handleFileChange}
+                />
+              </div> 
               <RegisterInput
                 label='Nombre'
                 name='name'
@@ -164,11 +188,11 @@ export default function DentistRegister () {
                 <h3 className='text-plover-blue text-center text-2xl'>Datos de la cuenta</h3>
               </div>
               {
-                falsePop
-                  ? <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
-                    <p>El correo que intentas usar ya esta registrado intenta con uno nuevo o recupera tu cuenta</p>
-                  </div>
-                  : null
+                falsePop ?
+                <div className='flex justify-center text-red-800  bg-red-200 text-center rounded p-1 w-280px md:w-408px lg:w-539px'>
+                  <p>El correo que intentas usar ya esta registrado intenta con uno nuevo o recupera tu cuenta</p>
+                </div>
+                : null
               }
               <RegisterInput
                 label='Correo para registrar tu cuenta'
