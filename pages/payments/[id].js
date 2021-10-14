@@ -201,7 +201,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
      setPayment({ ...payment, [name]: value })
    }
 
-   const notify = () => toast.success('Pago agregado', {
+   const notifyPayment = () => toast.success('Pago agregado', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: true,
@@ -225,11 +225,12 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
        },1000)
      }
      else{
-      notify()
-      //await postPayment(payment)
-      //const newPayments = await getPaymentsByPatientId(idPatient)
-      //console.log(newPayments)
-      //setDynamicPayments(newPayments)
+      
+      await postPayment(payment)
+      notifyPayment()
+      const newPayments = await getPaymentsByPatientId(idPatient)
+      console.log(newPayments)
+      setDynamicPayments(newPayments)
      }
 }
 

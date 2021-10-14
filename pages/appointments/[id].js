@@ -17,7 +17,7 @@ import Image from 'next/image'
 import addIcon from '../../public/addIcon.svg'
 import useUserInfo from '../../hooks/useUserInfo'
 import AnotationsCard from '../../components/AnotationsCard'
-
+import {useRouter} from 'next/router'
 import annotation from '../../public/post-it.png'
 import care from '../../public/care.png'
 dayjs.extend(utc)
@@ -25,6 +25,8 @@ dayjs.extend(utc)
 // nota hay un bugsito en el manejo de estado de los toggles
 // corregimos los errores de vercer, corregimos el pull request
 // corregimos el carrusel y los links y los erroes de vercel
+
+import swal from 'sweetalert';
 
 import {  getAllAppointmentsIds,
           getAppointmentById,
@@ -68,6 +70,8 @@ export async function getStaticProps (context) {
 }
 
 export default function Appointment ({ appointmentFetched, patientInfo, appointmentsInfo,dentistInfo }) {
+  
+  const router = useRouter()
   useAvailableToken()
     //hook para traernos el id y el rol del usuario
     const [id,rol] = useUserInfo()
@@ -120,8 +124,17 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
   }
   async function handleSubmit () {
     await patchAppointment(appointment, appointmentFetched._id)
+    //modal de exito de creacion de cita
+    swal("Informacion de la cita", "actualizada exitosamente", "success",{
+      button:{
+        className:'bg-plover-blue',
+        visible:false
+      },
+      timer:2000
+    }).then(()=>{
+      router.push(`/patients/${idPatient._id}`)
+    })
   }
-
   return (
     <div className='flex flex-col sm:flex-row '>
       <NavBarDentist 
@@ -151,29 +164,31 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
               <div className='self-start '><H3 textTitle='Lista de Procedimientos' textColor='plover-blue' /></div>
 
               <div>
-                {rol=='dentista' && (<button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
-                <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
-                <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
-                   </button>)}
+                <button onClick={handleAddProcedure} className=' flex justify-center text-white bg-plover-blue w-30px sm:w-28  h-30px rounded my-1'>
+                 <div className='pt-1'><Image src={addIcon} height={15} width={15} /></div>
+                 <span className='hidden sm:inline-block pl-3 text-sm pt-0.5'>Agregar</span>
+                </button>
               </div>
             </div>
             <div className='flex'>
-              <div className='w-full grid grid-cols-6 gap-x-5'>
+              <div className='w-full grid grid-cols-7 gap-x-5'>
                 {rol=='dentista' &&
                   <>
-                    <div className='col-span-3'><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                    <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
-                    <div className='flex flex-col items-end mt-5 '>
-                      <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
-                      <Toggle handleToggle={handleToggle} disabled />
-                    </div>
+                  <div className='col-span-4 '><FormInput textLabel='Procedimiento' textName='name' textValue={procedure.name} inputID='Procedimiento' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                <div className='col-span-2'><FormInput textLabel='Costo' textName='price' textValue={procedure.price} inputID='Costo' handleChange={handleProcedure} handleBlur={() => console.log('blur')} /></div>
+                <div className='flex flex-col  mt-5'>
+                  <span className='text-plover-blue self-center text-sm mb-2 xl:pl-6'>Estatus</span>
+                  <div className='flex justify-end'>
+                    <Toggle handleToggle={handleToggle} disabled={true} />
+                  </div>
+                </div>
                   </>
                 }
                 {
 									procedures.map((procedure, key) => {
 									  return (
   <React.Fragment key={key}>
-    <div className='col-span-3'><PlainText text={procedure.name} /></div>
+    <div className='col-span-4'><PlainText text={procedure.name} /></div>
     <div className='col-span-2'><PlainText text={procedure.price} /></div>
     <div className='flex justify-end'>
       <Toggle id={key} handleToggle={handleToggle} status={procedure.status} disabled={rol=='paciente'?true:false} />

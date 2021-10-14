@@ -13,6 +13,9 @@ import { useRouter } from 'next/router'
 import { postPatient } from '../lib/api'
 import useUserInfo from '../hooks/useUserInfo'
 
+import swal from 'sweetalert';
+
+
 // single form
 export default function Giform () {
   useAvailableToken()
@@ -267,10 +270,14 @@ export default function Giform () {
             onSubmit={async (values) => {
               const formatedValues = formatPatient(values)
               console.log(formatedValues)
-              alert(JSON.stringify(formatedValues,null,2))
+              //alert(JSON.stringify(formatedValues,null,2))
               await postPatient(formatedValues)
-              router.push(`/dentists/${id}`)
-              
+              swal("Nueva Paciente", "creado exitosamente", "success",{
+                button:{
+                className:'bg-plover-blue'
+                }
+              });
+              //router.push(`/dentists/${id}`)
           }}
           >
             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue, errors, touched }) => (
