@@ -58,6 +58,7 @@ export default function NavBarDentist (props) {
   function handleHamburgerMenu () {
     setIsOpen(!isOpen)
   }
+  //arreglaremos el navBar de denstista
   console.log('el rol desde el navBar es: ',rol)
   return (
     <div className='z-40 '>
