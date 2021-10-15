@@ -80,7 +80,7 @@ export default function Medicalrecord ({ patientFetched }) {
 
   return (
 
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarPatient 
         rol={rol}
         formulario={formulario} 
@@ -88,8 +88,8 @@ export default function Medicalrecord ({ patientFetched }) {
         idDentist={idDentist}
         idPatient={idPatient}
         />
-      <main className='flex mt-16 sm:mt-1 justify-center flex-grow sm:w-65vw mx-11'>
-        <div className='w-full max-w-screen-lg flex flex-col'>
+      <main className='sm:absolute right-0 flex sm:mt-1 justify-center flex-grow sm:w-60vw mx-11 '>
+        <div className=' flex flex-col w-full'>
           {/* aqui comienza el formulario de informacion general */}
           {formulario == 'General Information' && (
             <div id='General Information' className='pt-14 md:pt-10'>

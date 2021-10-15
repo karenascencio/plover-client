@@ -75,7 +75,7 @@ export default function Configuration ({ patientInfo }) {
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <ToastContainer
         toastStyle={{ backgroundColor: '#EDF5FC' }}
         position='top-right'
@@ -95,7 +95,7 @@ export default function Configuration ({ patientInfo }) {
         idPatient={_id}
         name={name} 
         image={userImage} />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex justify-center flex-grow sm:w-60vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Configuración'
