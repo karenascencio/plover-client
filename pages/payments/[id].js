@@ -17,14 +17,16 @@ import Image from 'next/image'
 import { useS3Upload } from 'next-s3-upload'
 import useUserInfo from '../../hooks/useUserInfo'
 import AnotationsCard from '../../components/AnotationsCard'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 
-//const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
+// const DocViewer = dynamic(() => import('react-doc-viewer'), { ssr: false })
 
-//const DocViewerRenderers = dynamic(() =>
-  //import('react-doc-viewer').then(module => module.DocViewerRenderers), {ssr:false});
+// const DocViewerRenderers = dynamic(() =>
+//   import('react-doc-viewer').then(module => {
+//     console.log(module)
+//     return module.DocViewerRenderers}), {ssr:false});
 
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 import VoucherButton from '../../components/voucherButton'
 
@@ -274,7 +276,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
 //   else{
      return ( 
       <>
-      <div className='flex flex-col sm:flex-row '>
+      <div className='sm:relative flex flex-col sm:flex-row '>
         <NavBarDentist
           rol={rol}
           isHome={false}
@@ -285,7 +287,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         
 
         />
-        <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+        <main className='sm:absolute right-0 flex justify-center flex-grow sm:w-60vw mx-11'>
           <div className='flex flex-col items-center max-w-screen-lg '>
             <TitleHeader
               pageTitle='Paciente'
@@ -340,7 +342,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Monto</div>
                 <div className='col-span-2 text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Fecha</div>
                 </>}
-                <div className='text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
+                <div className='hidden md:block text-plover-blue text-sm pt-5 rounded ml-1 py-1.5 px-1 w-full'>Comprobante</div>
              
                 {!!dynamicPayments.length && dynamicPayments.map((item, key) => {
 								  return (
@@ -352,7 +354,6 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
       payment={item}
       handleSeeFile={handleSeeFile}
     />
-    
   </React.Fragment>
 								  )
                 })}
@@ -382,7 +383,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         />
       </div>
     {/*aqui va la logica para mostrar el documento*/}
-   {visible && (
+   {/* {visible && (
         <>
           <div className='z-40 bg-plover-blue bg-opacity-25 w-full h-100vh fixed top-0 border border-red-500'>
             <DocViewer
@@ -397,7 +398,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
             </button>
           </div>
         </>
-      )}
+      )} */}
     </>
   )
 }

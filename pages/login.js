@@ -6,7 +6,6 @@ import useAvailableToken from '../hooks/useAvailableToken'
 import LoginForm from '../components/LoginForm'
 
 export default function Login () {
-  useAvailableToken()
   const [userData, setUserData] = useState({ email: '', password: '' })
   const [webToken, setWebToken] = useState('')
   const [error, setError] = useState(false)

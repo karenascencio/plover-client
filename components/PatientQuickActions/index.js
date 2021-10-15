@@ -24,7 +24,7 @@ export default function PatientQuickActions (props) {
       />
       <PaymentHistoryButton
         image={payments}
-        reference={`/payments/${idPatient}?idDentist=${idDentist}`}
+        reference={`/payments/${idPatient}`}
       />
       <DeleteButton
         image={deletePatient}

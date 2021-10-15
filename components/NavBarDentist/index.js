@@ -10,6 +10,8 @@ import ProfilePicture from '../ProfilePicture'
 import logo from '../../public/logo.svg'
 import Image from 'next/image'
 import LogOutButton from '../LogOutButton'
+import ploverLogo from '../../public/plover-logo.png'
+
 
 export default function NavBarDentist (props) {
   const { isHome, idPatient, idDentist, image,name,rol } = props
@@ -19,7 +21,7 @@ export default function NavBarDentist (props) {
     { title: 'Agregar cita', link: `/newappointment?idDentist=${idDentist}&idPatient=${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
-    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
+    { title: 'Historial de pagos', link: `/payments/${idPatient}` },
     { title: 'Configuración', link: `/configuration/${idDentist} ` }
   ]
 
@@ -32,8 +34,8 @@ export default function NavBarDentist (props) {
     { title: 'Home', link: `/patients/${idPatient}` },
     { title: 'Consultar citas', link: `/patients/${idPatient}` },
     { title: 'Historial clínico', link: `/medicalrecords/${idPatient}` },
-    { title: 'Historial de pagos', link: `/payments/${idPatient}?idDentist=${idDentist}` },
-    { title: 'Configuración', link:`/patientconfiguration/${idPatient}`}
+    { title: 'Historial de pagos', link: `/payments/${idPatient}` },
+    { title: 'Configuración', link: `/patientconfiguration/${idPatient}`}
     // { title: 'Configuración', link: `/configuration/${idDentist} ` }
 
   ]
@@ -56,15 +58,17 @@ export default function NavBarDentist (props) {
   function handleHamburgerMenu () {
     setIsOpen(!isOpen)
   }
+  //arreglaremos el navBar de denstista
   console.log('el rol desde el navBar es: ',rol)
   return (
-    <div className='z-40 '>
-      <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
+    <div className='z-50 sm:absolute'>
+      <div className='sm:fixed flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
         <div className='h-16 flex justify-center'>
-          <div className='hidden md:block h-10 w-10'>
+          <div className='hidden md:block h-16 w-015 mr-3'>
+            <Image src={ploverLogo} />
           </div>
           <p
-            className='text-white text-3xl md:text-5xl font-thin font-lato'
+            className='mt-2 sm:mt-0 text-white text-3xl md:text-5xl font-thin '
           >
             Plover
           </p>

@@ -89,18 +89,21 @@ export default function VoucherButton(props) {
 					disabled={rol=='paciente'?true:false}
           			id={payment._id}
           			onClick={openFileDialog}
-          			className={`p-1 px-5 text-white ${rol=='paciente'?'bg-lighter-gray':'bg-plover-blue'}  rounded my-1`}
+          			className={`text-sm p-1 md:px-5 text-white ${rol=='paciente'?'bg-lighter-gray':'bg-plover-blue'}  rounded my-1`}
         				>Agregar
         			</button>
       			</div>)
 					}
 					{hasVoucher && (
 						<div>
-							<button
-          			className='p-1 px-5 text-white bg-plover-blue  rounded my-1'
-          			onClick={()=>handleSeeFile(file)}
+							<a
+          			className='text-sm p-1 md:px-5 text-white bg-plover-blue  rounded my-1'
+          			href={file}
+								download
+								target='_blank'
+								rel="noreferrer"
         				>Mostrar
-      				</button>
+      				</a>
 						</div> )
 					}
 				</>

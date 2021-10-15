@@ -89,7 +89,7 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
 
   return (
 
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarDentist
         rol={rol}
         isHome={false}
@@ -98,7 +98,7 @@ export default function Patient ({ patientInfo, appointmentsInfo, dentistInfo })
         image={rol == 'paciente' ? imagePatient : imageDentist}
         name={rol == 'paciente' ? name : dentistName}
       />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex justify-center flex-grow lg:w-65vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col items-center'>
           <TitleHeader
             pageTitle='Paciente'
