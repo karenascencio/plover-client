@@ -59,6 +59,8 @@ export async function getServerSideProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  
+  
   useAvailableToken()
   // hook para traer el rol del usuario
   const [id, rol] = useUserInfo()
@@ -76,6 +78,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
+    if (!appointment.idPatient) return
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
