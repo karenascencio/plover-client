@@ -25,9 +25,8 @@ export default function NavBarPatient (props) {
     setIsOpen(!isOpen)
   }
   return (
-    <div className='z-50  '>
-
-      <div className='sm:sticky top-0  flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
+    <div className='z-50 '>
+      <div className='flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
         <div className='flex flex-col items-start'>
           <div className='sm:mt-5'><H1 textTitle='Plover' textColor='white' /></div>
         </div>
