@@ -114,7 +114,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarDentist
         isHome
         idDentist={idDentist}
@@ -123,7 +123,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
         name={name}
         rol={rol}
       />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex justify-center flex-grow lg:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Home'

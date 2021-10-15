@@ -79,7 +79,7 @@ export default function Configuration ({ dentistInfo }) {
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <ToastContainer
         toastStyle={{ backgroundColor: '#EDF5FC' }}
         position='top-right'
@@ -94,7 +94,7 @@ export default function Configuration ({ dentistInfo }) {
         transition={Zoom}
       />
       <NavBarDentist isHome idDentist={_id} name={name} image={userImage} />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex justify-center flex-grow sm:w-60vw mx-11 '>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Configuración'
@@ -223,7 +223,7 @@ export default function Configuration ({ dentistInfo }) {
               }
               <div className='flex justify-center w-full mb-5 py-0.5 text-plover-blue rounded border-2 border-plover-blue hover:border-login-blue hover:text-login-blue'>
                 <Link href={`/changepassword/${_id}`}>
-                  <a>Cambiar de contraseña</a>
+                  <a className='text-center' >Cambiar de contraseña</a>
                 </Link>
               </div>
             </div>

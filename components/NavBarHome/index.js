@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import H1 from '../H1'
 import Greeting from '../Greeting'
+import ploverLogo from '../../public/plover-logo.png'
 import HamburgerMenu from 'react-hamburger-menu'
+import Image from 'next/image'
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
@@ -23,23 +25,32 @@ export default function NavBarHome () {
     <div className='z-40 '>
       <div className='flex justify-between items-center h-20 md:w-screen bg-plover-blue'>
         <div className='flex pl-1'>
-          <H1 textTitle='Plover' textColor='white' />
+          <div className='h-16 flex justify-center items-center'>
+            <div className='hidden md:block h-10 w-11 mr-3'>
+              <Image src={ploverLogo} />
+            </div>
+            <p
+              className='mt-2 sm:mt-0 text-white text-2xl md:text-4xl font-thin '
+            >
+              Plover
+            </p>
+          </div>
         </div>
 
         <div className='w-280px'>
-        <ul className='flex  justify-evenly invisible md:visible'>
-          {
+          <ul className='flex  justify-evenly invisible md:visible'>
+            {
                         optionsHome.map((item, key) => {
                           return (
                             <motion.li
                               whileHover={{ scale: 1.2 }}
                               className='' key={key}
-                            ><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm p-1 rounded'>{item.title}</a></Link>
+                            ><Link href={item.link}><a className='bg-white block text-plover-blue text-center text-sm py-1 px-1.5 rounded'>{item.title}</a></Link>
                             </motion.li>
                           )
                         })
                     }
-        </ul>
+          </ul>
         </div>
         <HamburgerMenu
           className='sm:hidden mr-3'
