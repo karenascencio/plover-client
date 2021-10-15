@@ -59,6 +59,8 @@ export async function getServerSideProps (context) {
 }
 
 export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
+  
+  
   useAvailableToken()
   // hook para traer el rol del usuario
   const [id, rol] = useUserInfo()

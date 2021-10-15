@@ -36,21 +36,21 @@ import { getAllPatientsIds,
           getPatientById} from '../../lib/api'     
 
 
-// export async function getStaticPaths () {
-//   const ids = await getAllPatientsIds()
-//   const paths = ids.map(item => {
-//     return {
-//       params: { id: item }
-//     }
-//   })
+export async function getStaticPaths () {
+  const ids = await getAllPatientsIds()
+  const paths = ids.map(item => {
+    return {
+      params: { id: item }
+    }
+  })
 
-//   return {
-//     paths,
-//     fallback: false
-//   }
-// }
+  return {
+    paths,
+    fallback: false
+  }
+}
 
-export async function getServerSideProps (context) {
+export async function getStaticProps (context) {
   const id = context.params.id
   const patient = await getPatientById(id)
   return {
