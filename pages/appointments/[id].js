@@ -136,7 +136,7 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
     })
   }
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarDentist 
         rol={rol}
         isHome={false} 
@@ -146,8 +146,8 @@ export default function Appointment ({ appointmentFetched, patientInfo, appointm
         name={rol=='paciente'?name:nameDentist} 
         />
       {/* el w-full rompe el layout */}
-      <main className='flex  justify-center flex-grow sm:w-65vw mx-11 '>
-        <div className='max-w-screen-lg w-full flex flex-col items-center '>
+      <main className='sm:absolute right-0 flex justify-center sm:w-60vw flex-grow  mx-11 '>
+        <div className='w-full flex flex-col items-center '>
           <TitleHeader
             pageTitle='Paciente'
             patientName={name}

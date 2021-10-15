@@ -83,13 +83,13 @@ export default function Giform () {
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarPatient
         formulario={formulario}
         handleOption={handleOption}
         idDentist={id}
       />
-      <main className='flex w-ful justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex w-ful justify-center flex-grow sm:w-60vw mx-11'>
         <div className='w-full max-w-screen-lg flex flex-col'>
           <Formik
             initialValues={{

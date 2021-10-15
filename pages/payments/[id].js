@@ -276,7 +276,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
 //   else{
      return ( 
       <>
-      <div className='flex flex-col sm:flex-row '>
+      <div className='sm:relative flex flex-col sm:flex-row '>
         <NavBarDentist
           rol={rol}
           isHome={false}
@@ -287,7 +287,7 @@ export default function Payments ({payments,appointments,patient,dentistInfo}) {
         
 
         />
-        <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+        <main className='sm:absolute right-0 flex justify-center flex-grow sm:w-60vw mx-11'>
           <div className='flex flex-col items-center max-w-screen-lg '>
             <TitleHeader
               pageTitle='Paciente'

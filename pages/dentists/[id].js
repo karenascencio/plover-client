@@ -78,7 +78,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   appointmentsInfo.sort((a, b) => b.date - a.date)
   appointmentsInfo.forEach(appointment => {
     // const appontmentId = appointment._id
-    if(!appointment.idPatient ) return 
+    if (!appointment.idPatient) return
     const trimmedName = appointment.idPatient.name.split(' ', 1).join() + ' ' + appointment.idPatient.lastName.split(' ', 1).join()
     const now = dayjs.utc()
     const appointmentDate = dayjs.utc(appointment.date)
@@ -114,7 +114,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
   }
 
   return (
-    <div className='flex flex-col sm:flex-row '>
+    <div className='sm:relative flex flex-col sm:flex-row '>
       <NavBarDentist
         isHome
         idDentist={idDentist}
@@ -123,7 +123,7 @@ export default function Home ({ patientsInfo, appointmentsInfo, dentistInfo }) {
         name={name}
         rol={rol}
       />
-      <main className='flex justify-center flex-grow sm:w-65vw mx-11'>
+      <main className='sm:absolute right-0 flex justify-center flex-grow lg:w-65vw mx-11'>
         <div className='max-w-screen-lg w-full flex flex-col items-center'>
           <TitleHeader
             pageTitle='Home'

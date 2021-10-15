@@ -61,11 +61,11 @@ export default function NavBarDentist (props) {
   //arreglaremos el navBar de denstista
   console.log('el rol desde el navBar es: ',rol)
   return (
-    <div className='z-50 sm:h-screen border border-red-500'>
-      <div className='flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
+    <div className='z-50 sm:absolute border border-red-500'>
+      <div className='sm:fixed flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100% sm:w-30vw sm:max-w-sm lg:max-w-18rem xl:max-w-26rem  bg-plover-blue'>
         <div className='h-16 flex justify-center'>
-          <div className='hidden md:block h-16 w-20 '>
-            <Image src={ploverLogo} width={50} height={50}/>
+          <div className='hidden md:block h-16 w-015 mr-3'>
+            <Image src={ploverLogo} />
           </div>
           <p
             className='mt-2 sm:mt-0 text-white text-3xl md:text-5xl font-thin '
