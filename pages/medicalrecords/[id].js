@@ -89,7 +89,7 @@ export default function Medicalrecord ({ patientFetched }) {
         idPatient={idPatient}
         />
       <main className='sm:absolute right-0 flex sm:mt-1 justify-center flex-grow sm:w-60vw mx-11 '>
-        <div className=' flex flex-col'>
+        <div className=' flex flex-col w-full'>
           {/* aqui comienza el formulario de informacion general */}
           {formulario == 'General Information' && (
             <div id='General Information' className='pt-14 md:pt-10'>
