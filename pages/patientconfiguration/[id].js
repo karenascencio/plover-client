@@ -146,7 +146,7 @@ export default function Configuration ({ patientInfo }) {
                     Guardar cambios
                     </button>
               }
-              <div className='flex justify-center w-full mb-5 py-0.5 text-plover-blue rounded border-2 border-plover-blue hover:border-login-blue hover:text-login-blue'>
+              <div className='text-center flex justify-center w-full mb-5 py-0.5 text-plover-blue rounded border-2 border-plover-blue hover:border-login-blue hover:text-login-blue'>
                 <Link href={`/changepatientpassword/${_id}`}>
                   <a>Cambiar de contraseña</a>
                 </Link>
