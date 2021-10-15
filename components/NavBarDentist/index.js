@@ -63,8 +63,8 @@ export default function NavBarDentist (props) {
     <div className='z-40 '>
       <div className='sm:sticky top-0 flex flex-row sm:flex-col justify-between sm:justify-start items-center px-080 sm:pt-10 h-20 w-100vw sm:h-100vh sm:w-30vw lg:max-w-18rem xl:max-w-26rem bg-plover-blue'>
         <div className='h-16 flex justify-center'>
-          <div className='hidden md:block h-16 w-20 '>
-            <Image src={ploverLogo} width={50} height={50}/>
+          <div className='hidden md:block h-16 w-015 mr-3'>
+            <Image src={ploverLogo} />
           </div>
           <p
             className='mt-2 sm:mt-0 text-white text-3xl md:text-5xl font-thin '
