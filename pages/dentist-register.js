@@ -5,6 +5,7 @@ import { Formik, Form} from 'formik'
 import * as Yup from 'yup'
 import useAvailableToken from '../hooks/useAvailableToken'
 import { signUp } from '../lib/api'
+import swal from 'sweetalert'
 // .: userSchema
 import { dentistSchema } from '../lib/DentistSchemaValidation'
 // .: components
@@ -18,11 +19,10 @@ import close from '../public/close.svg'
 const defaultPicture = 'https://plover-bucket.s3.us-east-2.amazonaws.com/next-s3-uploads/13c4f937-4c34-4f51-b0c4-bc633854b13f/12artboard_1.png'
 
 export default function DentistRegister () {
-  useAvailableToken()
   const router = useRouter()
   // .: hooks
-  const [falsePop, setFalsePop] = useState(false)
   const [profileImage, setProfileImage] = useState(defaultPicture)
+  const [falsePop, setFalsePop] = useState(false)
   const { uploadToS3 } = useS3Upload()
   console.log('cuack', profileImage)
   // .: Handdler
@@ -33,8 +33,9 @@ export default function DentistRegister () {
         const response = await signUp(values)
         const success = response.success
         if (success) {
-          alert('Se ha mandado un correo para verificar tu cuenta')
-          //router//.push('/login')
+          swal("¡Enhorabuena!", "Se está validando tu información, pronto recibirás un correo", "success").then((isOk) => {
+            router.push('/login')
+          })
         } else {
           setFalsePop(true)
         }
